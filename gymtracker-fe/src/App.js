@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-
+import Register from './User/Register';
 
 function App() {
   const { t } = useTranslation();
@@ -18,13 +18,16 @@ function App() {
       <div>
         <ul>
           <li>
-            <Link to="/">{t('welcome')}</Link>
+            <Link to="/">{t('Welcome')}</Link>
           </li>
           <li>
             <Link to="/about">{t('About')}</Link>
           </li>
           <li>
-            <Link to="/dashboard">{t('Users')}</Link>
+            <Link to="/users">{t('Users')}</Link>
+          </li>
+          <li>
+            <Link to="/register">{t('Register')}</Link>
           </li>
         </ul>
 
@@ -44,8 +47,11 @@ function App() {
           <Route path="/about">
             <About />
           </Route>
-          <Route path="/dashboard">
-            <Dashboard />
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/users">
+            <Users />
           </Route>
         </Switch>
       </div>
@@ -59,7 +65,7 @@ function App() {
 function Home() {
   return (
     <div>
-      <h2>Home</h2>
+      <h1>Home</h1>
     </div>
   );
 }
@@ -67,15 +73,15 @@ function Home() {
 function About() {
   return (
     <div>
-      <h2>About</h2>
+      <h1>About</h1>
     </div>
   );
 }
 
-function Dashboard() {
+function Users() {
   return (
     <div>
-      <h2>Dashboard</h2>
+      <h1>Users</h1>
     </div>
   );
 }
