@@ -1,0 +1,20 @@
+{
+  "name": "gymtracker",
+  "version": "1.0.0",
+  "description": "App tracking progress in the gym and much more!",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "concurrently \"cd gymtracker-be && npm run dev\" \"cd gymtracker-fe && npm start\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aurelchivu/GymTracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aurelchivu/GymTracker/issues"
+  },
+  "homepage": "https://github.com/aurelchivu/GymTracker#readme"
+}
