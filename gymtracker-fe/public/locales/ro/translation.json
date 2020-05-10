@@ -1,3 +1,10 @@
-{
-    "welcome": "Bun venit"
+{   
+    "About": "Despre",
+    "Confirm password": "Confirma parola",
+    "Email": "Email",
+    "Password": "Parola",
+    "Register": "Inregistrare",
+    "Username": "Nume de utilizator",
+    "Users": "Utilizatori",
+    "Welcome": "Bine ai venit"
   }
