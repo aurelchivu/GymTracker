@@ -11,27 +11,35 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
-);
+mongoose
+  .connect(uri, { useNewUrlParser: true, useCreateIndex: true })
+  .then(result => {
+    app.listen(port, () => {
+      console.log(`Server is running on port: ${port}`);
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  })
+  
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 });
 
 const exercisesRouter = require('./routes/exercises');
+const musclesRouter = require('./routes/muscles');
 const usersRouter = require('./routes/users');
 const indexRouter = require('./routes/index');
 // const musclesRouter = require('./routes/muscles');
 
 app.use('/exercises', exercisesRouter);
+app.use('/muscles', musclesRouter);
 app.use('/users', usersRouter);
 app.use('/', indexRouter);
-// app.use('/muscles', musclesRouter);
+
 
 app.use((req, res, next) => {
   res.status(404).send('<h1>Page not found!</h1>')
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});

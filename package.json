@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/aurelchivu/GymTracker/issues"
   },
-  "homepage": "https://github.com/aurelchivu/GymTracker#readme"
+  "homepage": "https://github.com/aurelchivu/GymTracker#readme",
+  "dependencies": {
+    "mongodb": "^3.5.7"
+  }
 }
