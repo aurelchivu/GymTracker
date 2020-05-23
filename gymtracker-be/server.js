@@ -28,18 +28,19 @@ connection.once('open', () => {
 });
 
 const exercisesRouter = require('./routes/exercises');
+const indexRouter = require('./routes/index');
+const measurementRouter = require('./routes/measurements');
 const musclesRouter = require('./routes/muscles');
 const usersRouter = require('./routes/users');
-const indexRouter = require('./routes/index');
-// const musclesRouter = require('./routes/muscles');
+const workoutsRouter = require('./routes/workouts');
 
 app.use('/exercises', exercisesRouter);
+app.use('/', indexRouter);
+app.use('/measurements', measurementRouter);
 app.use('/muscles', musclesRouter);
 app.use('/users', usersRouter);
-app.use('/', indexRouter);
-
+app.use('/workouts', workoutsRouter);
 
 app.use((req, res, next) => {
   res.status(404).send('<h1>Page not found!</h1>')
 });
-
