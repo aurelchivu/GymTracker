@@ -4,6 +4,7 @@
 /gymtracker-fe/node_modules
 /gymtracker-be/node_modules
 /.pnp
+/.env
 .pnp.js
 
 # testing
