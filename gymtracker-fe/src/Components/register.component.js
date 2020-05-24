@@ -3,10 +3,11 @@ import React, { Component } from "react";
 export default function Register() {
   return (
     <form>
-      <h3>Sign Up</h3>
+      <h3>Register</h3>
+      <br/>
       <div className="form-group">
           <label>Username</label>
-          <input type="text" className="form-control" placeholder="Username" />
+          <input type="text" className="form-control" placeholder="Choose a username" />
       </div>
       <div className="form-group">
           <label>Email address</label>
@@ -20,9 +21,9 @@ export default function Register() {
           <label>Confirm password</label>
           <input type="password" className="form-control" placeholder="Confirm password" />
       </div>
-      <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+      <button type="submit" className="btn btn-primary btn-block">Register</button>
       <p className="forgot-password text-right">
-          Already registered <a href="#">sign in?</a>
+          Already registered?<a href="#">Sign in</a>
       </p>
     </form>
   );
