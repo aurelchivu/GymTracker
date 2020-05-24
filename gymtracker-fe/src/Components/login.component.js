@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 
-export default function Login(){
+export default function Login() {
     return (
         <form>
-            <h3>Sign In</h3>
+            <h3>Log in</h3>
+            <br/>
             <div className="form-group">
                 <label>Email address</label>
                 <input type="email" className="form-control" placeholder="Enter email" />
@@ -20,7 +21,7 @@ export default function Login(){
             </div>
             <button type="submit" className="btn btn-primary btn-block">Submit</button>
             <p className="forgot-password text-right">
-                Forgot <a href="#">password?</a>
+                <a href="#">Forgot password?</a>
             </p>
         </form>
     );
