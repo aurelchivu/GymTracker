@@ -7,9 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import './i18n';
 
 ReactDOM.render(
-  <Suspense fallback={null}>
-    <App />
-  </Suspense>,
+    <App />, 
   document.getElementById('root')
 );
 
