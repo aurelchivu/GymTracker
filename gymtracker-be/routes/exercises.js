@@ -1,55 +1,36 @@
-const router = require('express').Router();
-let Exercise = require('../models/exercise.model');
+const express = require('express');
+const {
+  getExercises,
+  getExercise,
+  addExercise,
+  updateExercise,
+  deleteExercise
+} = require('../controllers/exercises');
 
-router.route('/').get((req, res) => {
-  Exercise.find()
-    .then(exercises => res.json(exercises))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+const Exercise = require('../models/Exercise');
 
-router.route('/add').post((req, res) => {
-  const username = req.body.username;
-  const description = req.body.description;
-  const duration = Number(req.body.duration);
-  const date = Date.parse(req.body.date);
+const router = express.Router({ mergeParams: true });
 
-  const newExercise = new Exercise({
-    username,
-    description,
-    duration,
-    date,
-  });
+const advancedResults = require('../middleware/advancedResults');
+const { protect } = require('../middleware/auth');
 
-  newExercise.save()
-  .then(() => res.json('Exercise added!'))
-  .catch(err => res.status(400).json('Error: ' + err));
-});
+// router.use(protect);
 
-router.route('/:id').get((req, res) => {
-  Exercise.findById(req.params.id)
-    .then(exercise => res.json(exercise))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+router
+  .route('/')
+  .get(
+    advancedResults(Exercise, {
+      path: 'workout',
+      select: 'name description'
+    }),
+    getExercises
+  )
+  .post(addExercise);
 
-router.route('/:id').delete((req, res) => {
-  Exercise.findByIdAndDelete(req.params.id)
-    .then(() => res.json('Exercise deleted.'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
-
-router.route('/update/:id').post((req, res) => {
-  Exercise.findById(req.params.id)
-    .then(exercise => {
-      exercise.username = req.body.username;
-      exercise.description = req.body.description;
-      exercise.duration = Number(req.body.duration);
-      exercise.date = Date.parse(req.body.date);
-
-      exercise.save()
-        .then(() => res.json('Exercise updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-      })
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+router
+  .route('/:id')
+  .get(getExercise)
+  .put(updateExercise)
+  .delete(deleteExercise);
 
 module.exports = router;
