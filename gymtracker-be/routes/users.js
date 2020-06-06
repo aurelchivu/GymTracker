@@ -1,20 +1,31 @@
-const router = require('express').Router();
-let User = require('../models/user.model');
+const express = require('express');
+const {
+  getUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
+} = require('../controllers/users');
 
-router.route('/').get((req, res) => {
-  User.find()
-    .then(users => res.json(users))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+const User = require('../models/User');
 
-router.route('/add').post((req, res) => {
-  const username = req.body.username;
+const router = express.Router({ mergeParams: true });
 
-  const newUser = new User({username});
+const advancedResults = require('../middleware/advancedResults');
+const { protect, authorize } = require('../middleware/auth');
 
-  newUser.save()
-    .then(() => res.json('User added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
-});
+// router.use(protect);
+// router.use(authorize('admin'));
+
+router
+  .route('/')
+  .get(advancedResults(User), getUsers)
+  .post(createUser);
+
+router
+  .route('/:id')
+  .get(getUser)
+  .put(updateUser)
+  .delete(deleteUser);
 
 module.exports = router;
