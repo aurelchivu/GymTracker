@@ -27,7 +27,8 @@ const ExerciseSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: true
-  }
+  },
+  slug: String,
 });
 
 module.exports = mongoose.model('Exercise', ExerciseSchema);

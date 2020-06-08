@@ -5,22 +5,19 @@ const jwt = require('jsonwebtoken');
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: [true, 'Please add an username']
+    required: [true, 'Please add an username'],
+    unique: true
   },
-  email: {
-    type: String,
-    required: [true, 'Please add an email'],
-    unique: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please add a valid email'
-    ]
-  }, 
   role: {
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
   },
+  email: {
+    type: String,
+    required: [true, 'Please add an email'],
+    unique: true
+  }, 
   password: {
     type: String,
     required: [true, 'Please add a password'],
@@ -69,7 +66,7 @@ UserSchema.methods.getResetPasswordToken = function() {
     .digest('hex');
 
   // Set expire
-  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
 };

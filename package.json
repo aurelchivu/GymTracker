@@ -11,8 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/aurelchivu/GymTracker.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Aurel Chivu",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/aurelchivu/GymTracker/issues"
   },
