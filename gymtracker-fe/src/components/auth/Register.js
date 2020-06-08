@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import {
   Form,
   Input,
-  Tooltip,
-  Cascader,
-  Select,
   Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
+  Button
 } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
+const axios = require('axios');
 
 const formItemLayout = {
   labelCol: {
@@ -48,28 +42,25 @@ const tailFormItemLayout = {
 };
 
 const Register = () => {
+
   const [form] = Form.useForm();
 
   const onFinish = values => {
+    
     console.log('Received values of form: ', values);
+
+    axios.post('http://localhost:5000/api/v1/auth/register', values)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
   };
 
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const onWebsiteChange = value => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(['.com', '.org', '.net'].map(domain => `${value}${domain}`));
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map(website => ({
-    label: website,
-    value: website,
-  }));
   return (
-    <>
+    <Fragment>
     <Row>
         <h1>Register your account</h1>
     </Row>
@@ -79,11 +70,11 @@ const Register = () => {
       form={form}
       name="register"
       onFinish={onFinish}
-      scrollToFirstError
+
     >
     
     <Form.Item
-        name="Username"
+        name="username"
         label={
           <span>
             Username
@@ -156,29 +147,18 @@ const Register = () => {
         <Input />
       </Form.Item>
 
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value ? Promise.resolve() : Promise.reject('Should accept agreement'),
-          },
-        ]}
-        {...tailFormItemLayout}
-      >
-        <Checkbox>
-          I have read the <a href="">agreement</a>
-        </Checkbox>
-      </Form.Item>
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
           Register
         </Button>
       </Form.Item>
+
+      <p>
+        Already have an account? <Link to="/login">Log In</Link>
+      </p>
     </Form>
     </Row>
-    </>
+    </Fragment>
   );
 };
 

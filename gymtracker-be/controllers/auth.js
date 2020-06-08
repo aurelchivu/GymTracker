@@ -12,9 +12,8 @@ exports.register = asyncHandler(async (req, res, next) => {
   // Create user
   const user = await User.create({
     username,
-    email,
     password,
-    role
+    email
   });
 
   sendTokenResponse(user, 200, res);
