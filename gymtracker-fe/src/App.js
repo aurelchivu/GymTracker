@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import { useTranslation } from 'react-i18next';
 // import { Layout } from 'antd';
 
-import './App.css';
+import './App.less';
 
 import About from './components/layout/About';
 import Home from './components/layout/Home';
 import Login from './components/auth/Login';
-import Navbar from './components/layout/Navbar';
+import Navbar from './components/layout/Menu';
 import Register from './components/auth/Register';
 import Users from './components/layout/Users';
 
@@ -22,7 +22,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <Fragment>
+        <Fragment className="App">
           <Navbar />
           <Route exact path="/" component={Home} />
           <section className="container">
