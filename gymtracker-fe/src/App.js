@@ -5,11 +5,15 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import './App.less';
 
+import Auth from './permissions/Auth';
+import LoggedInRoute from './permissions/LoggedInRoute';
+
 import About from './components/layout/About';
+import ControlPanel from './components/users/ControlPanel';
 import Home from './components/layout/Home';
-import Login from './components/auth/Login';
+import Login from './components/users/Login';
 import Navbar from './components/layout/Menu';
-import Register from './components/auth/Register';
+import Register from './components/users/Register';
 import Users from './components/layout/Users';
 
 // Redux
@@ -22,7 +26,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <Fragment className="App">
+        <Fragment>
           <Navbar />
           <Route exact path="/" component={Home} />
           <section className="container">
