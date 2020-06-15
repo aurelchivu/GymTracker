@@ -1,0 +1,31 @@
+import React from 'react';
+import {Link} from "react-router-dom";
+// import { useTranslation } from 'react-i18next';
+
+
+const Main = () => {
+    // const { t } = useTranslation();
+    return (
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/users">Users</Link>
+          </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+          <li>
+            <Link to="/register">Register</Link>
+          </li>
+        </ul>
+      </nav>
+    )
+}
+
+export default Main;

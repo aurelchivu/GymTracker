@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -65,7 +65,7 @@ const Login = () => {
             Log in
           </Button>
         </Form.Item>
-          <a className="login-form-forgot" href="">
+          <a className="login-form-forgot" href="/forgotPassword">
             Forgot password?
           </a>
           <p></p>

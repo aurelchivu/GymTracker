@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ControlPanel = () => {
+const Dashboard= () => {
     return (
         <div>
             <h1>Wellcome! This is your private page</h1>
@@ -8,4 +8,4 @@ const ControlPanel = () => {
     )
 }
 
-export default ControlPanel;
+export default Dashboard;
