@@ -6,10 +6,16 @@ import * as serviceWorker from './serviceWorker';
 
 import './i18n';
 
+// Redux
+import { Provider } from 'react-redux';
+import store from './store';
+
 ReactDOM.render(
-  <Suspense fallback={null}>
-    <App />
-  </Suspense>,
+  <Provider store={store}>
+    <Suspense fallback={null}>
+      <App />
+    </Suspense>
+  </Provider>,
   document.getElementById('root')
 );
 
