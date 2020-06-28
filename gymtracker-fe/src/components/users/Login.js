@@ -5,17 +5,23 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const axios = require('axios');
 
-const Login = () => {
+const Login = (props) => {
+
+  const [form] = Form.useForm();
 
     const onFinish = values => {
 
       console.log('Received values of form: ', values);
 
       axios.post('http://localhost:5000/api/v1/auth/login', values)
-      .then(function (response) {
-        console.log(response);
+      .then(response => {
+        console.log('Response: ', response);
+        if (response.data.success === true) {
+          props.onLoginSuccess(values.username);
+          console.log('earrgerg ', values.username);
+        }
       })
-      .catch(function (error) {
+      .catch(error => {
         console.log(error);
       });
     };
