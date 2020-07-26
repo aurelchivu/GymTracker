@@ -1,7 +1,5 @@
 import React, { Fragment, useState} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-// import { useTranslation } from 'react-i18next';
-
 import './App.less';
 import { Layout } from 'antd';
 
@@ -16,8 +14,7 @@ import Navbar from './components/layout/Navbar';
 import Register from './components/users/Register';
 
 const App = () => {
-  // const { t } = useTranslation();
-  
+
   const { Content } = Layout;
   const [userData, setUserData] = useState({});
 
