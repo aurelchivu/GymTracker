@@ -1,9 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const axios = require('axios');
+
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 3 },
+};
+
+
 
 const Login = (props) => {
 
@@ -27,8 +34,9 @@ const Login = (props) => {
   };
 
   return (
-    <Fragment>
+    <div className="container">
       <Form
+        {...layout}
         name="normal_login"
         className="login-form"
         initialValues={{
@@ -79,7 +87,7 @@ const Login = (props) => {
           You don't have an account?<Link to="/register"> Register!</Link>
         </p>
       </Form>
-    </Fragment>
+    </div>
   );
 };
   

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -11,22 +11,8 @@ import {
 const axios = require('axios');
 
 const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 12,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 56,
-    },
-  },
+  labelCol: { span: 10 },
+  wrapperCol: { span: 60 },
 };
 const tailFormItemLayout = {
   wrapperCol: {
@@ -36,7 +22,7 @@ const tailFormItemLayout = {
     },
     sm: {
       span: 16,
-      offset: 8,
+      offset: 14,
     },
   },
 };
@@ -59,7 +45,7 @@ const Register = () => {
   };
 
   return (
-    <Fragment>
+    <div className="container">
     <Row>
         <h1>Register your account</h1>
     </Row>
@@ -157,7 +143,7 @@ const Register = () => {
       </p>
     </Form>
     </Row>
-    </Fragment>
+    </div>
   );
 };
 
