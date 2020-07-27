@@ -9,7 +9,7 @@ const rightStyle = {position: 'absolute', top: 0, right: 0, margin: "16px 16px"}
 function Navbar(props) {
     return(
         <Header style={{ background: "black", padding: 16, paddingRight: 16 }} >
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['Home']}>
+            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['Home']} >
                 <Menu.Item key="Home" >
                     <Link to="/">Home</Link>
                 </Menu.Item>

@@ -15,7 +15,7 @@ import Register from './components/users/Register';
 
 const App = () => {
 
-  const { Content } = Layout;
+  const { Content, Footer } = Layout;
   const [userData, setUserData] = useState({});
 
   const onLoginSuccess = username => {
@@ -27,7 +27,7 @@ const App = () => {
       <Fragment>
         <Layout className="layout" >
           <Navbar userData={userData} />
-          <Content style={{ margin: "24px 16px", padding: 24, minHeight: 280}}>
+          <Content className="site-layout" style={{padding: 24, minHeight: 780, display:"flex"}}>
             <Route exact path="/" component={ Home } />
             <Route exact path="/login">
               <Login onLoginSuccess={onLoginSuccess}/>
@@ -37,6 +37,7 @@ const App = () => {
             <Route exact path="/dashboard" component={ Dashboard } />
           </Content>
         </Layout>
+        <Footer style={{ textAlign: 'center' }}>GymTracker ©2020.All rights reserved</Footer>
       </Fragment>
     </Router>
   );
