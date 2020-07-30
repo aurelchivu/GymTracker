@@ -139,7 +139,7 @@ const Register = () => {
       </Form.Item>
 
       <p>
-        Already have an account? <Link to="/login">Log In</Link>
+        Already have an account? <Link to="/login">Log In!</Link>
       </p>
     </Form>
     </Row>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox,Row } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 const axios = require('axios');
@@ -35,6 +35,9 @@ const Login = (props) => {
 
   return (
     <div className="container">
+      <Row>
+        <h1>Login</h1>
+    </Row>
       <Form
         {...layout}
         name="normal_login"

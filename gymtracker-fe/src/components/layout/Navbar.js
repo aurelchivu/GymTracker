@@ -11,16 +11,16 @@ function Navbar(props) {
         <Header style={{ background: "black", padding: 16, paddingRight: 16 }} >
             <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['Home']} >
                 <Menu.Item key="Home" >
-                    <Link to="/">Home</Link>
+                    <Link to="/" activestyle>Home</Link>
                 </Menu.Item>
                 <Menu.Item key="Login">
-                    <Link to="/login">Login</Link>
+                    <Link to="/login" activestyle>Login</Link>
                 </Menu.Item>
                 <Menu.Item key="Register">
-                    <Link to="/register">Register</Link>
+                    <Link to="/register" activestyle>Register</Link>
                 </Menu.Item>
                 <Menu.Item key="About">
-                    <Link to="/about">About</Link>
+                    <Link to="/about" activestyle>About</Link>
                 </Menu.Item>
                 <Menu.Item key="User" id="logged-in-user" style={rightStyle}>
                     {props.userData.username}

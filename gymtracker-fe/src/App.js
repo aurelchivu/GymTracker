@@ -12,6 +12,7 @@ import Home from './components/layout/Home';
 import Login from './components/users/Login';
 import Navbar from './components/layout/Navbar';
 import Register from './components/users/Register';
+import Workouts from './components/users/Workouts';
 
 const App = () => {
 
@@ -27,7 +28,7 @@ const App = () => {
       <Fragment>
         <Layout className="layout" >
           <Navbar userData={userData} />
-          <Content className="site-layout" style={{padding: 24, minHeight: 780, display:"flex"}}>
+          <Content className="site-layout" style={{padding: 16, minHeight: 780, display:"flex"}}>
             <Route exact path="/" component={ Home } />
             <Route exact path="/login">
               <Login onLoginSuccess={onLoginSuccess}/>
@@ -35,6 +36,7 @@ const App = () => {
             <Route exact path="/register" component={ Register } />
             <Route exact path="/about" component={ About } />
             <Route exact path="/dashboard" component={ Dashboard } />
+            <Route exact path="/workouts" component={ Workouts } />
           </Content>
         </Layout>
         <Footer style={{ textAlign: 'center' }}>GymTracker ©2020.All rights reserved</Footer>
