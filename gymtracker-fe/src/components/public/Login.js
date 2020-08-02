@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import auth from '../../permissions/auth'
 import { Form, Input, Button, Checkbox,Row } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
@@ -9,8 +10,6 @@ const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 3 },
 };
-
-
 
 const Login = (props) => {
 
@@ -24,8 +23,10 @@ const Login = (props) => {
     .then(response => {
       console.log('Response: ', response);
       if (response.data.success === true) {
-        props.onLoginSuccess(values.username);
-        history.push("/Dashboard");
+        // props.onLoginSuccess(values.username);
+        auth.login(() => {
+          history.push("/dashboard");
+        });
       }
     })
     .catch(error => {
