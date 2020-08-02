@@ -1,47 +1,28 @@
-import React, { Fragment, useState} from 'react';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React, { Fragment, useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.less';
 import { Layout } from 'antd';
 
-// import Auth from './permissions/Auth';
-// import LoggedInRoute from './permissions/LoggedInRoute';
-
-import About from './components/layout/About';
-import Dashboard from './components/users/Dashboard';
-import Home from './components/layout/Home';
-import Login from './components/users/Login';
-import Navbar from './components/layout/Navbar';
-import Register from './components/users/Register';
-import Workouts from './components/users/Workouts';
+import Dashboard from './components/protected/Dashboard';
+import PublicComponent from './components/public/PublicComponent';
+// import Login from './components/public/Login'
+import { ProtectedRoute } from './components/protected/ProtectedComponent';
 
 const App = () => {
 
-  const { Content, Footer } = Layout;
-  const [userData, setUserData] = useState({});
-
-  const onLoginSuccess = username => {
-      setUserData({ username });
-  }
+  const { Footer } = Layout;
 
   return (
-    <Router userData={userData}>
-      <Fragment>
-        <Layout className="layout" >
-          <Navbar userData={userData} />
-          <Content className="site-layout" style={{padding: 16, minHeight: 780, display:"flex"}}>
-            <Route exact path="/" component={ Home } />
-            <Route exact path="/login">
-              <Login onLoginSuccess={onLoginSuccess}/>
-            </Route>
-            <Route exact path="/register" component={ Register } />
-            <Route exact path="/about" component={ About } />
-            <Route exact path="/dashboard" component={ Dashboard } />
-            <Route exact path="/workouts" component={ Workouts } />
-          </Content>
-        </Layout>
-        <Footer style={{ textAlign: 'center' }}>GymTracker ©2020.All rights reserved</Footer>
-      </Fragment>
-    </Router>
+    <Fragment>
+      <Switch>
+        <Route exact path="/" component={PublicComponent} />
+        <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+        {/* <Route path="*" component={() => "404 NOT FOUND"} /> */}
+      </Switch>
+      <Footer style={{ textAlign: 'center' }}>
+        GymTracker ©2020. All rights reserved
+      </Footer>
+    </Fragment>
   );
 }
 
