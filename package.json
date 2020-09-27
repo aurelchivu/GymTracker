@@ -27,12 +27,14 @@
     "core-js": "^3.6.5",
     "craco-less": "^1.16.0",
     "dayjs": "^1.8.27",
-    "jquery": "^1.12.4",
+    "history": "^5.0.0",
+    "jquery": "^3.5.1",
     "mongodb": "^3.5.7",
     "react": "^16.13.1",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
+    "react-toastify": "^6.0.8",
     "redux": "^4.0.5"
   }
 }
