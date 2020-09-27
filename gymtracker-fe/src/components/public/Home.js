@@ -5,7 +5,7 @@ const Home = () => {
         <div className="container">
             <h1>Welcome!</h1>
             <p>
-                This is the place if you want to get results in the gym!
+                This is the place if you want to get better results in the gym!
             </p>
         </div>
     )
