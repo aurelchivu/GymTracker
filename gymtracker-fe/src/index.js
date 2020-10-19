@@ -5,8 +5,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// import "assets/css/material-dashboard-react.css?v=1.9.0";
+
 ReactDOM.render(
-  <Router basename="">
+  <Router>
     <App />
   </Router>,
   document.getElementById('root')

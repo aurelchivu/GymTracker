@@ -1,6 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import Login from './Login'
+import Register from './Register'
+import About from './About'
+import Home from './Home'
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -35,17 +40,17 @@ export default function PublicComponent(props) {
 
   return (
     <div className={classes.root}>
-        <AppBar position="static" >
-            <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="gray" aria-label="menu">
-                    <MenuIcon />
-                </IconButton>
-                <Button color="inherit" href="/" >Home</Button>
-                <Button color="inherit" href="/login" >Login</Button>
-                <Button color="inherit" href="/register" >Register</Button>
-                <Button color="inherit" href="/about" >About</Button>
-            </Toolbar>
-        </AppBar>
+      <AppBar position="static" >
+        <Toolbar>
+          <IconButton edge="start" className={classes.menuButton} color="secondary" aria-label="menu">
+            <MenuIcon />
+          </IconButton>
+          <Button color="inherit" href="/" >Home</Button>
+          <Button color="inherit" href="/login" >Login</Button>
+          <Button color="inherit" href="/register" >Register</Button>
+          <Button color="inherit" href="/about" >About</Button>
+        </Toolbar>
+      </AppBar>
     </div>
   );
 }

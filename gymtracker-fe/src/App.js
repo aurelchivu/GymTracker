@@ -1,24 +1,30 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
 import {AppBar,CssBaseline,Typography,createMuiTheme} from "@material-ui/core";
 
-import Dashboard from './components/protected/Dashboard';
-import Login from './components/public/Login'
-import Register from './components/public/Register'
 import About from './components/public/About'
+import Dashboard from './components/protected/Dashboard'
 import Home from './components/public/Home'
+import Login from './components/public/Login'
 import PublicComponent from './components/public/PublicComponent'
-import { ProtectedRoute } from './components/protected/ProtectedComponent';
+import Register from './components/public/Register'
+
 import Image from './utils/gym.jpg'
 import { palette } from '@material-ui/system';
+
+const theme = createMuiTheme({
+  palette: {
+    type: "dark"
+  }
+})
 
 const styles = theme => ({
 	"@global": {
 		body: {
-			backgroundImage: `url(${Image})`,
+			// backgroundImage: `url(${Image})`,
 			backgroundRepeat: "no-repeat",
 			backgroundPosition: "center center",
 			backgroundSize: "cover",
@@ -34,26 +40,18 @@ const styles = theme => ({
 	}
 });
 
-const theme = createMuiTheme({
-  palette: {
-    type: "dark"
-  }
-});
-
-const App = (props) => {
+const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Typography style={{ margin: 10 }}>
-      {/* <Switch> */}
         <Route exact from="/" render={props => <PublicComponent {...props} />} />
-        <Route exact path="/dasboard" render={props => <Dashboard {...props} />} />
-      {/* </Switch>    */}
         <Route exact path="/" render={props => <Home {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
         <Route exact path="/about" render={props => <About {...props} />} />
         <Route exact path="/register" render={props => <Register {...props} />} />
+        <Route exact path="/dashboard" render={props => <Dashboard {...props} />} />
       </Typography>
     </ThemeProvider>
   );
