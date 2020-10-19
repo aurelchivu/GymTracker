@@ -61,9 +61,7 @@ const Login = (props) => {
   
   const handleSubmit = event => {
     event.preventDefault();
-    console.log('Event: ', event);
-    console.log('Username:', username, ', ', 'Password: ', password); 
-    console.log('Props: ', props);
+    console.log('Username:', username, ', ', 'Password: ', password);
 
     axios.post('http://localhost:5000/api/v1/auth/login', {username, password})
     .then(res => {
@@ -71,7 +69,7 @@ const Login = (props) => {
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('username', username);
-        window.location = 'dasboard';
+        window.location = 'http://localhost:3000/dashboard';
       }
     })
     .catch(error => {
