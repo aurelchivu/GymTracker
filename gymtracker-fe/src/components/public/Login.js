@@ -69,7 +69,10 @@ const Login = (props) => {
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('username', username);
-        window.location = 'http://localhost:3000/dashboard';
+        console.log(props);
+        props.onLoginSuccess();
+
+        // window.location = 'http://localhost:3000/admin/dashboard';
       }
     })
     .catch(error => {
