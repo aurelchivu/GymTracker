@@ -19,7 +19,7 @@ function Copyright() {
 const About = () => {
     return (
         <div>
-            <h1>GymTracker</h1>
+            <h2>GymTracker</h2>
             <p>
                 GymTracker is an app tracks
                 your progress in the gym, gives you a workout routine depending on

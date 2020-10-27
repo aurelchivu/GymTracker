@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { BrowserRouter as Router, Route,Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
@@ -43,22 +43,20 @@ const styles = theme => ({
 const App = () => {
   const [userData, setUserData] = useState({});
 
-  const onLoginSuccess = (id) => {
-    setUserData({id})
+  const onLoginSuccess = (username) => {
+    setUserData({username})
   }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Typography style={{ margin: 10 }}>
-        <Switch>
-          <Route exact path="/" render={props => <PublicComponent {...props} />} />
-          <Route exact path="/" render={props => <Home {...props} />} />
-          <Route exact path="/login" render={props => <Login {...props} onLoginSuccess={onLoginSuccess} />} />
-          <Route exact path="/about" render={props => <About {...props} />} />
-          <Route exact path="/register" render={props => <Register {...props} />} /> 
-          <Route exact path="/admin/dashboard" render={props => <Admin {...props} userData={userData} />} />
-        </Switch> 
+        <Route exact path="/" render={props => <PublicComponent {...props} />} />
+        <Route exact path="/" render={props => <Home {...props} />} />
+        <Route exact path="/login" render={props => <Login {...props} onLoginSuccess={onLoginSuccess} />} />
+        <Route exact path="/about" render={props => <About {...props} />} />
+        <Route exact path="/register" render={props => <Register {...props} />} /> 
+        <Route exact path="/admin" render={props => <Admin {...props} userData={userData} />} />
       </Typography>
     </ThemeProvider>
   );
