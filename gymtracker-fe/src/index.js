@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-// import "assets/css/material-dashboard-react.css?v=1.9.0";
+
+import Admin from "./components/protected/layouts/Admin";
+import './components/protected/assets/css/material-dashboard-react.css?v=1.9.0"'
+
+const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router>
+  <Router history={hist}>
     <App />
+    <Route path="/admin" component={Admin} />
   </Router>,
   document.getElementById('root')
 );

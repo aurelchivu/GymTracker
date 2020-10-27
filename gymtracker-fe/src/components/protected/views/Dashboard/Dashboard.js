@@ -21,7 +21,7 @@ const googleWorkout = "legs";
 export default function Dashboard() {
   const classes = useStyles();
   return (
-    <div>
+    <div >
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
@@ -39,6 +39,7 @@ export default function Dashboard() {
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
+                  <br />
               </div>
             </CardFooter>
           </Card>

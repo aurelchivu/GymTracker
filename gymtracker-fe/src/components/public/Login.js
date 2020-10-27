@@ -69,10 +69,10 @@ const Login = (props) => {
       if (res.data.success) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('username', username);
-        console.log(props);
-        props.onLoginSuccess();
+        // console.log(props);
+        // props.onLoginSuccess(username);
 
-        // window.location = 'http://localhost:3000/admin/dashboard';
+        window.location = 'http://localhost:3000/admin';
       }
     })
     .catch(error => {
