@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link as ReactLink, useHistory } from 'react-router-dom';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-import auth from '../../permissions/auth'
+import React, { useEffect, useState } from 'react';
+import { Link as ReactLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../../actions/userActions'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,8 +17,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
-
-const axios = require('axios');
 
 function Copyright() {
   return (
@@ -53,33 +51,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = (props) => {
+const Login = ({ location, history }) => {
 
   const classes = useStyles();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { loading, error, userInfo } = userLogin;
+
+  const redirect = location.search ? location.search.split('=')[1] : '/admin'
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history, userInfo, redirect]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password));
+  }
   
-  const handleSubmit = event => {
-    event.preventDefault();
-    console.log('Username:', username, ', ', 'Password: ', password);
-
-    axios.post('http://localhost:5000/api/v1/auth/login', {username, password})
-    .then(res => {
-      console.log('Response: ', res);
-      if (res.data.success) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', username);
-        // console.log(props);
-        // props.onLoginSuccess(username);
-
-        window.location = 'http://localhost:3000/admin';
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -97,21 +92,21 @@ const Login = (props) => {
             onSubmit={handleSubmit}
           >
             <TextField
-              value={username}
-              onInput={ e=>setUsername(e.target.value)}
+              value={email}
+              onInput={ e =>setEmail(e.target.value)}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
               autoFocus
             />
             <TextField
               value={password}
-              onInput={ e=>setPassword(e.target.value)}
+              onInput={ e =>setPassword(e.target.value)}
               variant="outlined"
               margin="normal"
               required

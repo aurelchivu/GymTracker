@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import { register } from '../../actions/userActions'
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,8 +14,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-const axios = require('axios');
 
 function Copyright() {
   return (
@@ -48,29 +48,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Register(props) {
+export default function Register({ location, history }) {
   const classes = useStyles();
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    console.log('Username:', username, ', ', 'Password: ', password); 
+  const dispatch = useDispatch();
 
-    axios.post('http://localhost:5000/api/v1/auth/register', {username, password, email})
-    .then(res => {
-      console.log('Response: ', res);
-      if (res.data.success) {
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('username', username);
-        window.location = 'http://localhost:3000/dashboard';
-      }
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  };
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  const redirect = location.search ? location.search.split('=')[1] : '/admin'
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect);
+    }
+  }, [history, userInfo, redirect]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(register(username, email, password));
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -90,7 +91,7 @@ export default function Register(props) {
             <Grid item xs={12} sm={20}>
               <TextField
                 value={username}
-                onInput={ e=>setUsername(e.target.value)}
+                onInput={ e => setUsername(e.target.value)}
                 variant="outlined"
                 margin="normal"
                 required
@@ -105,7 +106,7 @@ export default function Register(props) {
             <Grid item xs={12}>
               <TextField
                 value={email}
-                onInput={ e=>setEmail(e.target.value)}
+                onInput={ e => setEmail(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -118,7 +119,7 @@ export default function Register(props) {
             <Grid item xs={12}>
               <TextField
                 value={password}
-                onInput={ e=>setPassword(e.target.value)}
+                onInput={ e => setPassword(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -131,6 +132,8 @@ export default function Register(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={confirmPassword}
+                onInput={ e => setConfirmPassword(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth

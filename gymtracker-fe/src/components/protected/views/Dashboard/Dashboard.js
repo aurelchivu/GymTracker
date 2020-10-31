@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from 'react-redux';
+
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -13,12 +15,15 @@ import styles from "../../assets/jss/material-dashboard-react/views/dashboardSty
 
 const useStyles = makeStyles(styles);
 
-const username = 'aurel';
 const date = new Date().toDateString();
 const lastWeekWorkout = 'back and abs';
 const googleWorkout = "legs";
 
 export default function Dashboard() {
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const classes = useStyles();
   return (
     <div >
@@ -30,7 +35,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardBody>
               <h3 className={classes.cardTitle}>
-                Hello, {username}! <br />
+                Hello, {userInfo.username}! <br />
                 Today is {date}.<br />
                 This time last week you had the {lastWeekWorkout} workout.<br />
                 Acording to your Google Calendar, today you have {googleWorkout} day.<br />

@@ -2,6 +2,7 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendEmail');
 const User = require('../models/User');
+const generateToken = require('../utils/generateToken')
 
 // @desc      Register user
 // @route     POST /api/v1/auth/register
@@ -9,42 +10,59 @@ const User = require('../models/User');
 exports.register = asyncHandler(async (req, res, next) => {
   const { username, password, email, role } = req.body;
 
-  // Create user
+  const userExists = await User.findOne({ email })
+
+  if (userExists) {
+    res.status(400)
+    throw new Error('User already exists')
+  }
+
   const user = await User.create({
     username,
+    email,
     password,
-    email
-  });
+  })
 
-  sendTokenResponse(user, 200, res);
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      username: user.name,
+      email: user.email,
+      token: generateToken(user._id),
+    })
+  } else {
+    res.status(400)
+    throw new Error('Invalid user data')
+  }
 });
 
-// @desc      Login usernpm
+// @desc      Login user
 // @route     POST /api/v1/auth/login
 // @access    Public
 exports.login = asyncHandler(async (req, res, next) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  // Validate username & password
-  if (!username || !password) {
+  // Validate email & password
+  if (!email || !password) {
     return next(new ErrorResponse('Please provide an username and password', 400));
   }
 
-  // Check for user
-  const user = await User.findOne({ username }).select('+password');
+  // Check user & password
+  const user = await User.findOne({ email }).select('+password');
 
-  if (!user) {
-    return next(new ErrorResponse('Invalid credentials', 401));
-  } 
-
-  // Check if password matches
-  const isMatch = await user.matchPassword(password);
-
-  if (!isMatch) {
-    return next(new ErrorResponse('Invalid credentials', 401));
+  if (user && (await user.matchPassword(password))) {
+    res.json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      token: generateToken(user._id)
+    })
+  } else {
+    res.status(401)
+    throw new Error('Invalid email or password')
   }
 
-  sendTokenResponse(user, 200, res);
+  // sendTokenResponse(user, 200, res);
 });
 
 // @desc      Log out user / clear cookie
