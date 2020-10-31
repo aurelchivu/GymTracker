@@ -1,4 +1,9 @@
 import React from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../../actions/userActions'
+
+
+
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,9 +27,14 @@ import Button from "../../components/CustomButtons/Button.js";
 import styles from "../../assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
-const username = 'aurel';
 
 export default function AdminNavbarLinks() {
+
+  const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const classes = useStyles();
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickProfile = event => {
@@ -34,14 +44,20 @@ export default function AdminNavbarLinks() {
       setOpenProfile(event.currentTarget);
     }
   };
+
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+
+  const logoutHandler = () => {
+    dispatch(logout());
+  }
+
   return (
     <div>
       <div className={classes.manager}>
         <p>
-          Hello, {username}!
+          Hello, {userInfo.username} !
         </p>
       </div>
       <div className={classes.manager}>
@@ -83,18 +99,7 @@ export default function AdminNavbarLinks() {
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
-                      className={classes.dropdownItem}
-                    >
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<Switch size="small"/>}
-                          label="Dark theme"
-                        />
-                      </FormGroup>
-                    </MenuItem>
-                    <Divider light />
-                    <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={logoutHandler}
                       className={classes.dropdownItem}
                     >
                       Logout
