@@ -24,11 +24,18 @@ export default function Dashboard() {
               <h2>My Workouts</h2>
             </CardHeader>
             <CardBody>
-
+              <h3 className={classes.cardTitle}>
+                You have no registered workouts.
+              </h3>
+              <br />
+              <h3 className={classes.cardBody}>
+                Last workout.
+              </h3>
             </CardBody>
             <CardFooter chart>
-              <div className={classes.stats}>
-              </div>
+              <h3>
+                Last week's workout summary.
+              </h3>
             </CardFooter>
           </Card>
         </GridItem>

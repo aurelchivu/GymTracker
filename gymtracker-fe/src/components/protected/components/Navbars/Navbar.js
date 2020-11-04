@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from 'react-redux';
+
 import classNames from "classnames";
 import PropTypes from "prop-types";
 // @material-ui/core components
@@ -18,12 +20,18 @@ import styles from "../../assets/jss/material-dashboard-react/components/headerS
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const classes = useStyles();
+
   function makeBrand() {
     var name;
     props.routes.map(prop => prop.name);
     return name;
   }
+
   const { color } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color
