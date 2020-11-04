@@ -41,22 +41,17 @@ const styles = theme => ({
 });
 
 const App = () => {
-  const [userData, setUserData] = useState({});
-
-  const onLoginSuccess = (username) => {
-    setUserData({username})
-  }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Typography style={{ margin: 10 }}>
+      <Typography style={{ margin: 10 }} color="secondary">
         <Route exact path="/" render={props => <PublicComponent {...props} />} />
         <Route exact path="/" render={props => <Home {...props} />} />
-        <Route exact path="/login" render={props => <Login {...props} onLoginSuccess={onLoginSuccess} />} />
+        <Route exact path="/login" render={props => <Login {...props} />} />
         <Route exact path="/about" render={props => <About {...props} />} />
         <Route exact path="/register" render={props => <Register {...props} />} /> 
-        <Route exact path="/admin" render={props => <Admin {...props} userData={userData} />} />
+        <Route exact path="/admin" render={props => <Admin {...props} />} />
       </Typography>
     </ThemeProvider>
   );

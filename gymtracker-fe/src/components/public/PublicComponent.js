@@ -34,13 +34,13 @@ const useStyles = makeStyles(theme => ({
     }
   }));
 
-export default function PublicComponent(props) {
+export default function PublicComponent() {
 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" >
+      <AppBar position="static" color="default">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="secondary" aria-label="menu">
             <MenuIcon />

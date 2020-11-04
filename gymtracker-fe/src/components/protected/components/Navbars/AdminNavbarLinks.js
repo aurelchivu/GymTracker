@@ -2,8 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../../../actions/userActions'
 
-
-
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -37,11 +35,11 @@ export default function AdminNavbarLinks() {
 
   const classes = useStyles();
   const [openProfile, setOpenProfile] = React.useState(null);
-  const handleClickProfile = event => {
-    if (openProfile && openProfile.contains(event.target)) {
+  const handleClickProfile = e => {
+    if (openProfile && openProfile.contains(e.target)) {
       setOpenProfile(null);
     } else {
-      setOpenProfile(event.currentTarget);
+      setOpenProfile(e.currentTarget);
     }
   };
 
@@ -54,10 +52,10 @@ export default function AdminNavbarLinks() {
   }
 
   return (
-    <div>
+    <>
       <div className={classes.manager}>
         <p>
-          Hello, {userInfo.username} !
+          {userInfo.username}
         </p>
       </div>
       <div className={classes.manager}>
@@ -72,7 +70,7 @@ export default function AdminNavbarLinks() {
         >
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p className={classes.linkText}>{userInfo.username}</p>
           </Hidden>
         </Button>
         <Poppers
@@ -111,6 +109,6 @@ export default function AdminNavbarLinks() {
           )}
         </Poppers>
       </div>
-    </div>
+=    </>
   );
 }

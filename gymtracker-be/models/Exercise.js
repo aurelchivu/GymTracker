@@ -18,6 +18,11 @@ const ExerciseSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  muscle: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Muscle',
+    required: true
+  },
   workout: {
     type: mongoose.Schema.ObjectId,
     ref: 'Workout',

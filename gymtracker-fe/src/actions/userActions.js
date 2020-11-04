@@ -39,7 +39,7 @@ export const login = (email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      'http://localhost:5000/api/v1/auth/login',
+      '/api/v1/auth/login',
       { email, password },
       config
     )
@@ -81,7 +81,7 @@ export const register = (username, email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      'http://localhost:5000/api/v1/auth/register',
+      '/api/v1/auth/register',
       { username, email, password },
       config
     )
