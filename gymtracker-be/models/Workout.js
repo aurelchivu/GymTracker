@@ -3,32 +3,19 @@ const slugify = require('slugify'); // part of a URL which identifies a particul
 
 const WorkoutSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: [true, 'Please add a name'],
-      unique: true,
-      trim: true,
-      maxlength: [25, 'Name can not be more than 50 characters']
-    },
-    description: {
-      type: String,
-      required: [true, 'Please add a description'],
-      maxlength: [50, 'Description can not be more than 500 characters']
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now
-    },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       required: true
     },
-    slug: String,
+    slug: String
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true }
+  },
+  {
+    timestamps: true,
   }
 );
 
@@ -38,16 +25,16 @@ WorkoutSchema.pre('save', function(next) {
   next();
 });
 
-// Cascade delete exercises when a workout is deleted
+// Cascade delete muscles when a workout is deleted
 WorkoutSchema.pre('remove', async function(next) {
-  console.log(`Exercises being removed from workout ${this._id}`);
-  await this.model('Exercise').deleteMany({ workout: this._id });
+  console.log(`Muscles being removed from workout ${this._id}`);
+  await this.model('Muscle').deleteMany({ workout: this._id });
   next();
 });
 
 // Reverse populate with virtuals
-WorkoutSchema.virtual('exercises', {
-  ref: 'Exercise',
+WorkoutSchema.virtual('muscles', {
+  ref: 'Muscle',
   localField: '_id',
   foreignField: 'workout',
   justOne: false
