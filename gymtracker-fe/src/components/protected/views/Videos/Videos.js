@@ -39,7 +39,7 @@ export default function Dashboard(props) {
   const classes = useStyles();
   
   return (
-    <div>
+    <>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
@@ -79,6 +79,6 @@ export default function Dashboard(props) {
           </Card>
         </GridItem>
       </GridContainer>
-    </div>
+    </>
   );
 }

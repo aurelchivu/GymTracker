@@ -25,11 +25,9 @@ const UserSchema = new mongoose.Schema({
     select: false // when we get an user through the API we don't get the pasword
   },
   resetPasswordToken: String,
-  resetPasswordExpire: Date,
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+  resetPasswordExpire: Date
+}, {
+  timestamps: true,
 });
 
 // Encrypt password using bcrypt

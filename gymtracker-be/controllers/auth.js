@@ -26,9 +26,10 @@ exports.register = asyncHandler(async (req, res, next) => {
   if (user) {
     res.status(201).json({
       _id: user._id,
-      username: user.name,
+      username: user.username,
       email: user.email,
       token: generateToken(user._id),
+      createdAt: user.createdAt
     })
   } else {
     res.status(400)
@@ -55,7 +56,8 @@ exports.login = asyncHandler(async (req, res, next) => {
       _id: user._id,
       username: user.username,
       email: user.email,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
+      createdAt: user.createdAt
     })
   } else {
     res.status(401)

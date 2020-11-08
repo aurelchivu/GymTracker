@@ -62,7 +62,7 @@ exports.updateWorkout = asyncHandler(async (req, res, next) => {
     );
   }
 
-  workout = await Workout.findOneAndUpdate(req.params.id, req.body, {
+  workout = await Workout.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true
   });
