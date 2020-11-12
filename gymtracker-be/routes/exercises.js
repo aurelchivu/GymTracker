@@ -21,7 +21,7 @@ router
   .get(
     advancedResults(Exercise, {
       path: 'workout',
-      select: 'name description'
+      select: 'name'
     }),
     getExercises
   )

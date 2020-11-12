@@ -53,7 +53,7 @@ exports.updateWorkout = asyncHandler(async (req, res, next) => {
   }
 
   // Make sure user is workout owner
-  if (workout.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (workout.user.toString() !== req.user.id) {
     return next(
       new ErrorResponse(
         `User ${req.params.id} is not authorized to update this workout`,
@@ -83,7 +83,7 @@ exports.deleteWorkout = asyncHandler(async (req, res, next) => {
   }
 
   // Make sure user is workout owner
-  if (workout.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (workout.user.toString() !== req.user.id) {
     return next(
       new ErrorResponse(
         `User ${req.params.id} is not authorized to delete this workout`,

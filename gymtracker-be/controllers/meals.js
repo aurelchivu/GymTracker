@@ -52,7 +52,7 @@ exports.updateMeal = asyncHandler(async (req, res, next) => {
   }
 
   // Make sure user is meal owner
-  if (meal.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (meal.user.toString() !== req.user.id) {
     return next(
       new ErrorResponse(
         `User ${req.params.id} is not authorized to update this meal`,
@@ -72,7 +72,7 @@ exports.updateMeal = asyncHandler(async (req, res, next) => {
 // @desc      Delete meal
 // @route     DELETE /api/v1/meals/:id
 // @access    Private
-exports.deletemeal = asyncHandler(async (req, res, next) => {
+exports.deleteMeal = asyncHandler(async (req, res, next) => {
   const meal = await Meal.findById(req.params.id);
 
   if (!meal) {
@@ -82,7 +82,7 @@ exports.deletemeal = asyncHandler(async (req, res, next) => {
   }
 
   // Make sure user is meal owner
-  if (meal.user.toString() !== req.user.id && req.user.role !== 'admin') {
+  if (meal.user.toString() !== req.user.id) {
     return next(
       new ErrorResponse(
         `User ${req.params.id} is not authorized to delete this meal`,

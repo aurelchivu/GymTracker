@@ -7,9 +7,9 @@ const MeasurementSchema = new mongoose.Schema({
     required: true
   },
   muscle: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Muscle',
-    required: true
+    type: String,
+    trim: true,
+    required: [true, 'Please add a muscle']
   },
   value: {
     type: Number,

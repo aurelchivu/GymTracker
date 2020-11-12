@@ -21,10 +21,12 @@ connectDB();
 
 // Route files
 const auth = require('./routes/auth');
-const exercises = require('./routes/exercises');
 const home = require('./routes/home');
 const users = require('./routes/users');
 const workouts = require('./routes/workouts');
+const exercises = require('./routes/exercises');
+const meals = require('./routes/meals');
+const measurements = require('./routes/measurements');
 
 const app = express();
 
@@ -68,8 +70,11 @@ app.use(express.static(path.join(__dirname, ' public')));
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/exercises', exercises);
 app.use('/api/v1/', home);
+app.use('/api/v1/meals', meals);
+app.use('/api/v1/measurements', measurements);
 app.use('/api/v1/users', users);
 app.use('/api/v1/workouts', workouts);
+
 
 app.use((req, res, next) => {
   res.status(404).send('<h1>Page not found!</h1>')
