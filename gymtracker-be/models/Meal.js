@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const MealSchema = new mongoose.Schema({
+  count: {
+    type: Number,
+    default: 0
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',

@@ -6,27 +6,34 @@ const ExerciseSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  muscle: {
+  workout: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Muscle',
+    ref: 'Workout',
     required: true
+  },
+  muscle: {
+    type: String,
+    trim: true,
+    required: [true, 'Please add a muscle']
   },
   name: {
     type: String,
     trim: true,
     required: [true, 'Please add an exercise']
   },
-  sets: {
-    type: Number,
-    required: [true, 'Please add reps']
-  },
-  reps: {
-    type: Number,
-    required: [true, 'Please add reps']
-  },
-  weight: {
-    type: Number,
-    required: [true, 'Please add weight']
+  description: {
+    sets: {
+      type: Number,
+      required: true
+    },
+    reps: {
+      type: Number,
+      required: [true, 'Please add reps']
+    },
+    weight: {
+      type: Number,
+      required: [true, 'Please add weight']
+    },
   },
   slug: String
 },

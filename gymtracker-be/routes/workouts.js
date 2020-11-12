@@ -8,10 +8,10 @@ const {
 } = require('../controllers/workouts');
 
 const Workout = require('../models/Workout');
-
+   
 // Include other resource routers
-const courseRouter = require('./exercises');
-
+const exerciseRouter = require('./exercises');
+ 
 const router = express.Router();
 
 const advancedResults = require('../middleware/advancedResults');
@@ -20,7 +20,7 @@ const { protect } = require('../middleware/auth');
 // router.use(protect);
 
 // Re-route into other resource routers
-router.use('/:workoutId/exercises', courseRouter);
+router.use('/:workoutId/exercises', exerciseRouter);
 
 router
   .route('/')

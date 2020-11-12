@@ -14,6 +14,9 @@
 /build
 
 # misc
+/gymtracker-be/config/config.env
+/gymtracker-fe/.env
+
 .DS_Store
 .env.local
 .env.development.local

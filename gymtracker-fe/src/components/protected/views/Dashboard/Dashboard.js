@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { getUserDetails} from '../../../../actions/userActions'
 
@@ -44,12 +45,13 @@ export default function Dashboard() {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const createdAt = userInfo.createdAt
-  const date = new Date().toDateString();
-  const time = new Date().toLocaleTimeString();
+  const newUser = 0;
+  const currentDate = new Date().toDateString();
+  const currentTime = new Date().toLocaleTimeString();
   const lastWeekWorkout = 'back and abs';
   const googleWorkout = "legs";
   const classes = useStyles();
+  const created = new Date(userInfo.createdAt).toDateString();
 
   return (
     <GridContainer>
@@ -59,19 +61,20 @@ export default function Dashboard() {
             <h2>Dasboard</h2>
           </CardHeader>
           <CardBody>
-            {createdAt > Date.now() - 60000 ?
+            {newUser ?
               <h3 className={classes.cardTitle}>
                 Hello, {userInfo.username}! <br />
                 Welcome to GymTracker!<br />
-                Today is {date}, {time}.<br />
+                Today is {currentDate}, {currentTime}.<br />
                 This is the place to be if you want better results in the gym.<br />
                 Drink water and don't forget to warm up before each training.<br />
                 What do you want to train today?<br />
               </h3>
               :
               <h3 className={classes.cardTitle}>
+                {created} <br />
                 Hello, {userInfo.username}! <br />
-                Today is {date}, {time}.<br />
+                Today is {currentDate}, {currentTime}.<br />
                 This time last week you had the {lastWeekWorkout} workout.<br />
                 According to your Google Calendar, today you have {googleWorkout} day.<br />
                 What do you want to train today?<br />
