@@ -12,10 +12,13 @@ import {
 //   userUpdateReducer,
 } from './reducers/userReducers'
 
+import { exerciseReducer } from './reducers/exerciseReducer'
+
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
+  exercise: exerciseReducer
 //   userUpdateProfile: userUpdateProfileReducer,
 //   userList: userListReducer,
 //   userDelete: userDeleteReducer,

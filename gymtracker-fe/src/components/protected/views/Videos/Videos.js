@@ -20,7 +20,7 @@ const useStyles = makeStyles(styles);
 
 
 
-export default function Dashboard(props) {
+export default function Videos(props) {
 
   const YOUTUBE_PLAYLIST_ITEMS_API = 'https://www.googleapis.com/youtube/v3/playlistItems';
   const YOUTUBE_API_KEY="AIzaSyB6lOjj9XCkTwsotkClF5FuXtMUNmx2oxM"

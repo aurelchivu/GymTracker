@@ -50,6 +50,7 @@ export const login = (email, password) => async (dispatch) => {
     })
 
     localStorage.setItem('userInfo', JSON.stringify(data))
+
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -97,6 +98,7 @@ export const register = (username, email, password) => async (dispatch) => {
     })
 
     localStorage.setItem('userInfo', JSON.stringify(data))
+    
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,

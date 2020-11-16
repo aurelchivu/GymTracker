@@ -5,6 +5,15 @@ import { getUserDetails} from '../../../../actions/userActions'
 
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
+import Grid from '@material-ui/core/Grid';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 // core components
 import Button from '../../components/CustomButtons/Button.js';
 import GridItem from "../../components/Grid/GridItem.js";
@@ -13,19 +22,9 @@ import Card from "../../components/Card/Card.js";
 import CardHeader from "../../components/Card/CardHeader.js";
 import CardBody from "../../components/Card/CardBody.js";
 import CardFooter from "../../components/Card/CardFooter.js";
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 
 import styles from "../../assets/jss/material-dashboard-react/views/dashboardStyle.js";
 
-// const useStyles = makeStyles(styles);
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -45,13 +44,12 @@ export default function Dashboard() {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const newUser = 0;
+  const newUser = localStorage.getItem('newUser');
   const currentDate = new Date().toDateString();
   const currentTime = new Date().toLocaleTimeString();
   const lastWeekWorkout = 'back and abs';
   const googleWorkout = "legs";
   const classes = useStyles();
-  const created = new Date(userInfo.createdAt).toDateString();
 
   return (
     <GridContainer>
@@ -61,18 +59,17 @@ export default function Dashboard() {
             <h2>Dasboard</h2>
           </CardHeader>
           <CardBody>
-            {newUser ?
-              <h3 className={classes.cardTitle}>
+            { newUser === 'true' ?
+              <h className={classes.cardTitle}>
                 Hello, {userInfo.username}! <br />
                 Welcome to GymTracker!<br />
                 Today is {currentDate}, {currentTime}.<br />
                 This is the place to be if you want better results in the gym.<br />
                 Drink water and don't forget to warm up before each training.<br />
                 What do you want to train today?<br />
-              </h3>
+              </h>
               :
               <h3 className={classes.cardTitle}>
-                {created} <br />
                 Hello, {userInfo.username}! <br />
                 Today is {currentDate}, {currentTime}.<br />
                 This time last week you had the {lastWeekWorkout} workout.<br />
@@ -80,132 +77,30 @@ export default function Dashboard() {
                 What do you want to train today?<br />
               </h3>
             }
-              <form
-                // className={classes.form}
-                noValidate>
-                {/* onSubmit={handleSubmit}> */}
-                <Grid container direction="row" spacing="3">
-                  <Grid item xs={6} sm={3} md={3}>
-                    <TextField
-                      // value={username}
-                      // onInput={ e => setMuscle(e.target.value)}
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="standard-basic"
-                      label="Muscle"
-                      name="muscle"
-                      autoComplete="muscle"
-                      autoFocus
-                      className={classes.button}
-                    />
-                  </Grid> 
-                  <Grid item xs={4} sm={2} md={2}>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      round
-                      className={classes.button}
-                      // className={classes.submit}
-                    >
-                      Add muscle
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Grid container direction="row" spacing="3">
-                  <Grid item xs={6} sm={3} md={3}>
-                    <TextField
-                      // value={username}
-                      // onInput={ e => setMuscle(e.target.value)}
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="standard-basic"
-                      label="Muscle"
-                      name="muscle"
-                      autoComplete="muscle"
-                      autoFocus
-                      className={classes.button}
-                    />
-                  </Grid> 
-                  <Grid item xs={4} sm={2} md={2}>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      round
-                      className={classes.button}
-                      // className={classes.submit}
-                    >
-                      Add muscle
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Grid container direction="row" spacing="3">
-                  <Grid item xs={6} sm={3} md={3}>
-                    <TextField
-                      // value={username}
-                      // onInput={ e => setMuscle(e.target.value)}
-                      variant="outlined"
-                      margin="normal"
-                      required
-                      fullWidth
-                      id="standard-basic"
-                      label="Muscle"
-                      name="muscle"
-                      autoComplete="muscle"
-                      autoFocus
-                      className={classes.button}
-                    />
-                  </Grid> 
-                  <Grid item xs={4} sm={2} md={2}>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      round
-                      className={classes.button}
-                      // className={classes.submit}
-                    >
-                      Add muscle
-                    </Button>
-                  </Grid>
-                </Grid>
-
-                <br />
-                <Grid container direction="row" spacing="3">
-                  <Grid item xs={2} sm={3} md={3}>
-                  </Grid>
-
-                    <Grid item xs={8} sm={6} md={6}>
-                      <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        round
-                      className={classes.button}
-                      center
-                        // className={classes.submit}
-                      >
-                        start training
-                      </Button>
-                  </Grid>
-                  <Grid item xs={2} sm={3} md={3}>
-                  </Grid>
-                </Grid>
-            </form>
+            <Grid container direction="row" spacing="3">
+              <Grid item xs={2} sm={3} md={3}>
+              </Grid>
+              <Grid item xs={8} sm={6} md={6}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  round
+                  className={classes.button}
+                  center
+                  // className={classes.submit}
+                >
+                  start training
+                </Button>
+              </Grid>
+              <Grid item xs={2} sm={3} md={3}>
+              </Grid>
+            </Grid>
           </CardBody>
           <CardFooter chart>
             <div className={classes.CardBody}>
               <br />
-              {/* This is the place where I should pick exercises and start training */}
             </div>
           </CardFooter>
         </Card>

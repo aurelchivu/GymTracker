@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const MealSchema = new mongoose.Schema({
-  count: {
-    type: Number,
-    default: 0
-  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
@@ -15,7 +11,7 @@ const MealSchema = new mongoose.Schema({
       name: { type: String, required: true },
       qty: { type: Number, required: true },
       totalCalories: { type: Number, required: true }
-    },
+    }
   ],
   slug: String,
 }, {

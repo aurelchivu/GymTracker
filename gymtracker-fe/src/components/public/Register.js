@@ -71,6 +71,7 @@ export default function Register({ location, history }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(register(username, email, password));
+    localStorage.setItem('newUser', true);
   }
 
   return (
@@ -88,7 +89,7 @@ export default function Register({ location, history }) {
           noValidate
           onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={20}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 value={username}
                 onInput={ e => setUsername(e.target.value)}
