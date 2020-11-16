@@ -15,7 +15,7 @@ import styles from "../../assets/jss/material-dashboard-react/views/dashboardSty
 
 const useStyles = makeStyles(styles);
 
-export default function Dashboard() {
+export default function Measurements() {
   const classes = useStyles();
   return (
     <>

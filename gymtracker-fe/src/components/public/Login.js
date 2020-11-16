@@ -74,6 +74,7 @@ const Login = ({ location, history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(email, password));
+    localStorage.setItem('newUser', false);
   }
   
   return (

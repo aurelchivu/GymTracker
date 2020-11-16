@@ -1,2 +1,2 @@
 # GymTracker
-App tracking progress in the gym and much more!
+App tracking progress in the gym built using MERN stack!

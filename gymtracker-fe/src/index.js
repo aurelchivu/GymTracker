@@ -16,12 +16,14 @@ import './components/protected/assets/css/material-dashboard-react.css?v=1.9.0"'
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hist}>
-      <App />
-      <Route path="/admin" component={Admin} />
-    </Router>
-  </Provider>,
+  <>
+    <Provider store={store}>
+      <Router history={hist}>
+        <App />
+        <Route path="/admin" component={Admin} />
+      </Router>
+    </Provider>
+  </>,
   document.getElementById('root')
 );
 

@@ -16,7 +16,7 @@ import styles from "../../assets/jss/material-dashboard-react/views/dashboardSty
 
 const useStyles = makeStyles(styles);
 
-export default function Dashboard() {
+export default function Music() {
   const classes = useStyles();
   return (
     <>
