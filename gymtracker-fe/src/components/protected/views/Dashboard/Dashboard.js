@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import moment from 'moment';
-import { useSelector } from 'react-redux';
-import { getUserDetails} from '../../../../actions/userActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUserDetails } from '../../../../actions/userActions'
+import { createWorkout } from '../../../../actions/workoutActions'
 
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
@@ -40,16 +41,41 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function Dashboard() {
+export default function Dashboard({ history }) {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const newUser = localStorage.getItem('newUser');
+  const [workoutName, setWorkoutName] = useState('');
   const currentDate = new Date().toDateString();
   const currentTime = new Date().toLocaleTimeString();
   const lastWeekWorkout = 'back and abs';
   const googleWorkout = "legs";
   const classes = useStyles();
+
+  // const redirect = location.search ? location.search.split('=')[1] : '/admin/workouts'
+
+  const dispatch = useDispatch();
+
+  const workoutCreate = useSelector((state) => state.workoutCreate)
+  const { workout, success, error } = workoutCreate
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/admin/workouts/${workout._id}`)
+    }
+  }, [history, success])
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createWorkout({
+      name: workoutName
+    }));
+  }
+  
+  // const addWorkoutHandler = () => {
+  //   dispatch(createWorkout({}));
+  // }
 
   return (
     <GridContainer>
@@ -77,6 +103,25 @@ export default function Dashboard() {
                 What do you want to train today?<br />
               </h3>
             }
+            <FormControl>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleSubmit}
+          >
+            <TextField
+              value={workoutName}
+              onInput={ e => setWorkoutName(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="workoutName"
+              label="Workout Name"
+              name="workoutName"
+              autoComplete="workoutName"
+              autoFocus
+            />            
             <Grid container direction="row" spacing="3">
               <Grid item xs={2} sm={3} md={3}>
               </Grid>
@@ -88,15 +133,16 @@ export default function Dashboard() {
                   color="primary"
                   round
                   className={classes.button}
-                  center
                   // className={classes.submit}
                 >
-                  start training
+                  start
                 </Button>
               </Grid>
               <Grid item xs={2} sm={3} md={3}>
               </Grid>
             </Grid>
+          </form>
+        </FormControl>
           </CardBody>
           <CardFooter chart>
             <div className={classes.CardBody}>

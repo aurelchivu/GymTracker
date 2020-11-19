@@ -20,42 +20,42 @@ const dashboardRoutes = [
     layout: "/admin"
   },
   {
-    path: "/MyWorkouts",
+    path: "/workouts",
     name: "My Workouts",
     icon: Dashboard,
     component: WorkoutsPage,
     layout: "/admin"
   },
   {
-    path: "/MyMeasurements",
+    path: "/measurements",
     name: "My Measurements",
     icon: Dashboard,
     component: MeasurementsPage,
     layout: "/admin"
   },
   {
-    path: "/MyMeals",
+    path: "/meals",
     name: "My Meals",
     icon: Dashboard,
     component: MealsPage,
     layout: "/admin"
   },
   {
-    path: "/MyMusic",
+    path: "/music",
     name: "My Music",
     icon: Dashboard,
     component: MusicPage,
     layout: "/admin"
   },
   {
-    path: "/TrainingVideos",
+    path: "/training_videos",
     name: "Training Videos",
     icon: Dashboard,
     component: VideosPage,
     layout: "/admin"
   },
   {
-    path: "/findGym",
+    path: "/find_gym",
     name: "Find a Gym near me",
     icon: LocationOn,
     component: FindGym,

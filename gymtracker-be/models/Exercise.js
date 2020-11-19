@@ -23,7 +23,7 @@ const ExerciseSchema = new mongoose.Schema({
   },
   description: [
     {
-      sets: { type: Number,required: true},
+      sets: { type: Number,required: [true, 'Please add reps']},
       reps: {type: Number,required: [true, 'Please add reps']},
       weight: {type: Number,required: [true, 'Please add weight']}
     }
@@ -33,8 +33,7 @@ const ExerciseSchema = new mongoose.Schema({
 {
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
-},
-{
+}, {
   timestamps: true,
 });
 

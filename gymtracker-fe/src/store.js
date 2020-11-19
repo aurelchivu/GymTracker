@@ -12,13 +12,23 @@ import {
 //   userUpdateReducer,
 } from './reducers/userReducers'
 
-import { exerciseReducer } from './reducers/exerciseReducer'
+import { 
+  workoutListReducer,
+  workoutDetailsReducer,
+  workoutDeleteReducer,
+  workoutCreateReducer,
+  workoutUpdateReducer,
+ } from './reducers/workoutReducers'
 
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
-  exercise: exerciseReducer
+  workoutList: workoutListReducer,
+  workoutDetails: workoutDetailsReducer,
+  workoutDelete: workoutDeleteReducer,
+  workoutCreate: workoutCreateReducer,
+  workoutUpdate: workoutUpdateReducer,
 //   userUpdateProfile: userUpdateProfileReducer,
 //   userList: userListReducer,
 //   userDelete: userDeleteReducer,

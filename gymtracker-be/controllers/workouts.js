@@ -34,10 +34,7 @@ exports.createWorkout = asyncHandler(async (req, res, next) => {
 
   const workout = await Workout.create(req.body);
   
-  res.status(201).json({
-    success: true,
-    data: workout
-  });
+  res.status(201).json(workout);
 });
 
 // @desc      Update workout
