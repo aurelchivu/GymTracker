@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 // @material-ui/core
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
@@ -31,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Dashboard() {
+export default function Workouts() {
+
+  // const workoutCreate = useSelector((state) => state.workoutCreate);
+  // const { workout } = workoutCreate;
+
   const classes = useStyles();
   const [inputFields, setInputFields] = useState([
     { id: uuidv4(), muscle: '', exercise: '', sets: 0, reps: 0, weight: 0 },
@@ -72,7 +77,7 @@ export default function Dashboard() {
               <h2>My Workouts</h2>
             </CardHeader>
             <CardBody>
-            <h3>Today's workout</h3>
+              <h3>Today's workout: {localStorage.getItem('workoutName').match(/(?:"[^"]*"|^[^"]*$)/)[0].replace(/"/g, "")}</h3>
               <h3 className={classes.cardTitle}>
                 {/* You have no registered workouts. */}
                 <form className={classes.root} onSubmit={handleSubmit}>

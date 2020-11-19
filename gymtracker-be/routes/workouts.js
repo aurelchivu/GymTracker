@@ -24,13 +24,13 @@ router.use('/:workoutId/exercises', exerciseRouter);
 
 router
   .route('/')
-  .get(advancedResults(Workout, 'exercises'), getWorkouts)
-  .post(createWorkout);
+  .get(advancedResults(Workout, 'exercises'), protect, getWorkouts)
+  .post(protect, createWorkout);
 
 router
   .route('/:id')
-  .get(getWorkout)
-  .put(updateWorkout)
-  .delete(deleteWorkout);
+  .get(protect, getWorkout)
+  .put(protect, updateWorkout)
+  .delete(protect, deleteWorkout);
 
 module.exports = router;

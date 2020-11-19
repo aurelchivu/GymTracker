@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios"
 // @material-ui/core
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from "@material-ui/core/styles";
 // core components
 import Button from '../../components/CustomButtons/Button.js';
@@ -54,23 +55,33 @@ export default function Videos(props) {
                 required
                 fullWidth
                 id="standard-basic"
-                label="Training video"
+                label="Training videos"
                 name="muscle"
                 autoComplete="muscle"
                 autoFocus
               />
               <br />
               <br />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                round
-                className={classes.submit}
-              >
-                Search for training videos!
-              </Button>
+              <Grid container direction="row" spacing="3">
+              <Grid item xs={2} sm={3} md={3}>
+              </Grid>
+                <Grid item xs={8} sm={6} md={6}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    round
+                    className={classes.button}
+                    center
+                    // className={classes.submit}
+                  >
+                    search for training videos
+                  </Button>
+                </Grid>
+                <Grid item xs={2} sm={3} md={3}>
+                </Grid>
+              </Grid>
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>

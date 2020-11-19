@@ -1,5 +1,6 @@
 import React from "react";
 // @material-ui/core
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from "@material-ui/core/styles";
 // core components
 import Button from '../../components/CustomButtons/Button.js';
@@ -41,16 +42,26 @@ export default function Music() {
               />
               <br />
               <br />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                round
-                className={classes.submit}
-              >
-                Play music!
-              </Button>
+              <Grid container direction="row" spacing="3">
+              <Grid item xs={2} sm={3} md={3}>
+              </Grid>
+                <Grid item xs={8} sm={6} md={6}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    round
+                    className={classes.button}
+                    center
+                    // className={classes.submit}
+                  >
+                    play music!
+                  </Button>
+                </Grid>
+                <Grid item xs={2} sm={3} md={3}>
+                </Grid>
+              </Grid>
 
             </CardBody>
             <CardFooter chart>

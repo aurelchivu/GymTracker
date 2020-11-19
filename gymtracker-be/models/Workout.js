@@ -17,16 +17,15 @@ const WorkoutSchema = new mongoose.Schema({
 {
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
-},
-{
+}, {
   timestamps: true,
 });
 
 // Create workout slug from the name
-WorkoutSchema.pre('save', function(next) {
-  this.slug = slugify(this.name, { lower: true, replacement: '_' });
-  next();
-});
+// WorkoutSchema.pre('save', function(next) {
+//   this.slug = slugify(this.name, { lower: true, replacement: '_' });
+//   next();
+// });
 
 // Cascade delete exercises when a workout is deleted
 WorkoutSchema.pre('remove', async function(next) {
