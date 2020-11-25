@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const MeasurementSchema = new mongoose.Schema({
   user: {
