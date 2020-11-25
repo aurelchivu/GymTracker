@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const MealSchema = new mongoose.Schema({
   user: {
@@ -6,22 +7,29 @@ const MealSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  foods: [
-    {
-      name: { type: String, required: true },
-      qty: { type: Number, required: true },
-      totalCalories: { type: Number, required: true }
-    }
-  ],
   slug: String,
-}, {
+}, 
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+},
+{
   timestamps: true,
 });
 
-// Create meal slug from the name
-MealSchema.pre('save', function(next) {
-  this.slug = slugify(this.name, { lower: true });
+// Cascade delete foods when a meal is deleted
+MealSchema.pre('remove', async function(next) {
+  console.log(`Foods being removed from meal ${this._id}`);
+  await this.model('Food').deleteMany({ meal: this._id });
   next();
 });
 
-module.exports = mongoose.model('Meal', MealSchema);
+// Reverse populate with virtuals
+MealSchema.virtual('foods', {
+  ref: 'Food',
+  localField: '_id',
+  foreignField: 'bootcamp',
+  justOne: false
+});
+
+module.exports = mongoose.model('Meal',  MealSchema);

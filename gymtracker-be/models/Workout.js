@@ -13,13 +13,12 @@ const WorkoutSchema = new mongoose.Schema({
     required: [true, 'Please add a name']
   },
   slug: String
-},
-{
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
-}, {
-  timestamps: true,
-});
+  }, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }, {
+    timestamps: true,
+  });
 
 // Create workout slug from the name
 // WorkoutSchema.pre('save', function(next) {

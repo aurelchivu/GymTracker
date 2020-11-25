@@ -130,7 +130,7 @@ exports.deleteExercise = asyncHandler(async (req, res, next) => {
     );
   }
 
-  await exercise.remove();
+  await Exercise.remove();
 
   res.status(200).json({
     success: true,
