@@ -12,8 +12,7 @@ const MealSchema = new mongoose.Schema({
 {
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
-},
-{
+}, {
   timestamps: true,
 });
 
@@ -28,7 +27,7 @@ MealSchema.pre('remove', async function(next) {
 MealSchema.virtual('foods', {
   ref: 'Food',
   localField: '_id',
-  foreignField: 'bootcamp',
+  foreignField: 'meal',
   justOne: false
 });
 

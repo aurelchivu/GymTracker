@@ -16,6 +16,8 @@ exports.getWorkouts = asyncHandler(async (req, res, next) => {
 exports.getWorkout = asyncHandler(async (req, res, next) => {
   const workout = await Workout.findById(req.params.id);
 
+  console.log('Workout = ', workout)
+
   if (!workout) {
     return next(
       new ErrorResponse(`Workout not found with id of ${req.params.id}`, 404)
