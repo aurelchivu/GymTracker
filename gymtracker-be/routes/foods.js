@@ -2,25 +2,22 @@ const express = require('express');
 const {
   getFoods,
   getFood,
-  addFood,
+  createFood,
   updateFood,
   deleteFood
 } = require('../controllers/foods');
 
-const Food = require('../models/Food');
-
 const router = express.Router({ mergeParams: true });
 
-const advancedResults = require('../middleware/advancedResults');
 const { protect } = require('../middleware/auth');
 
-// router.use(protect);
+router.use(protect);
 
 router
   .route('/')
-  .get(
-    advancedResults(Food, {path: 'workout', select: 'name'}), protect, getFoods)
-  .post(protect, addFood);
+  .post(protect, createFood)
+  .get(protect, getFoods);
+  
 
 router
   .route('/:id')

@@ -24,20 +24,25 @@ const FoodSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Please add calories']
   },
-  proteins: {
-    type: Number,
-    required: [true, 'Please add proteins']
-  },
-  fats: {
-    type: Number,
-    required: [true, 'Please add fats']
-  },
-  carbs: {
-    type: Number,
-    required: [true, 'Please add carbs']
-  },
+  // proteins: {
+  //   type: Number,
+  //   required: [true, 'Please add proteins']
+  // },
+  // fats: {
+  //   type: Number,
+  //   required: [true, 'Please add fats']
+  // },
+  // carbs: {
+  //   type: Number,
+  //   required: [true, 'Please add carbs']
+  // },
   slug: String,
-}, {
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true }
+},
+  {
   timestamps: true,
 });
 

@@ -7,7 +7,7 @@ const Meal = require('../models/Meal');
 // @access    Private
 exports.createMeal = asyncHandler(async (req, res) => {
   // Add user to req.body
-  req.body.user = req.user._id;
+  req.body.user = req.user.id;
 
   const meal = await Meal.create(req.body);
   
@@ -21,21 +21,40 @@ exports.createMeal = asyncHandler(async (req, res) => {
 // @route     GET /api/v1/meals/
 // @access    Private
 exports.getMeals = asyncHandler(async (req, res) => {
-  const meals = await Meal.find({ user: req.user._id })
-  res.status(200).json(meals);
+  const meals = await Meal.find({ user: req.user.id }).populate({
+    path: 'foods',
+    select: 'name qty cals'
+  });
+
+  res.status(200).json({
+    succes: true,
+    count: meals.length,
+    data: meals
+  });
 });
 
 // @desc      Get meal by ID
 // @route     GET /api/v1/meals/:id
 // @access    Private
 exports.getMeal = asyncHandler(async (req, res, next) => {
-  const meal = await Meal.findById(req.params._id);
-
-  console.log('req.params._id = ', req.params._id)
-
+  const meal = await Meal.findById(req.params._id).populate({
+    path: 'foods',
+    select: 'name qty cals'
+  });
+  
   if (!meal) {
     return next(
       new ErrorResponse(`meal not found with id of ${req.params._id}`, 404)
+    );
+  }
+
+  // Make sure user is meal owner
+  if (meal.user.toString() !== req.user._id.toString()) {
+    return next(
+      new ErrorResponse(
+        `User ${req.user._id} is not authorized to get this meal`,
+        401
+      )
     );
   }
 
@@ -93,6 +112,9 @@ exports.deleteMeal = asyncHandler(async (req, res, next) => {
 
   meal.remove();
 
-  res.status(200).json({ success: true, data: {} });
+  res.status(200).json({
+    success: true,
+    data: {}
+  });
 });
 

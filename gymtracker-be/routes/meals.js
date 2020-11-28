@@ -4,21 +4,25 @@ const {
   getMeal,
   createMeal,
   updateMeal,
-  deleteMeal,
+  deleteMeal
 } = require('../controllers/meals');
 
-const Meal = require('../models/Meal');
+// Include other resource routers
+const foodRouter = require('./foods');
  
 const router = express.Router();
 
-const advancedResults = require('../middleware/advancedResults');
 const { protect } = require('../middleware/auth');
+
+// Re-route into other resource routers
+router.use('/:mealId/foods', foodRouter);
 
 router.use(protect);
 
 router.route('/')
-  .get(advancedResults(Meal), protect, getMeals)
-  .post(createMeal);
+  .post(protect, createMeal)
+  .get(protect, getMeals);
+  
 
 router
   .route('/:_id')
