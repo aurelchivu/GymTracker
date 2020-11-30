@@ -2,28 +2,31 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: [true, 'Please add an username'],
-    unique: true
+const UserSchema = new mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: [true, 'Please add an username'],
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: [true, 'Please add an email'],
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, 'Please add a password'],
+      minlength: 6,
+      select: false, // when we get an user through the API we don't get the pasword
+    },
+    resetPasswordToken: String,
+    resetPasswordExpire: Date,
   },
-  email: {
-    type: String,
-    required: [true, 'Please add an email'],
-    unique: true
-  }, 
-  password: {
-    type: String,
-    required: [true, 'Please add a password'],
-    minlength: 6,
-    select: false // when we get an user through the API we don't get the pasword
-  },
-  resetPasswordToken: String,
-  resetPasswordExpire: Date
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
 // Encrypt password using bcrypt
 UserSchema.pre('save', async function(next) {

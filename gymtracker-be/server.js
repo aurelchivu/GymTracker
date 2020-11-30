@@ -28,6 +28,7 @@ const workouts = require('./routes/workouts');
 const exercises = require('./routes/exercises');
 const meals = require('./routes/meals');
 const measurements = require('./routes/measurements');
+const muscles = require('./routes/muscles');
 
 const app = express();
 
@@ -74,6 +75,7 @@ app.use('/api/v1/', home);
 app.use('/api/v1/meals', meals);
 app.use('/api/v1/foods', foods);
 app.use('/api/v1/measurements', measurements);
+app.use('/api/v1/muscles', muscles);
 app.use('/api/v1/users', users);
 app.use('/api/v1/workouts', workouts);
 

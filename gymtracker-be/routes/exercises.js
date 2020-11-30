@@ -1,36 +1,27 @@
 const express = require('express');
 const {
+  createExercise,
   getExercises,
   getExercise,
-  addExercise,
   updateExercise,
-  deleteExercise
+  deleteExercise,
 } = require('../controllers/exercises');
-
-const Exercise = require('../models/Exercise');
 
 const router = express.Router({ mergeParams: true });
 
-const advancedResults = require('../middleware/advancedResults');
 const { protect } = require('../middleware/auth');
 
-// router.use(protect);
+router.use(protect);
 
 router
   .route('/')
-  .get(
-    advancedResults(Exercise, {
-      path: 'workout',
-      select: 'name'
-    }),
-    getExercises
-  )
-  .post(addExercise);
+  .post(protect, createExercise)
+  .get(protect, getExercises);
 
 router
   .route('/:id')
-  .get(getExercise)
-  .put(updateExercise)
-  .delete(deleteExercise);
+  .get(protect, getExercise)
+  .put(protect, updateExercise)
+  .delete(protect, deleteExercise);
 
 module.exports = router;

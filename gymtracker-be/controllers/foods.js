@@ -3,12 +3,13 @@ const asyncHandler = require('../middleware/async');
 const Food = require('../models/Food');
 const Meal = require('../models/Meal');
 
-// @desc      Add food
+// @desc      Add food to a specific meal
 // @route     POST /api/v1/meals/:mealId/foods
 // @access    Private
 exports.createFood = asyncHandler(async (req, res, next) => { 
-  req.body.meal = req.params.mealId;
+  // Add user and meal to req.body
   req.body.user = req.user.id;
+  req.body.meal = req.params.mealId;
 
   const meal = await Meal.findById(req.params.mealId);
 
@@ -51,15 +52,15 @@ exports.getFoods = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc      Get single food
-// @route     GET /api/v1/foods/:id
+// @desc      Get single food from a specific meal
+// @route     GET /api/v1/meals/:mealId/foods/:id
 // @access    Private
 exports.getFood = asyncHandler(async (req, res, next) => {
   const food = await Food.findById(req.params.id);
 
   if (!food) {
     return next(
-      new ErrorResponse(`No food with the id of ${req.params.id}`),
+      new ErrorResponse(`No food found with the id of ${req.params.id}`),
       404
     );
   }
@@ -82,8 +83,8 @@ exports.getFood = asyncHandler(async (req, res, next) => {
 
 
 
-// @desc      Update meal
-// @route     PUT /api/v1/foods/:id
+// @desc      Update food from a specific meal
+// @route     PUT /api/v1/meals/:mealId/foods/:id
 // @access    Private
 exports.updateFood = asyncHandler(async (req, res, next) => {
   let food = await Food.findById(req.params.id);
@@ -116,8 +117,8 @@ exports.updateFood = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc      Delete food
-// @route     DELETE /api/v1/foods/:id
+// @desc      Delete food from a specific meal
+// @route     DELETE /api/v1/meals/:mealId/foods/:id
 // @access    Private
 exports.deleteFood = asyncHandler(async (req, res, next) => {
   const food = await Food.findById(req.params.id);

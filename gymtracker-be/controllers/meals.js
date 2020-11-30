@@ -44,12 +44,12 @@ exports.getMeal = asyncHandler(async (req, res, next) => {
   
   if (!meal) {
     return next(
-      new ErrorResponse(`meal not found with id of ${req.params._id}`, 404)
+      new ErrorResponse(`No meal found with id of ${req.params._id}`, 404)
     );
   }
 
   // Make sure user is meal owner
-  if (meal.user.toString() !== req.user._id.toString()) {
+  if (meal.user.toString() !== req.user.id) {
     return next(
       new ErrorResponse(
         `User ${req.user._id} is not authorized to get this meal`,

@@ -1,20 +1,23 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
-const MealSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: true
+const MealSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    slug: String,
   },
-  slug: String,
-}, 
-{
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
-}, {
-  timestamps: true,
-});
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // Cascade delete foods when a meal is deleted
 MealSchema.pre('remove', async function(next) {
