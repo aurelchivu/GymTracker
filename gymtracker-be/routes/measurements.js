@@ -1,30 +1,27 @@
 const express = require('express');
 const {
+  createMeasurement,
   getMeasurements,
   getMeasurement,
-  createMeasurement,
   updateMeasurement,
   deleteMeasurement,
 } = require('../controllers/measurements');
 
-const Measurement = require('../models/Measurement');
- 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-const advancedResults = require('../middleware/advancedResults');
 const { protect } = require('../middleware/auth');
 
-// router.use(protect);
+router.use(protect);
 
 router
   .route('/')
-  .get(advancedResults(Measurement), getMeasurements)
-  .post(createMeasurement);
+  .post(protect, createMeasurement)
+  .get(protect, getMeasurements);
 
 router
   .route('/:id')
-  .get(getMeasurement)
-  .put(updateMeasurement)
-  .delete(deleteMeasurement);
+  .get(protect, getMeasurement)
+  .put(protect, updateMeasurement)
+  .delete(protect, deleteMeasurement);
 
 module.exports = router;
