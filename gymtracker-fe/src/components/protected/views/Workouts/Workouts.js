@@ -101,14 +101,6 @@ export default function Workouts() {
                           onChange={event => handleChangeInput(inputField.id, event)}
                         />                        
                         <TextField
-                          name="sets"
-                          label="Sets"
-                          variant="outlined"
-                          size="small"
-                          value={inputField.sets}
-                          onChange={event => handleChangeInput(inputField.id, event)}
-                        />
-                        <TextField
                           name="reps"
                           label="Reps"
                           variant="outlined"

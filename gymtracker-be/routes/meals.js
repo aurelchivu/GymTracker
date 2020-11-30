@@ -1,10 +1,10 @@
 const express = require('express');
 const {
+  createMeal,
   getMeals,
   getMeal,
-  createMeal,
   updateMeal,
-  deleteMeal
+  deleteMeal,
 } = require('../controllers/meals');
 
 // Include other resource routers
@@ -23,7 +23,6 @@ router.route('/')
   .post(protect, createMeal)
   .get(protect, getMeals);
   
-
 router
   .route('/:_id')
   .get(protect, getMeal)

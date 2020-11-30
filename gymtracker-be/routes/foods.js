@@ -1,10 +1,10 @@
 const express = require('express');
 const {
+  createFood,
   getFoods,
   getFood,
-  createFood,
   updateFood,
-  deleteFood
+  deleteFood,
 } = require('../controllers/foods');
 
 const router = express.Router({ mergeParams: true });
