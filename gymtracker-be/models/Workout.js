@@ -13,14 +13,15 @@ const WorkoutSchema = new mongoose.Schema(
       trim: true,
       required: [true, 'Please add a name'],
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     slug: String,
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
-  {
-    timestamps: true,
   }
 );
 

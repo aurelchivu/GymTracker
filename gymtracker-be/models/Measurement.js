@@ -17,10 +17,11 @@ const MeasurementSchema = new mongoose.Schema(
       type: Number,
       required: [true, 'Please add a value'],
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     slug: String,
-  },
-  {
-    timestamps: true,
   }
 );
 

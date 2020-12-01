@@ -33,10 +33,11 @@ const ExerciseSchema = new mongoose.Schema(
       trim: true,
       required: [true, 'Please add weight'],
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     slug: String,
-  },
-  {
-    timestamps: true,
   }
 );
 
