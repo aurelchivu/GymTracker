@@ -8,14 +8,15 @@ const MealSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     slug: String,
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
-  {
-    timestamps: true,
   }
 );
 
@@ -33,5 +34,11 @@ MealSchema.virtual('foods', {
   foreignField: 'meal',
   justOne: false
 });
+
+// Create exercise slug from the name
+// MealSchema.pre('save', function(next) {
+//   this.slug = slugify(this.name, { lower: true });
+//   next();
+// });
 
 module.exports = mongoose.model('Meal',  MealSchema);

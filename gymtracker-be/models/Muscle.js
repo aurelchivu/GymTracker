@@ -14,14 +14,15 @@ const MuscleSchema = new mongoose.Schema(
       required: [true, 'Please add a muscle'],
       unique: true,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     slug: String,
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
-  {
-    timestamps: true,
   }
 );
 
