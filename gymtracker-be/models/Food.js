@@ -37,14 +37,15 @@ const FoodSchema = new mongoose.Schema(
     //   type: Number,
     //   required: [true, 'Please add carbs']
     // },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     slug: String,
   },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  },
-  {
-    timestamps: true,
   }
 );
 

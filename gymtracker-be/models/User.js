@@ -20,11 +20,12 @@ const UserSchema = new mongoose.Schema(
       minlength: 6,
       select: false, // when we get an user through the API we don't get the pasword
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
-  },
-  {
-    timestamps: true,
   }
 );
 
