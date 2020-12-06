@@ -18,9 +18,17 @@ import {
   workoutDeleteReducer,
   workoutCreateReducer,
   workoutUpdateReducer,
- } from './reducers/workoutReducers'
+} from './reducers/workoutReducers'
+ 
+import {
+  mealListReducer,
+  mealDetailsReducer,
+  mealDeleteReducer,
+  mealCreateReducer,
+  mealUpdateReducer,
+} from './reducers/mealReducers';
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
@@ -29,11 +37,16 @@ const reducer = combineReducers({
   workoutDelete: workoutDeleteReducer,
   workoutCreate: workoutCreateReducer,
   workoutUpdate: workoutUpdateReducer,
-//   userUpdateProfile: userUpdateProfileReducer,
-//   userList: userListReducer,
-//   userDelete: userDeleteReducer,
-//   userUpdate: userUpdateReducer
-})
+  mealList: mealListReducer,
+  mealDetails: mealDetailsReducer,
+  mealDelete: mealDeleteReducer,
+  mealCreate: mealCreateReducer,
+  mealUpdate: mealUpdateReducer,
+  //   userUpdateProfile: userUpdateProfileReducer,
+  //   userList: userListReducer,
+  //   userDelete: userDeleteReducer,
+  //   userUpdate: userUpdateReducer
+});
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
@@ -46,7 +59,7 @@ const initialState = {
 const middleware = [thunk]
 
 const store = createStore(
-  reducer,
+  rootReducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 )

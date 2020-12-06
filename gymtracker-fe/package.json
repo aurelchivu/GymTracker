@@ -1,5 +1,7 @@
 {
   "name": "gymtracker-fe",
+  "proxy": "http://localhost:5000",
+  "secure": false,
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -71,7 +73,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000",
   "devDependencies": {
     "babel-plugin-root-import": "^6.5.0",
     "less": "^3.11.3",
