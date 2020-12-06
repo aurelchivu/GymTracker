@@ -13,6 +13,9 @@ const WorkoutSchema = new mongoose.Schema(
       trim: true,
       required: [true, 'Please add a name'],
     },
+    time: {
+      type: Number,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
