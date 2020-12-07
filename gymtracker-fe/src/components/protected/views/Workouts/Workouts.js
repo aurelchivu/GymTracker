@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, setState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // @material-ui/core
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputBase from '@material-ui/core/InputBase';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
@@ -10,64 +22,164 @@ import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
 import CardFooter from '../../components/Card/CardFooter.js';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
-import { v4 as uuidv4 } from 'uuid';
-
 import Button from '../../components/CustomButtons/Button.js';
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
-const useStyles = makeStyles((theme) => ({
+const BootstrapInput = withStyles((theme) => ({
   root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
+    'label + &': {
+      marginTop: theme.spacing(3),
     },
   },
-  button: {
+  input: {
+    borderRadius: 10,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 10,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+}))(InputBase);
+
+const useStyles = makeStyles((theme) => ({
+  margin: {
     margin: theme.spacing(1),
   },
 }));
 
+const workouts = [
+  { name: 'Muscle', exercises: ['Exercise'] },
+  {
+    name: 'Neck',
+    exercises: [
+      'Lying Face Down Plate Neck Resistance',
+      'Lying Face Up Plate Neck Resistance',
+      'Seated Head Harness Neck Resistance',
+    ],
+  },
+  {
+    name: 'Shoulders',
+    exercises: [
+      'Dumbbell front raise to lateral raise',
+      'Clean and press',
+      'Single-arm palm-in dumbbell shoulder press',
+    ],
+  },
+  {
+    name: 'Chest',
+    exercises: ['Dumbbell Bench Press', 'Pushups', 'Close-grip bench press'],
+  },
+  {
+    name: 'Biceps',
+    exercises: [
+      'Incline Hammer Curls',
+      'Wide-grip barbell curl',
+      'EZ-bar spider curl',
+    ],
+  },
+  {
+    name: 'Triceps',
+    exercises: [
+      'Triceps dip',
+      'Decline EZ-bar skullcrusher',
+      'Dumbbell floor press',
+    ],
+  },
+  {
+    name: 'Forearm',
+    exercises: [
+      'Rickshaw Carry',
+      'Palms-down wrist curl over bench',
+      'Straight-bar wrist roll-up',
+    ],
+  },
+  {
+    name: 'Traps',
+    exercises: [
+      'Smith machine shrug',
+      'Leverage Shrug',
+      'Standing dumbbell shrug',
+    ],
+  },
+  {
+    name: 'Lats',
+    exercises: ['Weighted pull-up', 'Pullups', 'Rocky Pull-Ups/Pulldowns'],
+  },
+  {
+    name: 'MiddleBack',
+    exercises: [
+      'T-Bar Row with Handle',
+      'Reverse-grip bent-over row',
+      'One-Arm Dumbbell Row',
+    ],
+  },
+  {
+    name: 'LowerBack',
+    exercises: ['Atlas Stones', 'Barbell deficit deadlift', 'Back extension'],
+  },
+  { name: 'Abs', exercises: ['Landmine twist', 'Elbow plank', 'Bottoms Up'] },
+  {
+    name: 'Glutes',
+    exercises: [
+      'Barbell glute bridge',
+      'Barbell Hip Thrust',
+      'Single-leg cable hip extension',
+    ],
+  },
+  {
+    name: 'Quads',
+    exercises: ['Single-Leg Press', 'Clean from Blocks', 'Barbell Full Squat'],
+  },
+  {
+    name: 'Hamstrings',
+    exercises: ['Barbell Deadlift', 'Clean Deadlift', 'Sumo deadlift'],
+  },
+  {
+    name: 'Calves',
+    exercises: [
+      'Smith Machine Calf Raise',
+      'Standing Calf Raises',
+      'Seated Calf Raise',
+    ],
+  },
+];
+
 export default function Workouts() {
-  // const workoutCreate = useSelector((state) => state.workoutCreate);
-  // const { workout } = workoutCreate;
-
   const classes = useStyles();
-  const [inputFields, setInputFields] = useState([
-    { id: uuidv4(), muscle: '', exercise: '', sets: 0, reps: 0, weight: 0 },
-  ]);
+  const workoutName = 'workoutName';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('InputFields', inputFields);
+  const [muscle, setMuscle] = useState('');
+  const [exercise, setExercise] = useState('');
+  const [exercises, setExercises] = useState([]);
+
+  const changeMuscle = (e) => {
+    setMuscle(e.target.value);
+    setExercises(
+      workouts.find((workout) => workout.name === e.target.value).exercises
+    );
   };
 
-  const handleChangeInput = (id, event) => {
-    const newInputFields = inputFields.map((i) => {
-      if (id === i.id) {
-        i[event.target.name] = event.target.value;
-      }
-      return i;
-    });
-
-    setInputFields(newInputFields);
-  };
-
-  const handleAddFields = () => {
-    setInputFields([
-      ...inputFields,
-      { id: uuidv4(), muscle: '', exercise: '', sets: 0, reps: 0, weight: 0 },
-    ]);
-  };
-
-  const handleRemoveFields = (id) => {
-    const values = [...inputFields];
-    values.splice(id, 1);
-    setInputFields(values);
+  const changeExercise = (e) => {
+    setExercise(e.target.value);
   };
 
   return (
@@ -79,78 +191,58 @@ export default function Workouts() {
               <h2>My Workouts</h2>
             </CardHeader>
             <CardBody>
-              <h3>Today's workout: {localStorage.getItem('workoutName')}</h3>
-              <h3 className={classes.cardTitle}>
-                {/* You have no registered workouts. */}
-                <form className={classes.root} onSubmit={handleSubmit}>
-                  <Grid item direction='row' xs={12} sm={12} md={12}>
-                    {inputFields.map((inputField) => (
-                      <div key={inputField.id}>
-                        <TextField
-                          name='muscle'
-                          label='Muscle'
-                          variant='outlined'
-                          size='small'
-                          value={inputField.muscle}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                        />
-                        <TextField
-                          name='exercise'
-                          label='Exercise'
-                          variant='outlined'
-                          size='small'
-                          value={inputField.exercise}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                        />
-                        <TextField
-                          name='reps'
-                          label='Reps'
-                          variant='outlined'
-                          size='small'
-                          value={inputField.reps}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                        />
-                        <TextField
-                          name='weight'
-                          label='Weight'
-                          variant='outlined'
-                          size='small'
-                          value={inputField.weight}
-                          onChange={(event) =>
-                            handleChangeInput(inputField.id, event)
-                          }
-                        />
-                        <IconButton
-                          disabled={inputFields.length === 1}
-                          onClick={() => handleRemoveFields(inputField.id)}
-                        >
-                          <RemoveIcon />
-                        </IconButton>
-                        <IconButton onClick={handleAddFields}>
-                          <AddIcon />
-                        </IconButton>
-                      </div>
-                    ))}
-                  </Grid>
-                  <Button
-                    center
-                    className={classes.button}
-                    round
-                    variant='contained'
-                    color='primary'
-                    type='submit'
-                    onClick={handleSubmit}
+              <h3>Today's workout: {localStorage.getItem(workoutName)}</h3>
+              <form>
+                <FormControl className={classes.margin}>
+                  <InputLabel htmlFor='demo-customized-select-native'>
+                    Muscle
+                  </InputLabel>
+                  <NativeSelect
+                    id='demo-customized-select-native'
+                    value={muscle}
+                    onChange={changeMuscle}
+                    input={<BootstrapInput />}
                   >
-                    Stop training
+                    {workouts.map((workout, key) => {
+                      return <option key={key}>{workout.name}</option>;
+                    })}
+                  </NativeSelect>
+                </FormControl>
+
+                <FormControl className={classes.margin}>
+                  <InputLabel htmlFor='demo-customized-select-native'>
+                    Exercise
+                  </InputLabel>
+                  <NativeSelect
+                    id='demo-customized-select-native'
+                    value={exercise}
+                    onChange={changeExercise}
+                    input={<BootstrapInput />}
+                  >
+                    {exercises.map((exercise, key) => {
+                      return <option key={key}>{exercise}</option>;
+                    })}
+                  </NativeSelect>
+                </FormControl>
+
+                <FormControl className={classes.margin}>
+                  <InputLabel htmlFor='demo-customized-select-native'>
+                    Reps
+                  </InputLabel>
+                  <BootstrapInput id='demo-customized-textbox' />
+                </FormControl>
+                <FormControl className={classes.margin}>
+                  <InputLabel htmlFor='demo-customized-select-native'>
+                    Weight
+                  </InputLabel>
+                  <BootstrapInput id='demo-customized-textbox' />
+                </FormControl>
+                <GridItem xs={2} sm={2} md={2}>
+                  <Button color='primary' round>
+                    Add Set
                   </Button>
-                </form>
-              </h3>
+                </GridItem>
+              </form>
               <br />
               <h3 className={classes.cardBody}>{/* Last workout. */}</h3>
             </CardBody>
