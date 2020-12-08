@@ -22,7 +22,7 @@ exports.createWorkout = asyncHandler(async (req, res) => {
 // @access    Private
 exports.getWorkouts = asyncHandler(async (req, res) => {
   const workouts = await Workout.find({ user: req.user.id }).populate({
-    path: 'exercises',
+    path: 'sets',
     select: 'muscle name reps weight',
   });
 
@@ -38,8 +38,8 @@ exports.getWorkouts = asyncHandler(async (req, res) => {
 // @access    Private
 exports.getWorkout = asyncHandler(async (req, res, next) => {
   const workout = await Workout.findById(req.params._id).populate({
-    path: 'exercises',
-    select: 'muscle name reps weight',
+    path: 'sets',
+    select: 'muscle exercise reps weight',
   });
 
   if (!workout) {

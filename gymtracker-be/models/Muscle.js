@@ -33,8 +33,8 @@ const MuscleSchema = new mongoose.Schema(
 // });
 
 // Reverse populate with virtuals
-MuscleSchema.virtual('exercises', {
-  ref: 'Exercise',
+MuscleSchema.virtual('sets', {
+  ref: 'Set',
   localField: '_id',
   foreignField: 'muscle',
   justOne: false

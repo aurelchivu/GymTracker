@@ -22,8 +22,8 @@ exports.createMuscle = asyncHandler(async (req, res) => {
 // @access    Private
 exports.getMuscles = asyncHandler(async (req, res) => {
   const muscle = await Muscle.find({ user: req.user.id }).populate({
-    path: 'exercises',
-    select: 'name reps weight',
+    path: 'sets',
+    select: 'exercise reps weight',
     path: 'measurements',
     select: 'value',
   });
@@ -40,8 +40,8 @@ exports.getMuscles = asyncHandler(async (req, res) => {
 // @access    Private
 exports.getMuscle = asyncHandler(async (req, res, next) => {
   const muscle = await Muscle.findById(req.params._id).populate({
-    path: 'exercises',
-    select: 'name reps weight',
+    path: 'sets',
+    select: 'exercise reps weight',
     path: 'measurements',
     select: 'value',
   });
