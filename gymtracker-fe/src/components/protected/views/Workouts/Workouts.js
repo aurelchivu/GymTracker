@@ -1,7 +1,11 @@
-import React, { useState, setState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // @material-ui/core
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  ServerStyleSheets,
+  withStyles,
+} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
@@ -165,93 +169,176 @@ const workouts = [
 
 export default function Workouts() {
   const classes = useStyles();
-  const workoutName = 'workoutName';
+  const workout = localStorage.getItem('workoutName');
 
   const [muscle, setMuscle] = useState('');
   const [exercise, setExercise] = useState('');
   const [exercises, setExercises] = useState([]);
+  const [reps, setReps] = useState();
+  const [weight, setWeight] = useState();
+  const [newSet, setNewSet] = useState('');
+  const [sets, setSets] = useState([]);
 
-  const changeMuscle = (e) => {
+  const selectMuscle = (e) => {
     setMuscle(e.target.value);
     setExercises(
       workouts.find((workout) => workout.name === e.target.value).exercises
     );
   };
 
-  const changeExercise = (e) => {
+  const selectExercise = (e) => {
     setExercise(e.target.value);
   };
 
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      console.log('FORM SUBMITTED')
+      console.log(muscle, exercise, reps, weight)
+      if (!newSet) return;
+      setSets([
+        ...sets,
+        {
+          id: sets.length ? sets[0].id + 1 : 1,
+          content: newSet,
+          done: false,
+        },
+      ]);
+      setNewSet('');
+    },
+    [newSet, sets]
+  );
+
+  useEffect(() => {
+    console.log('sets = ', sets);
+  }, [sets]);
+
+  const addSet = useCallback(
+    (set, index) => (e) => {
+      const newSets = [...sets];
+      newSets.splice(index, 1, {
+        ...set,
+        done: !set.done,
+      });
+      setSets(newSets);
+    },
+    [sets]
+  );
+
   return (
     <>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color='primary'>
-              <h2>My Workouts</h2>
-            </CardHeader>
-            <CardBody>
-              <h3>Today's workout: {localStorage.getItem(workoutName)}</h3>
-              <form>
-                <FormControl className={classes.margin}>
-                  <InputLabel htmlFor='demo-customized-select-native'>
-                    Muscle
-                  </InputLabel>
-                  <NativeSelect
-                    id='demo-customized-select-native'
-                    value={muscle}
-                    onChange={changeMuscle}
-                    input={<BootstrapInput />}
-                  >
-                    {workouts.map((workout, key) => {
-                      return <option key={key}>{workout.name}</option>;
-                    })}
-                  </NativeSelect>
-                </FormControl>
-
-                <FormControl className={classes.margin}>
-                  <InputLabel htmlFor='demo-customized-select-native'>
-                    Exercise
-                  </InputLabel>
-                  <NativeSelect
-                    id='demo-customized-select-native'
-                    value={exercise}
-                    onChange={changeExercise}
-                    input={<BootstrapInput />}
-                  >
-                    {exercises.map((exercise, key) => {
-                      return <option key={key}>{exercise}</option>;
-                    })}
-                  </NativeSelect>
-                </FormControl>
-
-                <FormControl className={classes.margin}>
-                  <InputLabel htmlFor='demo-customized-select-native'>
-                    Reps
-                  </InputLabel>
-                  <BootstrapInput id='demo-customized-textbox' />
-                </FormControl>
-                <FormControl className={classes.margin}>
-                  <InputLabel htmlFor='demo-customized-select-native'>
-                    Weight
-                  </InputLabel>
-                  <BootstrapInput id='demo-customized-textbox' />
-                </FormControl>
-                <GridItem xs={2} sm={2} md={2}>
-                  <Button color='primary' round>
-                    Add Set
-                  </Button>
-                </GridItem>
-              </form>
-              <br />
-              <h3 className={classes.cardBody}>{/* Last workout. */}</h3>
-            </CardBody>
-            <CardFooter chart>
-              <h3>Last week's workout summary.</h3>
-            </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
+      {/* <GridContainer>
+        <GridItem xs={12} sm={12} md={12}> */}
+      <Card>
+        <CardHeader color='primary'>
+          <h2>My Workouts</h2>
+        </CardHeader>
+        <CardBody>
+          <h3>Today's workout: {workout}</h3>
+          <GridContainer>
+            <form
+              style={{ display: 'flex' }}
+              className={classes.form}
+              noValidate
+              onSubmit={handleSubmit}
+            >
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor='demo-customized-select-native'></InputLabel>
+                <NativeSelect
+                  id='demo-customized-select-native'
+                  value={muscle}
+                  onChange={selectMuscle}
+                  input={<BootstrapInput />}
+                >
+                  {workouts.map((workout, key) => {
+                    return <option key={key}>{workout.name}</option>;
+                  })}
+                </NativeSelect>
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor='demo-customized-select-native'>
+                  Exercise
+                </InputLabel>
+                <NativeSelect
+                  id='demo-customized-select-native'
+                  value={exercise}
+                  onChange={selectExercise}
+                  input={<BootstrapInput />}
+                >
+                  {exercises.map((exercise, key) => {
+                    return <option key={key}>{exercise}</option>;
+                  })}
+                </NativeSelect>
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel
+                  htmlFor='demo-customized-select-native'
+                  value={reps}
+                  onInput={(e) => setReps(e.target.value)}
+                  variant='outlined'
+                  margin='normal'
+                  required
+                  fullWidth
+                  name='reps'
+                  label='Reps'
+                  type='reps'
+                  id='reps'
+                >
+                  Reps
+                </InputLabel>
+                <BootstrapInput id='demo-customized-textbox' />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel
+                  htmlFor='demo-customized-select-native'
+                  value={weight}
+                  onInput={(e) => setWeight(e.target.value)}
+                  variant='outlined'
+                  margin='normal'
+                  required
+                  fullWidth
+                  name='weight'
+                  label='Weight'
+                  type='weight'
+                  id='weight'
+                >
+                  Weight
+                </InputLabel>
+                <BootstrapInput id='demo-customized-textbox' />
+              </FormControl>
+              <Button
+                round
+                color='primary'
+                size='small'
+                type='submit'
+                color='primary'
+                className={classes.submit}
+              >
+                Add Set
+              </Button>
+            </form>
+          </GridContainer>
+          <br />
+          <ul>
+            {sets.map((set, index) => (
+              <li key={set.id}>
+                <input
+                  checked={set.done}
+                  type='checkbox'
+                  onChange={addSet(set, index)}
+                />
+                <span className={set.done ? 'done' : ''}>{set.content}</span>
+              </li>
+            ))}
+          </ul>
+          <h3 className={classes.cardBody}>{/* Last workout. */}</h3>
+        </CardBody>
+        <CardFooter chart>
+          <h3>Last week's workout summary.</h3>
+        </CardFooter>
+      </Card>
+      {/* </GridItem>
+      </GridContainer> */}
     </>
   );
 }

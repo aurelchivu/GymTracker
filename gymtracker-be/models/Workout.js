@@ -35,18 +35,18 @@ const WorkoutSchema = new mongoose.Schema(
 // });
 
 // Cascade delete exercises when a workout is deleted
-WorkoutSchema.pre('remove', async function(next) {
-  console.log(`Exercises being removed from workout ${this._id}`);
-  await this.model('Exercise').deleteMany({ workout: this._id });
+WorkoutSchema.pre('remove', async function (next) {
+  console.log(`Sets being removed from workout ${this._id}`);
+  await this.model('Set').deleteMany({ workout: this._id });
   next();
 });
 
 // Reverse populate with virtuals
-WorkoutSchema.virtual('exercises', {
-  ref: 'Exercise',
+WorkoutSchema.virtual('sets', {
+  ref: 'Set',
   localField: '_id',
   foreignField: 'workout',
-  justOne: false
+  justOne: false,
 });
 
 module.exports = mongoose.model('Workout', WorkoutSchema);

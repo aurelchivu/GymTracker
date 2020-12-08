@@ -8,7 +8,7 @@ const {
 } = require('../controllers/muscles');
 
 // Include other resource routers
-const muscleRouter = require('./exercises');
+const exercisesRouter = require('./exercises');
 const measurementRouter = require('./measurements');
 
 const router = express.Router();
@@ -16,7 +16,7 @@ const router = express.Router();
 const { protect } = require('../middleware/auth');
 
 // Re-route into other resource routers
-router.use('/:muscleId/exercises', muscleRouter);
+router.use('/:muscleId/exercises', exercisesRouter);
 router.use('/:muscleId/measurements', measurementRouter);
 
 router.use(protect);
