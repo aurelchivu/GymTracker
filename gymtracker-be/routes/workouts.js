@@ -8,20 +8,18 @@ const {
 } = require('../controllers/workouts');
 
 // Include other resource routers
-const setRouter = require('./sets');
+const setsRouter = require('./sets');
 
 const router = express.Router();
 
 const { protect } = require('../middleware/auth');
 
 // Re-route into other resource routers
-router.use('/:workoutId/sets', setRouter);
+router.use('/:workoutId/sets', setsRouter);
 
 router.use(protect);
 
-router.route('/')
-  .post(protect, createWorkout)
-  .get(protect, getWorkouts);
+router.route('/').post(protect, createWorkout).get(protect, getWorkouts);
 
 router
   .route('/:_id')

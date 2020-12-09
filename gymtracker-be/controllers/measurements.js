@@ -43,14 +43,14 @@ exports.createMeasurement = asyncHandler(async (req, res, next) => {
 // @access    Private
 exports.getMeasurements = asyncHandler(async (req, res, next) => {
   if (req.params.muscleId) {
-    const measurement = await Measurement.find({
+    const measurements = await Measurement.find({
       muscle: req.params.muscleId,
       user: req.user.id,
     });
     return res.status(200).json({
       success: true,
       count: measurements.length,
-      data: measurement,
+      data: measurements,
     });
   }
 });

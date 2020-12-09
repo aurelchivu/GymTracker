@@ -21,7 +21,7 @@ exports.createMuscle = asyncHandler(async (req, res) => {
 // @route     GET /api/v1/muscles/
 // @access    Private
 exports.getMuscles = asyncHandler(async (req, res) => {
-  const muscle = await Muscle.find({ user: req.user.id }).populate({
+  const muscles = await Muscle.find({ user: req.user.id }).populate({
     path: 'sets',
     select: 'exercise reps weight',
     path: 'measurements',
@@ -31,7 +31,7 @@ exports.getMuscles = asyncHandler(async (req, res) => {
   res.status(200).json({
     succes: true,
     count: muscle.length,
-    data: muscle,
+    data: muscles,
   });
 });
 

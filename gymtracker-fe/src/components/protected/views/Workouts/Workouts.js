@@ -9,14 +9,8 @@ import {
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 // core components
@@ -71,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const workouts = [
-  { name: 'Muscle', exercises: ['Exercise'] },
+  { name: 'Muscle', exercises: [] },
   {
     name: 'Neck',
     exercises: [
@@ -173,7 +167,7 @@ export default function Workouts() {
 
   const [muscle, setMuscle] = useState('');
   const [exercise, setExercise] = useState('');
-  const [exercises, setExercises] = useState([]);
+  const [exercises, setExercises] = useState(['Exercises']);
   const [reps, setReps] = useState();
   const [weight, setWeight] = useState();
   const [newSet, setNewSet] = useState('');
@@ -181,6 +175,7 @@ export default function Workouts() {
 
   const selectMuscle = (e) => {
     setMuscle(e.target.value);
+    console.log('Muscle selected!');
     setExercises(
       workouts.find((workout) => workout.name === e.target.value).exercises
     );
@@ -188,42 +183,50 @@ export default function Workouts() {
 
   const selectExercise = (e) => {
     setExercise(e.target.value);
+    console.log('Exericise selected!');
   };
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      console.log('FORM SUBMITTED')
-      console.log(muscle, exercise, reps, weight)
-      if (!newSet) return;
-      setSets([
-        ...sets,
-        {
-          id: sets.length ? sets[0].id + 1 : 1,
-          content: newSet,
-          done: false,
-        },
-      ]);
-      setNewSet('');
-    },
-    [newSet, sets]
-  );
+  const submitReps = (e) => {
+    setReps(e.target.value);
+    console.log('Reps selected!');
+  };
 
-  useEffect(() => {
-    console.log('sets = ', sets);
-  }, [sets]);
+  const submitWeight = (e) => {
+    setWeight(e.target.value);
+    console.log('Weight selected!');
+  };
 
-  const addSet = useCallback(
-    (set, index) => (e) => {
-      const newSets = [...sets];
-      newSets.splice(index, 1, {
-        ...set,
-        done: !set.done,
-      });
-      setSets(newSets);
-    },
-    [sets]
-  );
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('FORM SUBMITTED!');
+    console.log(muscle, exercise, reps, weight);
+    // if (!newSet) return;
+    // setSets([
+    //   ...sets,
+    //   {
+    //     id: sets.length ? sets[0].id + 1 : 1,
+    //     content: newSet,
+    //     done: false,
+    //   },
+    // ]);
+    // setNewSet('');
+  };
+
+  // useEffect(() => {
+  //   console.log('sets = ', sets);
+  // }, [sets]);
+
+  // const addSet = useCallback(
+  //   (set, index) => (e) => {
+  //     const newSets = [...sets];
+  //     newSets.splice(index, 1, {
+  //       ...set,
+  //       done: !set.done,
+  //     });
+  //     setSets(newSets);
+  //   },
+  //   [sets]
+  // );
 
   return (
     <>
@@ -243,7 +246,7 @@ export default function Workouts() {
               onSubmit={handleSubmit}
             >
               <FormControl className={classes.margin}>
-                <InputLabel htmlFor='demo-customized-select-native'></InputLabel>
+                {/* <InputLabel htmlFor='demo-customized-select-native'>Muscle</InputLabel> */}
                 <NativeSelect
                   id='demo-customized-select-native'
                   value={muscle}
@@ -256,9 +259,7 @@ export default function Workouts() {
                 </NativeSelect>
               </FormControl>
               <FormControl className={classes.margin}>
-                <InputLabel htmlFor='demo-customized-select-native'>
-                  Exercise
-                </InputLabel>
+                {/* <InputLabel htmlFor='demo-customized-select-native'>Exercise</InputLabel> */}
                 <NativeSelect
                   id='demo-customized-select-native'
                   value={exercise}
@@ -271,40 +272,26 @@ export default function Workouts() {
                 </NativeSelect>
               </FormControl>
               <FormControl className={classes.margin}>
-                <InputLabel
+                {/* <InputLabel htmlFor='demo-customized-select-native'>Reps</InputLabel> */}
+                <BootstrapInput
+                  id='demo-customized-textbox'
                   htmlFor='demo-customized-select-native'
                   value={reps}
-                  onInput={(e) => setReps(e.target.value)}
+                  onChange={submitReps}
                   variant='outlined'
-                  margin='normal'
                   required
-                  fullWidth
-                  name='reps'
-                  label='Reps'
-                  type='reps'
-                  id='reps'
-                >
-                  Reps
-                </InputLabel>
-                <BootstrapInput id='demo-customized-textbox' />
+                />
               </FormControl>
               <FormControl className={classes.margin}>
-                <InputLabel
+                {/* <InputLabel htmlFor='demo-customized-select-native'>Weight</InputLabel> */}
+                <BootstrapInput
+                  id='demo-customized-textbox'
                   htmlFor='demo-customized-select-native'
                   value={weight}
-                  onInput={(e) => setWeight(e.target.value)}
+                  onChange={submitWeight}
                   variant='outlined'
-                  margin='normal'
                   required
-                  fullWidth
-                  name='weight'
-                  label='Weight'
-                  type='weight'
-                  id='weight'
-                >
-                  Weight
-                </InputLabel>
-                <BootstrapInput id='demo-customized-textbox' />
+                />
               </FormControl>
               <Button
                 round
@@ -319,7 +306,7 @@ export default function Workouts() {
             </form>
           </GridContainer>
           <br />
-          <ul>
+          {/* <ul>
             {sets.map((set, index) => (
               <li key={set.id}>
                 <input
@@ -330,7 +317,7 @@ export default function Workouts() {
                 <span className={set.done ? 'done' : ''}>{set.content}</span>
               </li>
             ))}
-          </ul>
+          </ul> */}
           <h3 className={classes.cardBody}>{/* Last workout. */}</h3>
         </CardBody>
         <CardFooter chart>
