@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
-import { login } from '../../actions/userActions'
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../actions/userActions';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -20,9 +20,9 @@ import FormControl from '@material-ui/core/FormControl';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color="inherit" href="http://localhost:3000/">
+      <Link color='inherit' href='http://localhost:3000/'>
         GymTracker
       </Link>{' '}
       {new Date().getFullYear()}
@@ -52,9 +52,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Login = ({ location, history }) => {
-
   const classes = useStyles();
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -64,7 +63,7 @@ const Login = ({ location, history }) => {
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/admin'
+  const redirect = location.search ? location.search.split('=')[1] : '/admin';
 
   useEffect(() => {
     if (userInfo) {
@@ -76,72 +75,68 @@ const Login = ({ location, history }) => {
     e.preventDefault();
     dispatch(login(email, password));
     localStorage.setItem('newUser', false);
-  }
-  
+  };
+
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component='h1' variant='h5'>
           Log in
         </Typography>
         <FormControl>
-          <form
-            className={classes.form}
-            noValidate
-            onSubmit={handleSubmit}
-          >
+          <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <TextField
               value={email}
-              onInput={ e =>setEmail(e.target.value)}
-              variant="outlined"
-              margin="normal"
+              onInput={(e) => setEmail(e.target.value)}
+              variant='outlined'
+              margin='normal'
               required
               fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
+              id='email'
+              label='Email'
+              name='email'
+              autoComplete='email'
               autoFocus
             />
             <TextField
               value={password}
-              onInput={ e =>setPassword(e.target.value)}
-              variant="outlined"
-              margin="normal"
+              onInput={(e) => setPassword(e.target.value)}
+              variant='outlined'
+              margin='normal'
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              name='password'
+              label='Password'
+              type='password'
+              id='password'
+              autoComplete='current-password'
             />
-            
+
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={<Checkbox value='remember' color='primary' />}
+              label='Remember me'
             />
-            <Button 
-              type="submit"
+            <Button
+              type='submit'
               fullWidth
-              variant="contained"
-              color="primary"
+              variant='contained'
+              color='primary'
               className={classes.submit}
             >
               Log in
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href='#' variant='body2'>
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <ReactLink to="/register"> 
+                <ReactLink to='/register'>
                   {"Don't have an account? Register"}
                 </ReactLink>
               </Grid>
@@ -154,6 +149,6 @@ const Login = ({ location, history }) => {
       </Box>
     </Container>
   );
-}
+};
 
 export default Login;

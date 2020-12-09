@@ -43,15 +43,16 @@ exports.createSet = asyncHandler(async (req, res, next) => {
 // @access    Private
 exports.getSets = asyncHandler(async (req, res, next) => {
   if (req.params.workoutId) {
-    const set = await Set.find({
+    const sets = await Set.find({
       workout: req.params.workoutId,
       user: req.user.id,
     });
     return res.status(200).json({
       success: true,
       count: sets.length,
-      data: set,
+      data: sets,
     });
+    console.log('data =', data)
   }
 });
 

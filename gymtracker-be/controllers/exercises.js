@@ -43,14 +43,14 @@ exports.createExercise = asyncHandler(async (req, res, next) => {
 // @access    Private
 exports.getExercises = asyncHandler(async (req, res, next) => {
   if (req.params.workoutId) {
-    const exercise = await Exercise.find({
+    const exercises = await Exercise.find({
       workout: req.params.workoutId,
       user: req.user.id,
     });
     return res.status(200).json({
       success: true,
       count: exercises.length,
-      data: exercise,
+      data: exercises,
     });
   }
 });
