@@ -1,23 +1,68 @@
 import axios from 'axios';
 import {
+  WORKOUT_CREATE_REQUEST,
+  WORKOUT_CREATE_SUCCESS,
+  WORKOUT_CREATE_FAIL,
   WORKOUT_LIST_REQUEST,
   WORKOUT_LIST_SUCCESS,
   WORKOUT_LIST_FAIL,
   WORKOUT_DETAILS_REQUEST,
   WORKOUT_DETAILS_SUCCESS,
   WORKOUT_DETAILS_FAIL,
-  WORKOUT_DELETE_REQUEST,
-  WORKOUT_DELETE_SUCCESS,
-  WORKOUT_DELETE_FAIL,
-  WORKOUT_CREATE_REQUEST,
-  WORKOUT_CREATE_SUCCESS,
-  WORKOUT_CREATE_FAIL,
   WORKOUT_UPDATE_REQUEST,
   WORKOUT_UPDATE_SUCCESS,
   WORKOUT_UPDATE_FAIL,
+  WORKOUT_DELETE_REQUEST,
+  WORKOUT_DELETE_SUCCESS,
+  WORKOUT_DELETE_FAIL,
 } from '../constants/workoutConstants';
 import { logout } from './userActions';
 
+// Create workout
+export const createWorkout = (workout) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: WORKOUT_CREATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `http://localhost:5000/api/v1/workouts`,
+      workout,
+      config
+    );
+    console.log(data.data._id);
+
+    dispatch({
+      type: WORKOUT_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
+    dispatch({
+      type: WORKOUT_CREATE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+// Get list of workouts
 export const listWorkouts = (keyword = '', pageNumber = '') => async (
   dispatch
 ) => {
@@ -43,6 +88,7 @@ export const listWorkouts = (keyword = '', pageNumber = '') => async (
   }
 };
 
+// Get workout by id
 export const workoutDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: WORKOUT_DETAILS_REQUEST });
@@ -64,45 +110,7 @@ export const workoutDetails = (id) => async (dispatch) => {
   }
 };
 
-export const createWorkout = (workout) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: WORKOUT_CREATE_REQUEST,
-    });
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.post(`/api/v1/workouts`, workout, config);
-
-    dispatch({
-      type: WORKOUT_CREATE_SUCCESS,
-      payload: data,
-    });
-
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    if (message === 'Not authorized, token failed') {
-      dispatch(logout());
-    }
-    dispatch({
-      type: WORKOUT_CREATE_FAIL,
-      payload: message,
-    });
-  }
-};
-
+// Update workout
 export const updateWorkout = (workout) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -146,6 +154,7 @@ export const updateWorkout = (workout) => async (dispatch, getState) => {
   }
 };
 
+// Delete workout
 export const deleteWorkout = (id) => async (dispatch, getState) => {
   try {
     dispatch({

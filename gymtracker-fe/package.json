@@ -1,6 +1,5 @@
 {
   "name": "gymtracker-fe",
-  "proxy": "http://localhost:5000",
   "secure": false,
   "version": "0.1.0",
   "private": true,
@@ -27,6 +26,7 @@
     "gulp": "^4.0.2",
     "gulp-append-prepend": "^1.0.8",
     "history": "^5.0.0",
+    "http-proxy-middleware": "^1.0.6",
     "i18next": "^19.4.4",
     "i18next-xhr-backend": "^3.2.2",
     "material-ui": "^0.20.2",
@@ -50,7 +50,8 @@
     "redux-thunk": "^2.3.0",
     "uuid": "^8.1.0",
     "webpack": "^4.42.0",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "xhr": "^2.6.0"
   },
   "scripts": {
     "start": "craco start",

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 // @material-ui/core
 import {
   makeStyles,
@@ -69,6 +70,7 @@ const workouts = [
   {
     name: 'Neck',
     exercises: [
+      'Exercises',
       'Lying Face Down Plate Neck Resistance',
       'Lying Face Up Plate Neck Resistance',
       'Seated Head Harness Neck Resistance',
@@ -77,6 +79,7 @@ const workouts = [
   {
     name: 'Shoulders',
     exercises: [
+      'Exercises',
       'Dumbbell front raise to lateral raise',
       'Clean and press',
       'Single-arm palm-in dumbbell shoulder press',
@@ -84,11 +87,17 @@ const workouts = [
   },
   {
     name: 'Chest',
-    exercises: ['Dumbbell Bench Press', 'Pushups', 'Close-grip bench press'],
+    exercises: [
+      'Exercises',
+      'Dumbbell Bench Press',
+      'Pushups',
+      'Close-grip bench press',
+    ],
   },
   {
     name: 'Biceps',
     exercises: [
+      'Exercises',
       'Incline Hammer Curls',
       'Wide-grip barbell curl',
       'EZ-bar spider curl',
@@ -97,6 +106,7 @@ const workouts = [
   {
     name: 'Triceps',
     exercises: [
+      'Exercises',
       'Triceps dip',
       'Decline EZ-bar skullcrusher',
       'Dumbbell floor press',
@@ -105,6 +115,7 @@ const workouts = [
   {
     name: 'Forearm',
     exercises: [
+      'Exercises',
       'Rickshaw Carry',
       'Palms-down wrist curl over bench',
       'Straight-bar wrist roll-up',
@@ -113,6 +124,7 @@ const workouts = [
   {
     name: 'Traps',
     exercises: [
+      'Exercises',
       'Smith machine shrug',
       'Leverage Shrug',
       'Standing dumbbell shrug',
@@ -125,6 +137,7 @@ const workouts = [
   {
     name: 'MiddleBack',
     exercises: [
+      'Exercises',
       'T-Bar Row with Handle',
       'Reverse-grip bent-over row',
       'One-Arm Dumbbell Row',
@@ -132,12 +145,18 @@ const workouts = [
   },
   {
     name: 'LowerBack',
-    exercises: ['Atlas Stones', 'Barbell deficit deadlift', 'Back extension'],
+    exercises: [
+      'Exercises',
+      'Atlas Stones',
+      'Barbell deficit deadlift',
+      'Back extension',
+    ],
   },
   { name: 'Abs', exercises: ['Landmine twist', 'Elbow plank', 'Bottoms Up'] },
   {
     name: 'Glutes',
     exercises: [
+      'Exercises',
       'Barbell glute bridge',
       'Barbell Hip Thrust',
       'Single-leg cable hip extension',
@@ -145,15 +164,26 @@ const workouts = [
   },
   {
     name: 'Quads',
-    exercises: ['Single-Leg Press', 'Clean from Blocks', 'Barbell Full Squat'],
+    exercises: [
+      'Exercises',
+      'Single-Leg Press',
+      'Clean from Blocks',
+      'Barbell Full Squat',
+    ],
   },
   {
     name: 'Hamstrings',
-    exercises: ['Barbell Deadlift', 'Clean Deadlift', 'Sumo deadlift'],
+    exercises: [
+      'Exercises',
+      'Barbell Deadlift',
+      'Clean Deadlift',
+      'Sumo deadlift',
+    ],
   },
   {
     name: 'Calves',
     exercises: [
+      'Exercises',
       'Smith Machine Calf Raise',
       'Standing Calf Raises',
       'Seated Calf Raise',
@@ -161,9 +191,10 @@ const workouts = [
   },
 ];
 
-export default function Workouts() {
+export default function Workouts({ history }) {
   const classes = useStyles();
   const workout = localStorage.getItem('workoutName');
+  const workoutId = localStorage.getItem('workoutId');
 
   const [muscle, setMuscle] = useState('');
   const [exercise, setExercise] = useState('');
@@ -175,58 +206,36 @@ export default function Workouts() {
 
   const selectMuscle = (e) => {
     setMuscle(e.target.value);
-    console.log('Muscle selected!');
     setExercises(
       workouts.find((workout) => workout.name === e.target.value).exercises
     );
-  };
-
-  const selectExercise = (e) => {
-    setExercise(e.target.value);
-    console.log('Exericise selected!');
-  };
-
-  const submitReps = (e) => {
-    setReps(e.target.value);
-    console.log('Reps selected!');
-  };
-
-  const submitWeight = (e) => {
-    setWeight(e.target.value);
-    console.log('Weight selected!');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('FORM SUBMITTED!');
     console.log(muscle, exercise, reps, weight);
-    // if (!newSet) return;
-    // setSets([
-    //   ...sets,
-    //   {
-    //     id: sets.length ? sets[0].id + 1 : 1,
-    //     content: newSet,
-    //     done: false,
-    //   },
-    // ]);
-    // setNewSet('');
+    const set = {
+      muscle: muscle,
+      exercise: exercise,
+      reps: reps,
+      weight: weight,
+    };
+
+    const postSet = async () => {
+      await axios({
+        method: 'post',
+        url: `http://localhost:5000/api/v1/workouts/${workoutId}/sets`,
+        data: set,
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZGQzZjVmZDZiNTZmMDlmMzBkYzRhMiIsImlhdCI6MTYwNjgyNTkwMywiZXhwIjoxNjA5NDE3OTAzfQ.wBgEE72Xn-Z_P7_Tm-BQo-vZTuWWbhsKX9tZyT0DoUo`,
+        },
+      });
+    };
+    postSet();
   };
-
-  // useEffect(() => {
-  //   console.log('sets = ', sets);
-  // }, [sets]);
-
-  // const addSet = useCallback(
-  //   (set, index) => (e) => {
-  //     const newSets = [...sets];
-  //     newSets.splice(index, 1, {
-  //       ...set,
-  //       done: !set.done,
-  //     });
-  //     setSets(newSets);
-  //   },
-  //   [sets]
-  // );
 
   return (
     <>
@@ -263,7 +272,7 @@ export default function Workouts() {
                 <NativeSelect
                   id='demo-customized-select-native'
                   value={exercise}
-                  onChange={selectExercise}
+                  onChange={(e) => setExercise(e.target.value)}
                   input={<BootstrapInput />}
                 >
                   {exercises.map((exercise, key) => {
@@ -274,10 +283,11 @@ export default function Workouts() {
               <FormControl className={classes.margin}>
                 {/* <InputLabel htmlFor='demo-customized-select-native'>Reps</InputLabel> */}
                 <BootstrapInput
+                  placeholder='Reps'
                   id='demo-customized-textbox'
                   htmlFor='demo-customized-select-native'
                   value={reps}
-                  onChange={submitReps}
+                  onChange={(e) => setReps(e.target.value)}
                   variant='outlined'
                   required
                 />
@@ -285,10 +295,11 @@ export default function Workouts() {
               <FormControl className={classes.margin}>
                 {/* <InputLabel htmlFor='demo-customized-select-native'>Weight</InputLabel> */}
                 <BootstrapInput
+                  placeholder='Weight'
                   id='demo-customized-textbox'
                   htmlFor='demo-customized-select-native'
                   value={weight}
-                  onChange={submitWeight}
+                  onChange={(e) => setWeight(e.target.value)}
                   variant='outlined'
                   required
                 />
@@ -306,18 +317,6 @@ export default function Workouts() {
             </form>
           </GridContainer>
           <br />
-          {/* <ul>
-            {sets.map((set, index) => (
-              <li key={set.id}>
-                <input
-                  checked={set.done}
-                  type='checkbox'
-                  onChange={addSet(set, index)}
-                />
-                <span className={set.done ? 'done' : ''}>{set.content}</span>
-              </li>
-            ))}
-          </ul> */}
           <h3 className={classes.cardBody}>{/* Last workout. */}</h3>
         </CardBody>
         <CardFooter chart>
@@ -329,3 +328,6 @@ export default function Workouts() {
     </>
   );
 }
+
+// Clear form fields after form submit
+// Form validation

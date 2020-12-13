@@ -14,7 +14,7 @@ const errorHandler = require('./middleware/error'); // custom error handler
 const connectDB = require('./config/db');
 
 // Load environment variables
-dotenv.config({ path: './config/config.env' });
+dotenv.config({ path: `${__dirname}/config/config.env` });
 
 // Connect to database
 connectDB();
@@ -88,7 +88,7 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 const server = app.listen(
   PORT,
