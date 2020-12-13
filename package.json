@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"cd gymtracker-be && nodemon server\" \"cd gymtracker-fe && npm start\" "
+    "start": "node gymtracker-be/server",
+    "server": "nodemon gymtracker-be/server",
+    "client": "npm start --prefix gymtracker-fe ",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -27,6 +30,7 @@
     "core-js": "^3.6.5",
     "craco-less": "^1.16.0",
     "dayjs": "^1.8.27",
+    "dotenv": "^8.2.0",
     "history": "^5.0.0",
     "jquery": "^3.5.1",
     "mongodb": "^3.5.7",
@@ -36,5 +40,9 @@
     "react-redux": "^7.2.0",
     "react-toastify": "^6.0.8",
     "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
   }
 }

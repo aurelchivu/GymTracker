@@ -152,3 +152,5 @@ const Login = ({ location, history }) => {
 };
 
 export default Login;
+
+// Form validation

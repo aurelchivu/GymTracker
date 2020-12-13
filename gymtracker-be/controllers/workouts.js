@@ -8,6 +8,7 @@ const Workout = require('../models/Workout');
 exports.createWorkout = asyncHandler(async (req, res) => {
   // Add user to req.body
   req.body.user = req.user.id;
+  
 
   const workout = await Workout.create(req.body);
 

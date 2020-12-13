@@ -170,3 +170,5 @@ export default function Register({ location, history }) {
     </Container>
   );
 }
+
+//form validation
