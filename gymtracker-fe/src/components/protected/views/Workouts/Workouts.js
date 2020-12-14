@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import { createSet } from '../../../../actions/setActions';
+// import axios from 'axios';
 // @material-ui/core
 import {
   makeStyles,
@@ -193,8 +194,13 @@ const workouts = [
 
 export default function Workouts({ history }) {
   const classes = useStyles();
-  const workout = localStorage.getItem('workoutName');
+  const workoutName = localStorage.getItem('workoutName');
   const workoutId = localStorage.getItem('workoutId');
+
+  const dispatch = useDispatch();
+
+  // const setCreate = useSelector((state) => state.setCreate);
+  // const { set, success, error } = setCreate;
 
   const [muscle, setMuscle] = useState('');
   const [exercise, setExercise] = useState('');
@@ -213,28 +219,27 @@ export default function Workouts({ history }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('FORM SUBMITTED!');
-    console.log(muscle, exercise, reps, weight);
     const set = {
       muscle: muscle,
       exercise: exercise,
       reps: reps,
       weight: weight,
     };
+    dispatch(createSet(set, workoutId));
 
-    const postSet = async () => {
-      await axios({
-        method: 'post',
-        url: `http://localhost:5000/api/v1/workouts/${workoutId}/sets`,
-        data: set,
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZGQzZjVmZDZiNTZmMDlmMzBkYzRhMiIsImlhdCI6MTYwNjgyNTkwMywiZXhwIjoxNjA5NDE3OTAzfQ.wBgEE72Xn-Z_P7_Tm-BQo-vZTuWWbhsKX9tZyT0DoUo`,
-        },
-      });
-    };
-    postSet();
+    // const postSet = async () => {
+    //   await axios({
+    //     method: 'post',
+    //     url: `http://localhost:5000/api/v1/workouts/${workoutId}/sets`,
+    //     data: set,
+    //     headers: {
+    //       'Content-Type': 'application/json;charset=UTF-8',
+    //       'Access-Control-Allow-Origin': '*',
+    //       Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZGQzZjVmZDZiNTZmMDlmMzBkYzRhMiIsImlhdCI6MTYwNjgyNTkwMywiZXhwIjoxNjA5NDE3OTAzfQ.wBgEE72Xn-Z_P7_Tm-BQo-vZTuWWbhsKX9tZyT0DoUo`,
+    //     },
+    //   });
+    // };
+    // postSet();
   };
 
   return (
@@ -246,7 +251,7 @@ export default function Workouts({ history }) {
           <h2>My Workouts</h2>
         </CardHeader>
         <CardBody>
-          <h3>Today's workout: {workout}</h3>
+          <h3>Today's workout: {workoutName}</h3>
           <GridContainer>
             <form
               style={{ display: 'flex' }}

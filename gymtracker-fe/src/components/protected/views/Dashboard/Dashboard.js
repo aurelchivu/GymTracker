@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserDetails } from '../../../../actions/userActions';
 import { createWorkout } from '../../../../actions/workoutActions';
 
 // @material-ui/core
@@ -154,3 +152,5 @@ export default function Dashboard({ history }) {
     </GridContainer>
   );
 }
+
+// Make form inactive after submit
