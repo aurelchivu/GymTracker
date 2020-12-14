@@ -59,7 +59,7 @@ export default function Dashboard({ history }) {
 
   useEffect(() => {
     if (success) {
-      localStorage.setItem('workoutId', workout.data._id);
+      // localStorage.setItem('workoutId', workout.data._id);
       history.push(`/admin/workouts/${workout.data._id}/sets`);
     }
   }, [history, success]);
