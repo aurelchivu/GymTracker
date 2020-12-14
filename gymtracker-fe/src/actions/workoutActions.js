@@ -41,7 +41,8 @@ export const createWorkout = (workout) => async (dispatch, getState) => {
       workout,
       config
     );
-    console.log(data.data._id);
+
+    console.log(data)
 
     dispatch({
       type: WORKOUT_CREATE_SUCCESS,
@@ -70,7 +71,7 @@ export const listWorkouts = (keyword = '', pageNumber = '') => async (
     dispatch({ type: WORKOUT_LIST_REQUEST });
 
     const { data } = await axios.get(
-      `/api/v1/workouts?keyword=${keyword}&pageNumber=${pageNumber}`
+      `http://localhost:5000/api/v1/workouts?keyword=${keyword}&pageNumber=${pageNumber}`
     );
 
     dispatch({
@@ -93,7 +94,9 @@ export const workoutDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: WORKOUT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(`/api/v1/workouts/${id}`);
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/workouts/${id}`
+    );
 
     dispatch({
       type: WORKOUT_DETAILS_SUCCESS,
@@ -129,7 +132,7 @@ export const updateWorkout = (workout) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `/api/v1/workouts/${workout._id}`,
+      `http://localhost:5000/api/v1/workouts/${workout._id}`,
       workout,
       config
     );
@@ -171,7 +174,7 @@ export const deleteWorkout = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`/api/v1/workouts/${id}`, config);
+    await axios.delete(`http://localhost:5000/api/v1/workouts/${id}`, config);
 
     dispatch({
       type: WORKOUT_DELETE_SUCCESS,

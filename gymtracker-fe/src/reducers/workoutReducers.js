@@ -48,7 +48,7 @@ export const workoutListReducer = (state = { workouts: [] }, action) => {
 };
 
 export const workoutDetailsReducer = (
-  state = { workout: { exercises: [] } },
+  state = { workout: { sets: [] } },
   action
 ) => {
   switch (action.type) {

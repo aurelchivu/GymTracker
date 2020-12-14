@@ -13,13 +13,21 @@ import {
 } from './reducers/userReducers'
 
 import { 
+  workoutCreateReducer,
   workoutListReducer,
   workoutDetailsReducer,
-  workoutDeleteReducer,
-  workoutCreateReducer,
   workoutUpdateReducer,
+  workoutDeleteReducer,
 } from './reducers/workoutReducers'
- 
+
+import {
+  setCreateReducer,
+  setListReducer,
+  setDetailsReducer,
+  setUpdateReducer,
+  setDeleteReducer,
+} from './reducers/setReducers';
+
 import {
   mealListReducer,
   mealDetailsReducer,
@@ -32,11 +40,16 @@ const rootReducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
+  workoutCreate: workoutCreateReducer,
   workoutList: workoutListReducer,
   workoutDetails: workoutDetailsReducer,
-  workoutDelete: workoutDeleteReducer,
-  workoutCreate: workoutCreateReducer,
   workoutUpdate: workoutUpdateReducer,
+  workoutDelete: workoutDeleteReducer,
+  setCreateReducer,
+  setListReducer,
+  setDetailsReducer,
+  setUpdateReducer,
+  setDeleteReducer,
   mealList: mealListReducer,
   mealDetails: mealDetailsReducer,
   mealDelete: mealDeleteReducer,

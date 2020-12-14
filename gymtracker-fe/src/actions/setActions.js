@@ -3,16 +3,22 @@ import {
   SET_CREATE_REQUEST,
   SET_CREATE_SUCCESS,
   SET_CREATE_FAIL,
-  SET_DETAILS_FAIL,
-  SET_DETAILS_REQUEST,
-  SET_DETAILS_SUCCESS,
-  SET_DETAILS_FAIL,
   SET_LIST_REQUEST,
   SET_LIST_SUCCESS,
   SET_LIST_FAIL,
+  SET_DETAILS_REQUEST,
+  SET_DETAILS_SUCCESS,
+  SET_DETAILS_FAIL,
+  SET_UPDATE_REQUEST,
+  SET_UPDATE_SUCCESS,
+  SET_UPDATE_FAIL,
+  SET_DELETE_REQUEST,
+  SET_DELETE_SUCCESS,
+  SET_DELETE_FAIL,
 } from '../constants/setConstants';
 import { logout } from './userActions';
 
+// Create set
 export const createSet = (set) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -23,6 +29,12 @@ export const createSet = (set) => async (dispatch, getState) => {
       userLogin: { userInfo },
     } = getState();
 
+    const {
+      workoutCreate: { workout },
+    } = getState();
+
+    // const workoutId = localStorage.getItem('workoutId');
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -30,17 +42,17 @@ export const createSet = (set) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/v1/:workoutId/sets`, set, config);
+    const { data } = await axios.post(
+      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets`,
+      set,
+      config
+    );
+    console.log(data);
 
     dispatch({
       type: SET_CREATE_SUCCESS,
       payload: data,
     });
-    dispatch({
-      type: CART_CLEAR_ITEMS,
-      payload: data,
-    });
-      
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -56,51 +68,123 @@ export const createSet = (set) => async (dispatch, getState) => {
   }
 };
 
-export const getSetDetails = (id) => async (dispatch, getState) => {
+// Get list of sets
+export const listSets = (keyword = '', pageNumber = '') => async (dispatch, getState) => {
   try {
-    dispatch({
-      type: SET_DETAILS_REQUEST,
-    });
+    dispatch({ type: SET_LIST_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      workoutCreate: { workout },
     } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
 
-    const { data } = await axios.get(`/api/v1/:workoutId/sets/${id}`, config);
+    dispatch({
+      type: SET_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: SET_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Get set by id
+export const setDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: SET_DETAILS_REQUEST });
+
+    const {
+      workoutCreate: { workout },
+    } = getState();
+
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/workouts/${workout.data._id}//sets/${id}`
+    );
 
     dispatch({
       type: SET_DETAILS_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    if (message === 'Not authorized, token failed') {
-      dispatch(logout());
-    }
     dispatch({
       type: SET_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Update set
+export const updateSet = (set) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SET_UPDATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const {
+      workoutCreate: { workout },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets/${set._id}`,
+      set,
+      config
+    );
+
+    dispatch({
+      type: SET_UPDATE_SUCCESS,
+      payload: data,
+    });
+    dispatch({ type: SET_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
+    dispatch({
+      type: SET_UPDATE_FAIL,
       payload: message,
     });
   }
 };
 
-export const listMySets = () => async (dispatch, getState) => {
+// Delete set
+export const deleteSet = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: SET_LIST_REQUEST,
+      type: SET_DELETE_REQUEST,
     });
 
     const {
       userLogin: { userInfo },
+    } = getState();
+
+    const {
+      workoutCreate: { workout },
     } = getState();
 
     const config = {
@@ -109,11 +193,13 @@ export const listMySets = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/v1/sets/mysets`, config);
+    await axios.delete(
+      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets/${id}`,
+      config
+    );
 
     dispatch({
-      type: SET_LIST_SUCCESS,
-      payload: data,
+      type: SET_DELETE_SUCCESS,
     });
   } catch (error) {
     const message =
@@ -124,44 +210,7 @@ export const listMySets = () => async (dispatch, getState) => {
       dispatch(logout());
     }
     dispatch({
-      type: SET_LIST_FAIL,
-      payload: message,
-    });
-  }
-};
-
-export const listSets = () => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: SET_LIST_REQUEST,
-    });
-
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-
-    const { data } = await axios.get(`/api/v1/sets`, config);
-
-    dispatch({
-      type: SET_LIST_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    if (message === 'Not authorized, token failed') {
-      dispatch(logout());
-    }
-    dispatch({
-      type: SET_LIST_FAIL,
+      type: SET_DELETE_FAIL,
       payload: message,
     });
   }
