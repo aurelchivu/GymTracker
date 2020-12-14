@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSet } from '../../../../actions/setActions';
-// import axios from 'axios';
 // @material-ui/core
 import {
   makeStyles,
@@ -133,7 +132,12 @@ const workouts = [
   },
   {
     name: 'Lats',
-    exercises: ['Weighted pull-up', 'Pullups', 'Rocky Pull-Ups/Pulldowns'],
+    exercises: [
+      'Exercises',
+      'Weighted pull-up',
+      'Pullups',
+      'Rocky Pull-Ups/Pulldowns',
+    ],
   },
   {
     name: 'MiddleBack',
@@ -153,7 +157,10 @@ const workouts = [
       'Back extension',
     ],
   },
-  { name: 'Abs', exercises: ['Landmine twist', 'Elbow plank', 'Bottoms Up'] },
+  {
+    name: 'Abs',
+    exercises: ['Exercises', 'Landmine twist', 'Elbow plank', 'Bottoms Up'],
+  },
   {
     name: 'Glutes',
     exercises: [
@@ -192,7 +199,7 @@ const workouts = [
   },
 ];
 
-export default function Workouts({ history }) {
+export default function Workouts() {
   const classes = useStyles();
   const workoutName = localStorage.getItem('workoutName');
   const workoutId = localStorage.getItem('workoutId');
@@ -225,21 +232,7 @@ export default function Workouts({ history }) {
       reps: reps,
       weight: weight,
     };
-    dispatch(createSet(set, workoutId));
-
-    // const postSet = async () => {
-    //   await axios({
-    //     method: 'post',
-    //     url: `http://localhost:5000/api/v1/workouts/${workoutId}/sets`,
-    //     data: set,
-    //     headers: {
-    //       'Content-Type': 'application/json;charset=UTF-8',
-    //       'Access-Control-Allow-Origin': '*',
-    //       Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlZGQzZjVmZDZiNTZmMDlmMzBkYzRhMiIsImlhdCI6MTYwNjgyNTkwMywiZXhwIjoxNjA5NDE3OTAzfQ.wBgEE72Xn-Z_P7_Tm-BQo-vZTuWWbhsKX9tZyT0DoUo`,
-    //     },
-    //   });
-    // };
-    // postSet();
+    dispatch(createSet(set));
   };
 
   return (
