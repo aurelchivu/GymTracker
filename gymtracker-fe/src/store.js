@@ -1,4 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
@@ -61,6 +63,13 @@ const rootReducer = combineReducers({
   //   userUpdate: userUpdateReducer
 });
 
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null
@@ -72,9 +81,11 @@ const initialState = {
 const middleware = [thunk]
 
 const store = createStore(
-  rootReducer,
+  persistedReducer,
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
-)
+);
 
-export default store
+const persistor = persistStore(store);
+
+export { store, persistor }
