@@ -22,12 +22,12 @@ export default function Meals() {
 
   const dispatch = useDispatch();
 
-  const mealList = useSelector((state) => state.mealList);
-  const { loading, error, meals } = mealList;
+  // const mealList = useSelector((state) => state.mealList);
+  // const { loading, error, meals } = mealList;
 
-  useEffect(() => {
-    dispatch(listMeals());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(listMeals());
+  // }, [dispatch]);
 
   return (
     <>
@@ -60,7 +60,7 @@ export default function Meals() {
                 Add a meal
               </Button> */}
               <h2>All meals</h2>
-              {loading ? (
+              {/* {loading ? (
                 <h3>Loading...</h3>
               ) : error ? (
                 <h3>{error}</h3>
@@ -68,7 +68,7 @@ export default function Meals() {
                     <h3>
                       {meals}
                     </h3>
-              )}
+              )} */}
             </CardBody>
             <CardFooter chart>
               {/* <h3 className={classes.cardTitle}>
