@@ -1,26 +1,28 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+
+import { USER_LOGOUT } from './constants/userConstants';
 
 import {
   userLoginReducer,
   userRegisterReducer,
   userDetailsReducer,
-//   userUpdateProfileReducer,
-//   userListReducer,
-//   userDeleteReducer,
-//   userUpdateReducer,
-} from './reducers/userReducers'
+  //   userUpdateProfileReducer,
+  //   userListReducer,
+  //   userDeleteReducer,
+  //   userUpdateReducer,
+} from './reducers/userReducers';
 
-import { 
+import {
   workoutCreateReducer,
   workoutListReducer,
   workoutDetailsReducer,
   workoutUpdateReducer,
   workoutDeleteReducer,
-} from './reducers/workoutReducers'
+} from './reducers/workoutReducers';
 
 import {
   setCreateReducer,
@@ -38,7 +40,7 @@ import {
   mealUpdateReducer,
 } from './reducers/mealReducers';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
@@ -52,16 +54,26 @@ const rootReducer = combineReducers({
   setDetailsReducer,
   setUpdateReducer,
   setDeleteReducer,
-  mealList: mealListReducer,
-  mealDetails: mealDetailsReducer,
-  mealDelete: mealDeleteReducer,
-  mealCreate: mealCreateReducer,
-  mealUpdate: mealUpdateReducer,
+  // mealList: mealListReducer,
+  // mealDetails: mealDetailsReducer,
+  // mealDelete: mealDeleteReducer,
+  // mealCreate: mealCreateReducer,
+  // mealUpdate: mealUpdateReducer,
   //   userUpdateProfile: userUpdateProfileReducer,
   //   userList: userListReducer,
   //   userDelete: userDeleteReducer,
   //   userUpdate: userUpdateReducer
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === USER_LOGOUT) {
+    // for all keys defined in your persistConfig(s)
+    storage.removeItem('persist:root');
+    // storage.removeItem('persist:otherKey')
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 const persistConfig = {
   key: 'root',
@@ -72,13 +84,13 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
-  : null
+  : null;
 
 const initialState = {
-  userLogin: { userInfo: userInfoFromStorage }
-}
+  userLogin: { userInfo: userInfoFromStorage },
+};
 
-const middleware = [thunk]
+const middleware = [thunk];
 
 const store = createStore(
   persistedReducer,
@@ -88,4 +100,4 @@ const store = createStore(
 
 const persistor = persistStore(store);
 
-export { store, persistor }
+export { store, persistor };

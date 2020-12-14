@@ -24,7 +24,7 @@ const theme = createMuiTheme({
 const styles = theme => ({
 	"@global": {
 		body: {
-			backgroundImage: `url(${Image})`,
+			// backgroundImage: `url(${Image})`,
 			backgroundRepeat: "no-repeat",
 			backgroundPosition: "center center",
 			backgroundSize: "cover",

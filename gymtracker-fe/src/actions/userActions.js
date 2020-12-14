@@ -39,10 +39,10 @@ export const login = (email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      '/api/v1/auth/login',
+      'http://localhost:5000/api/v1/auth/login',
       { email, password },
       config
-    )
+    );
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -62,7 +62,7 @@ export const login = (email, password) => async (dispatch) => {
   }
 }
 
-export const logout = () => (dispatch) => {
+export const logout = () => (dispatch, state) => {
   localStorage.removeItem('userInfo')
   dispatch({ type: USER_LOGOUT })
   dispatch({ type: USER_DETAILS_RESET })
@@ -82,10 +82,10 @@ export const register = (username, email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      '/api/v1/auth/register',
+      'http://localhost:5000/api/v1/auth/register',
       { username, email, password },
       config
-    )
+    );
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
@@ -126,7 +126,10 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/v1/users/${id}`, config)
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/users/${id}`,
+      config
+    );
 
     dispatch({
       type: USER_DETAILS_SUCCESS,
@@ -164,7 +167,11 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.put(`/api/v1/users/profile`, user, config)
+    const { data } = await axios.put(
+      `http://localhost:5000/api/v1/users/profile`,
+      user,
+      config
+    );
 
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
@@ -206,7 +213,10 @@ export const listUsers = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/v1/users`, config)
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/users`,
+      config
+    );
 
     dispatch({
       type: USER_LIST_SUCCESS,
@@ -243,7 +253,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     }
 
-    await axios.delete(`/api/v1/users/${id}`, config)
+    await axios.delete(`http://localhost:5000/api/v1/users/${id}`, config);
 
     dispatch({ type: USER_DELETE_SUCCESS })
   } catch (error) {
@@ -278,7 +288,11 @@ export const updateUser = (user) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.put(`/api/v1/users/${user._id}`, user, config)
+    const { data } = await axios.put(
+      `http://localhost:5000/api/v1/users/${user._id}`,
+      user,
+      config
+    );
 
     dispatch({ type: USER_UPDATE_SUCCESS })
 
