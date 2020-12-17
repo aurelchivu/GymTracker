@@ -1,5 +1,12 @@
 // @material-ui/icons
 import Dashboard from "@material-ui/icons/Dashboard";
+import HomeIcon from '@material-ui/icons/Home';
+import FlashOnIcon from '@material-ui/icons/FlashOn';
+import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import HeightIcon from '@material-ui/icons/Height';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import VideocamIcon from '@material-ui/icons/Videocam';
 import LocationOn from "@material-ui/icons/LocationOn";
 // core components/views for Admin layout
 import DashboardPage from "../protected/views/Dashboard/Dashboard";
@@ -13,54 +20,54 @@ import VideosPage from "../protected/views/Videos/Videos.js";
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: Dashboard,
+    path: '/dashboard',
+    name: 'Dashboard',
+    icon: HomeIcon,
     component: DashboardPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/workouts",
-    name: "My Workouts",
-    icon: Dashboard,
+    path: '/workouts',
+    name: 'My Workouts',
+    icon: FitnessCenterIcon,
     component: WorkoutsPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/measurements",
-    name: "My Measurements",
-    icon: Dashboard,
+    path: '/measurements',
+    name: 'My Measurements',
+    icon: FlashOnIcon,
     component: MeasurementsPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/meals",
-    name: "My Meals",
-    icon: Dashboard,
+    path: '/meals',
+    name: 'My Meals',
+    icon: FastfoodIcon,
     component: MealsPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/music",
-    name: "My Music",
-    icon: Dashboard,
+    path: '/music',
+    name: 'My Music',
+    icon: PlayArrowIcon,
     component: MusicPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/training_videos",
-    name: "Training Videos",
-    icon: Dashboard,
+    path: '/training_videos',
+    name: 'Training Videos',
+    icon: VideocamIcon,
     component: VideosPage,
-    layout: "/admin"
+    layout: '/admin',
   },
   {
-    path: "/find_gym",
-    name: "Find a Gym near me",
+    path: '/find_gym',
+    name: 'Find a Gym near me',
     icon: LocationOn,
     component: FindGym,
-    layout: "/admin"
-  }
+    layout: '/admin',
+  },
 ];
 
 export default dashboardRoutes;

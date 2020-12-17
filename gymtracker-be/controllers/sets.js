@@ -52,7 +52,6 @@ exports.getSets = asyncHandler(async (req, res, next) => {
       count: sets.length,
       data: sets,
     });
-    console.log('data =', data)
   }
 });
 

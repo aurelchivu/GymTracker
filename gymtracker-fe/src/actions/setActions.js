@@ -47,7 +47,6 @@ export const createSet = (set) => async (dispatch, getState) => {
       set,
       config
     );
-    console.log(data);
 
     dispatch({
       type: SET_CREATE_SUCCESS,
@@ -69,16 +68,28 @@ export const createSet = (set) => async (dispatch, getState) => {
 };
 
 // Get list of sets
-export const listSets = (keyword = '', pageNumber = '') => async (dispatch, getState) => {
+export const listSets = () => async (dispatch, getState) => {
   try {
     dispatch({ type: SET_LIST_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
 
     const {
       workoutCreate: { workout },
     } = getState();
 
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets?keyword=${keyword}&pageNumber=${pageNumber}`
+      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets`,
+      config
     );
 
     dispatch({
