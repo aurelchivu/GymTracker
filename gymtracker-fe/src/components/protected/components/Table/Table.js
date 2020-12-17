@@ -34,17 +34,26 @@ export default function CustomTable(props) {
             </TableRow>
           </TableHead>
         ) : null}
-        <TableBody>
-          <TableRow className={classes.tableBodyRow}>
-            {Object.values(tableData).map((prop, key) => {
+        {tableData !== undefined ? (
+          <TableBody>
+            {tableData.map((item, key) => {
+              const unused = ['createdAt', '__v', '_id', 'user', 'workout'];
+              unused.map((unused) => delete item[unused]);
               return (
-                <TableCell className={classes.tableCell} key={key}>
-                  {prop}
-                </TableCell>
+                <TableRow key={key} className={classes.tableBodyRow}>
+                  {Object.values(item).map((prop, key) => {
+                    // console.log(prop);
+                    return (
+                      <TableCell className={classes.tableCell} key={key}>
+                        {prop}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
               );
             })}
-          </TableRow>
-        </TableBody>
+          </TableBody>
+        ) : null}
       </Table>
     </div>
   );

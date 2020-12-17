@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSet } from '../../../../actions/setActions';
+import { createSet, listSets } from '../../../../actions/setActions';
 import workoutSets from './workoutSets';
+import axios from 'axios';
 // @material-ui/core
 import {
   makeStyles,
@@ -15,6 +16,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
@@ -81,7 +83,19 @@ export default function Workouts() {
   const [exercises, setExercises] = useState(['Exercises']);
   const [reps, setReps] = useState();
   const [weight, setWeight] = useState();
-  const [sets, setSets] = useState([]);
+
+  const setList = useSelector((state) => state.setList);
+  const { loading, error, sets } = setList;
+
+  useEffect(() => {
+    let mounted = true;
+    console.log('Rerender')
+    dispatch(listSets());
+    return () => {
+      // When cleanup is called, toggle the mounted variable to false
+      mounted = false;
+    };
+  }, [dispatch]);
 
   const selectMuscle = (e) => {
     setMuscle(e.target.value);
@@ -99,8 +113,31 @@ export default function Workouts() {
       weight: weight,
     };
     dispatch(createSet(set));
-    setSets(set);
+    window.location.reload();
   };
+
+  // const displayData = (e) => {
+  //   e.preventDefault();
+  //   console.log('Rerender');
+  //   dispatch(listSets());
+  // }
+
+  // const DisplayData = () => {
+  //   useEffect(() => {
+  //     dispatch(listSets());
+  //   }, [dispatch]);
+  //   return (
+  //     <Card plain>
+  //       <CardBody>
+  //         <Table
+  //           tableHeaderColor='primary'
+  //           tableHead={['Muscle', 'Exercise', 'Reps', 'Weight']}
+  //           tableData={sets.data}
+  //         />
+  //       </CardBody>
+  //     </Card>
+  //   );
+  // };
 
   return (
     <>
@@ -171,8 +208,8 @@ export default function Workouts() {
               </FormControl>
               <Button
                 round
+                size='sm'
                 color='primary'
-                size='small'
                 type='submit'
                 color='primary'
                 className={classes.submit}
@@ -181,17 +218,23 @@ export default function Workouts() {
               </Button>
             </form>
           </GridContainer>
-          <br />
-          <h3 className={classes.cardBody}>{/* Last workout. */}</h3>
-          <Card plain>
-            <CardBody>
-              <Table
-                tableHeaderColor='primary'
-                tableHead={['Muscle', 'Exercise', 'Reps', 'Weight']}
-                tableData={sets}
-              />
-            </CardBody>
-          </Card>
+          {loading ? (
+            <h3>
+              <CircularProgress color='secondary'/>
+            </h3>
+          ) : error ? (
+            <h3>{error}</h3>
+          ) : (
+            <Card plain>
+              <CardBody>
+                <Table
+                  tableHeaderColor='primary'
+                  tableHead={['Muscle', 'Exercise', 'Reps', 'Weight']}
+                  tableData={sets.data}
+                />
+              </CardBody>
+            </Card>
+          )}
         </CardBody>
         <CardFooter chart>
           {/* <h3>Last week's workout summary.</h3> */}
@@ -203,5 +246,5 @@ export default function Workouts() {
   );
 }
 
-// Clear form fields after form submit
+// Clear form fields after form submit ???
 // Form validation

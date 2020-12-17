@@ -36,12 +36,13 @@ export const setListReducer = (state = { sets: [] }, action) => {
     case SET_LIST_SUCCESS:
       return {
         loading: false,
-        sets: action.payload.sets,
-        pages: action.payload.pages,
-        page: action.payload.page,
+        sets: action.payload,
       };
     case SET_LIST_FAIL:
-      return { loading: false, error: action.payload };
+      return {
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }
