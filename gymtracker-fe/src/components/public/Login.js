@@ -154,3 +154,4 @@ const Login = ({ location, history }) => {
 export default Login;
 
 // Form validation
+// Check if CapsLock is on

@@ -42,8 +42,6 @@ export const createWorkout = (workout) => async (dispatch, getState) => {
       config
     );
 
-    console.log(data)
-
     dispatch({
       type: WORKOUT_CREATE_SUCCESS,
       payload: data,

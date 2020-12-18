@@ -57,12 +57,12 @@ export default function Dashboard({ history }) {
   const workoutCreate = useSelector((state) => state.workoutCreate);
   const { workout, success, error } = workoutCreate;
 
-  useEffect(() => {
-    if (success) {
-      // localStorage.setItem('workoutId', workout.data._id);
-      history.push(`/admin/workouts/${workout.data._id}/sets`);
-    }
-  }, [history, success]);
+  // useEffect(() => {
+  //   if (success) {
+  //     // localStorage.setItem('workoutId', workout.data._id);
+  //     history.push(`/admin/workouts/${workout.data._id}/sets`);
+  //   }
+  // }, [success]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,6 +72,9 @@ export default function Dashboard({ history }) {
       })
     );
     localStorage.setItem('workoutName', workoutName);
+    if (success) {
+      history.push(`/admin/workouts/${workout.data._id}/sets`);
+    }
   };
 
   return (
@@ -96,7 +99,7 @@ export default function Dashboard({ history }) {
                 <br />
               </h>
             ) : (
-              <h3 className={classes.cardTitle}>
+              <h4 className={classes.cardTitle}>
                 Hello, {userInfo.username}! <br />
                 Today is {currentDate}, {currentTime}.<br />
                 This time last week you had the {lastWeekWorkout} workout.
@@ -106,7 +109,7 @@ export default function Dashboard({ history }) {
                 <br />
                 What do you want to train today?
                 <br />
-              </h3>
+              </h4>
             )}
             <FormControl>
               <form className={classes.form} noValidate onSubmit={handleSubmit}>
