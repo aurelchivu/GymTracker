@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSet, listSets } from '../../../../actions/setActions';
 import workoutSets from './workoutSets';
-import axios from 'axios';
+import useAxios from 'axios-hooks';
 // @material-ui/core
 import {
   makeStyles,
@@ -69,9 +69,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Workouts() {
+export default function Workouts({ history }) {
   const classes = useStyles();
   const workoutName = localStorage.getItem('workoutName');
+  // const {refetch} = useAxios();
 
   const dispatch = useDispatch();
 
@@ -87,15 +88,19 @@ export default function Workouts() {
   const setList = useSelector((state) => state.setList);
   const { loading, error, sets } = setList;
 
+  const fetchData = () => {
+    dispatch(listSets());
+  };
+
   useEffect(() => {
     let mounted = true;
-    console.log('Rerender')
-    dispatch(listSets());
+    console.log('Rerender');
+    fetchData();
     return () => {
       // When cleanup is called, toggle the mounted variable to false
       mounted = false;
     };
-  }, [dispatch]);
+  }, [weight]);
 
   const selectMuscle = (e) => {
     setMuscle(e.target.value);
@@ -113,31 +118,18 @@ export default function Workouts() {
       weight: weight,
     };
     dispatch(createSet(set));
-    window.location.reload();
+    setTimeout(() => {
+      fetchData();
+    }, 200);
+    // window.location.reload();
   };
 
-  // const displayData = (e) => {
-  //   e.preventDefault();
-  //   console.log('Rerender');
-  //   dispatch(listSets());
-  // }
-
-  // const DisplayData = () => {
-  //   useEffect(() => {
-  //     dispatch(listSets());
-  //   }, [dispatch]);
-  //   return (
-  //     <Card plain>
-  //       <CardBody>
-  //         <Table
-  //           tableHeaderColor='primary'
-  //           tableHead={['Muscle', 'Exercise', 'Reps', 'Weight']}
-  //           tableData={sets.data}
-  //         />
-  //       </CardBody>
-  //     </Card>
-  //   );
-  // };
+  const stopTraining = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('workoutName');
+    localStorage.removeItem('workoutId');
+    history.push(`/admin/dashboard/`);
+  };
 
   return (
     <>
@@ -148,7 +140,7 @@ export default function Workouts() {
           <h2>My Workouts</h2>
         </CardHeader>
         <CardBody>
-          <h3>Today's workout: {workoutName}</h3>
+          <h3>Today's {workoutName} workout summary:</h3>
           <GridContainer>
             <form
               style={{ display: 'flex' }}
@@ -220,11 +212,11 @@ export default function Workouts() {
           </GridContainer>
           {loading ? (
             <h3>
-              <CircularProgress color='secondary'/>
+              <CircularProgress color='secondary' />
             </h3>
           ) : error ? (
-            <h3>{error}</h3>
-          ) : (
+            <h3>{error.message}</h3>
+          ) : sets ? (
             <Card plain>
               <CardBody>
                 <Table
@@ -234,8 +226,27 @@ export default function Workouts() {
                 />
               </CardBody>
             </Card>
-          )}
+          ) : null }
+          <Grid container direction='row' spacing='3'>
+            <Grid item xs={2} sm={3} md={3}></Grid>
+            <Grid item xs={8} sm={6} md={6}>
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                color='primary'
+                round
+                className={classes.button}
+                center
+                onClick={stopTraining}
+              >
+                Stop Training
+              </Button>
+            </Grid>
+            <Grid item xs={2} sm={3} md={3}></Grid>
+          </Grid>
         </CardBody>
+
         <CardFooter chart>
           {/* <h3>Last week's workout summary.</h3> */}
         </CardFooter>
