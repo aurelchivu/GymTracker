@@ -33,8 +33,6 @@ export const createSet = (set) => async (dispatch, getState) => {
       workoutCreate: { workout },
     } = getState();
 
-    // const workoutId = localStorage.getItem('workoutId');
-
     const config = {
       headers: {
         'Content-Type': 'application/json',
