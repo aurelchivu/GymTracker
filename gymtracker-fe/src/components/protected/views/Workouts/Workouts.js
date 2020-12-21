@@ -71,13 +71,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Workouts({ history }) {
   const classes = useStyles();
-  const workoutName = localStorage.getItem('workoutName');
-  // const {refetch} = useAxios();
-
+  
   const dispatch = useDispatch();
-
-  // const setCreate = useSelector((state) => state.setCreate);
-  // const { set, success, error } = setCreate;
 
   const [muscle, setMuscle] = useState('');
   const [exercise, setExercise] = useState('');
@@ -88,19 +83,19 @@ export default function Workouts({ history }) {
   const setList = useSelector((state) => state.setList);
   const { loading, error, sets } = setList;
 
-  const fetchData = () => {
-    dispatch(listSets());
-  };
+  const setCreate = useSelector((state) => state.setCreate);
+  const { success } = setCreate;
+
+  const workoutCreate = useSelector((state) => state.workoutCreate);
+  const { workout } = workoutCreate;
+  const workoutName = workout.data.name;
 
   useEffect(() => {
-    let mounted = true;
-    console.log('Rerender');
-    fetchData();
-    return () => {
-      // When cleanup is called, toggle the mounted variable to false
-      mounted = false;
-    };
-  }, [weight]);
+    if (success) {
+      dispatch(listSets());
+      // history.push(`/admin/workouts/${workout.data._id}/sets`);
+    }
+  }, [success]);
 
   const selectMuscle = (e) => {
     setMuscle(e.target.value);
@@ -110,7 +105,6 @@ export default function Workouts({ history }) {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
     const set = {
       muscle: muscle,
       exercise: exercise,
@@ -118,16 +112,12 @@ export default function Workouts({ history }) {
       weight: weight,
     };
     dispatch(createSet(set));
-    setTimeout(() => {
-      fetchData();
-    }, 200);
-    // window.location.reload();
+    e.preventDefault();
   };
 
   const stopTraining = (e) => {
     e.preventDefault();
     localStorage.removeItem('workoutName');
-    localStorage.removeItem('workoutId');
     history.push(`/admin/dashboard/`);
   };
 
@@ -210,7 +200,7 @@ export default function Workouts({ history }) {
               </Button>
             </form>
           </GridContainer>
-          {loading ? (
+          {success && loading ? (
             <h3>
               <CircularProgress color='secondary' />
             </h3>
@@ -226,7 +216,7 @@ export default function Workouts({ history }) {
                 />
               </CardBody>
             </Card>
-          ) : null }
+          ) : null}
           <Grid container direction='row' spacing='3'>
             <Grid item xs={2} sm={3} md={3}></Grid>
             <Grid item xs={8} sm={6} md={6}>
@@ -259,3 +249,5 @@ export default function Workouts({ history }) {
 
 // Clear form fields after form submit ???
 // Form validation
+// Keep workout id after changing menu items
+// Move create sets in Dashboard

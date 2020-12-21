@@ -23,6 +23,7 @@ import CardBody from '../../components/Card/CardBody.js';
 import CardFooter from '../../components/Card/CardFooter.js';
 
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import { successCardHeader } from '../../assets/jss/material-dashboard-react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard({ history }) {
+export default function Dashboard({ location, history }) {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const newUser = localStorage.getItem('newUser');
@@ -50,19 +51,20 @@ export default function Dashboard({ history }) {
   const googleWorkout = 'legs';
   const classes = useStyles();
 
-  // const redirect = location.search ? location.search.split('=')[1] : '/admin/workouts'
+  // const redirect = location.search ? location.search.split('=')[1] : `/admin/workouts/${workout.data._id}/sets`
 
   const dispatch = useDispatch();
 
   const workoutCreate = useSelector((state) => state.workoutCreate);
   const { workout, success, error } = workoutCreate;
 
-  // useEffect(() => {
-  //   if (success) {
-  //     // localStorage.setItem('workoutId', workout.data._id);
-  //     history.push(`/admin/workouts/${workout.data._id}/sets`);
-  //   }
-  // }, [success]);
+  useEffect(() => {
+    if (success) {
+      console.log('successsssssssssss')
+      history.push(`/admin/workouts/${workout.data._id}/sets`);
+      console.log(workout.data._id);
+    }
+  }, [success]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,10 +73,13 @@ export default function Dashboard({ history }) {
         name: workoutName,
       })
     );
-    localStorage.setItem('workoutName', workoutName);
-    if (success) {
-      history.push(`/admin/workouts/${workout.data._id}/sets`);
-    }
+    // localStorage.setItem('workoutName', workoutName);
+
+    // if (success) {
+    //   history.push(`/admin/workouts/${workout.data._id}/sets`);
+    // } else {
+    //   console.log('Succes not')
+    // }
   };
 
   return (
@@ -157,3 +162,4 @@ export default function Dashboard({ history }) {
 }
 
 // Make form inactive after submit
+// Form validation
