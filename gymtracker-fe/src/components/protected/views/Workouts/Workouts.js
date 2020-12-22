@@ -93,7 +93,7 @@ export default function Workouts({ history }) {
   useEffect(() => {
     if (success) {
       dispatch(listSets());
-      // history.push(`/admin/workouts/${workout.data._id}/sets`);
+      history.push(`/admin/workouts/${workout.data._id}/sets`);
     }
   }, [success]);
 

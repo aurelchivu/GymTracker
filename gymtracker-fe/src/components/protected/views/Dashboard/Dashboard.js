@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createWorkout } from '../../../../actions/workoutActions';
 
@@ -43,8 +43,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard({ location, history }) {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
   const newUser = localStorage.getItem('newUser');
   const [workoutName, setWorkoutName] = useState('');
+
   const currentDate = new Date().toDateString();
   const currentTime = new Date().toLocaleTimeString();
   const lastWeekWorkout = 'back and abs';
@@ -58,11 +60,15 @@ export default function Dashboard({ location, history }) {
   const workoutCreate = useSelector((state) => state.workoutCreate);
   const { workout, success, error } = workoutCreate;
 
+  const didMount = useRef(false);
+
   useEffect(() => {
-    if (success) {
-      console.log('successsssssssssss')
+    if (success && didMount.current) {
+      console.log('successsssssssssss');
       history.push(`/admin/workouts/${workout.data._id}/sets`);
       console.log(workout.data._id);
+    } else {
+      didMount.current = true;
     }
   }, [success]);
 
