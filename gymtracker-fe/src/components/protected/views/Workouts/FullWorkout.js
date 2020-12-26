@@ -12,13 +12,13 @@ import styles from '../../assets/jss/material-dashboard-react/components/tableSt
 
 const useStyles = makeStyles(styles);
 
-export default function CustomTable(props) {
+export default function FullWorkout({ tableHead, tableData, tableHeaderColor }) {
   const classes = useStyles();
-  const { tableHead, tableData, tableHeaderColor } = props;
+
   return (
-    <div className={classes.tableResponsive}>
-      <Table className={classes.table}>
-        {tableHead !== undefined ? (
+    <>
+      {tableData !== undefined ? (
+        <Table className={classes.table}>
           <TableHead className={classes[tableHeaderColor + 'TableHeader']}>
             <TableRow className={classes.tableHeadRow}>
               {tableHead.map((prop, key) => {
@@ -33,32 +33,35 @@ export default function CustomTable(props) {
               })}
             </TableRow>
           </TableHead>
-        ) : null}
-        <TableBody>
-          {tableData.map((prop, key) => {
-            return (
-              <TableRow key={key} className={classes.tableBodyRow}>
-                {prop.map((prop, key) => {
-                  return (
-                    <TableCell className={classes.tableCell} key={key}>
-                      {prop}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </div>
+          <TableBody>
+            {tableData.map((item, key) => {
+              const unused = ['createdAt', '__v', '_id', 'user', 'workout'];
+              unused.map((unused) => delete item[unused]);
+              return (
+                <TableRow key={key} className={classes.tableBodyRow}>
+                  {Object.values(item).map((prop, key) => {
+                    // console.log(prop);
+                    return (
+                      <TableCell className={classes.tableCell} key={key}>
+                        {prop}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      ) : null}
+    </>
   );
 }
 
-CustomTable.defaultProps = {
+FullWorkout.defaultProps = {
   tableHeaderColor: 'gray',
 };
 
-CustomTable.propTypes = {
+FullWorkout.propTypes = {
   tableHeaderColor: PropTypes.oneOf([
     'warning',
     'primary',

@@ -12,7 +12,7 @@ import Login from './components/public/Login'
 import PublicComponent from './components/public/PublicComponent'
 import Register from './components/public/Register'
 
-import Image from './utils/gym.jpg'
+import Image from './utils/Fitness.ico'
 import { palette } from '@material-ui/system';
 
 const theme = createMuiTheme({
@@ -29,10 +29,12 @@ const styles = theme => ({
 			backgroundPosition: "center center",
 			backgroundSize: "cover",
 			backgroundAttachment: "fixed",
-      height: "100%"
+      height: "fixed",
+      position: "center"
 		},
 		html: {
-      height: "100%"
+      height: "100%",
+
 		},
 		"#componentWithId": {
       height: "100%"
@@ -45,7 +47,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Typography style={{ margin: 10 }} color="secondary">
+      <Typography style={{ margin: 10 }} >
         <Route exact path="/" render={props => <PublicComponent {...props} />} />
         <Route exact path="/" render={props => <Home {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
@@ -58,3 +60,5 @@ const App = () => {
 }
 
 export default withStyles(styles)(App);
+
+// Fix double scrollbar

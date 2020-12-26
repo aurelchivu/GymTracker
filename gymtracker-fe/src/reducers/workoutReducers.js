@@ -2,6 +2,7 @@ import {
   WORKOUT_CREATE_REQUEST,
   WORKOUT_CREATE_SUCCESS,
   WORKOUT_CREATE_FAIL,
+  WORKOUT_CREATE_RESET,
   WORKOUT_LIST_REQUEST,
   WORKOUT_LIST_SUCCESS,
   WORKOUT_LIST_FAIL,
@@ -23,6 +24,11 @@ export const workoutCreateReducer = (state = {}, action) => {
     case WORKOUT_CREATE_SUCCESS:
       return { loading: false, success: true, workout: action.payload };
     case WORKOUT_CREATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case WORKOUT_CREATE_RESET:
       return {};
     default:
       return state;

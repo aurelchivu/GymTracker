@@ -17,6 +17,8 @@ import styles from "../assets/jss/material-dashboard-react/layouts/adminStyle.js
 
 import bgImage from "../assets/img/sidebar.jpg";
 import logo from "../assets/img/reactlogo.png";
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
+import { LocalDiningOutlined } from "@material-ui/icons";
 
 let ps;
 
@@ -89,12 +91,12 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
-        logoText={"GymTracker"}
+        logoText={'GymTracker'}
         logo={logo}
         image={image}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
-        color="purple"
+        color='purple'
         {...rest}
       />
       <div className={classes.mainPanel} ref={mainPanel}>

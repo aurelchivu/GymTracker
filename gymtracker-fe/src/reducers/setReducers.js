@@ -2,6 +2,7 @@ import {
   SET_CREATE_REQUEST,
   SET_CREATE_SUCCESS,
   SET_CREATE_FAIL,
+  SET_CREATE_RESET,
   SET_LIST_REQUEST,
   SET_LIST_SUCCESS,
   SET_LIST_FAIL,
@@ -23,6 +24,11 @@ export const setCreateReducer = (state = {}, action) => {
     case SET_CREATE_SUCCESS:
       return { loading: false, success: true, set: action.payload };
     case SET_CREATE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case SET_CREATE_RESET:
       return {};
     default:
       return state;

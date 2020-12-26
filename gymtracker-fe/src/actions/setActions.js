@@ -3,6 +3,7 @@ import {
   SET_CREATE_REQUEST,
   SET_CREATE_SUCCESS,
   SET_CREATE_FAIL,
+  SET_CREATE_RESET,
   SET_LIST_REQUEST,
   SET_LIST_SUCCESS,
   SET_LIST_FAIL,
@@ -66,7 +67,7 @@ export const createSet = (set) => async (dispatch, getState) => {
 };
 
 // Get list of sets
-export const listSets = () => async (dispatch, getState) => {
+export const listSets = (workoutId) => async (dispatch, getState) => {
   try {
     dispatch({ type: SET_LIST_REQUEST });
 
@@ -78,6 +79,8 @@ export const listSets = () => async (dispatch, getState) => {
       workoutCreate: { workout },
     } = getState();
 
+    
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -87,7 +90,8 @@ export const listSets = () => async (dispatch, getState) => {
 
     const { data } = await axios.get(
       `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets`,
-      config
+      config,
+      workoutId
     );
 
     dispatch({
@@ -224,3 +228,22 @@ export const deleteSet = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+// Reset set
+export const resetSet = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SET_CREATE_RESET,
+    });
+
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
+  }
+};
+
