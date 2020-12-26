@@ -53,8 +53,6 @@ export default function Dashboard({ location, history }) {
   const googleWorkout = 'legs';
   const classes = useStyles();
 
-  // const redirect = location.search ? location.search.split('=')[1] : `/admin/workouts/${workout.data._id}/sets`
-
   const dispatch = useDispatch();
 
   const workoutCreate = useSelector((state) => state.workoutCreate);
@@ -64,9 +62,7 @@ export default function Dashboard({ location, history }) {
 
   useEffect(() => {
     if (success && didMount.current) {
-      console.log('successsssssssssss');
       history.push(`/admin/workouts/${workout.data._id}/sets`);
-      console.log(workout.data._id);
     } else {
       didMount.current = true;
     }
@@ -79,13 +75,6 @@ export default function Dashboard({ location, history }) {
         name: workoutName,
       })
     );
-    // localStorage.setItem('workoutName', workoutName);
-
-    // if (success) {
-    //   history.push(`/admin/workouts/${workout.data._id}/sets`);
-    // } else {
-    //   console.log('Succes not')
-    // }
   };
 
   return (
@@ -93,7 +82,7 @@ export default function Dashboard({ location, history }) {
       <GridItem xs={12} sm={12} md={12}>
         <Card>
           <CardHeader color='primary'>
-            <h2>Dasboard</h2>
+            <h2>Dashboard</h2>
           </CardHeader>
           <CardBody>
             {newUser === 'true' ? (
@@ -167,5 +156,4 @@ export default function Dashboard({ location, history }) {
   );
 }
 
-// Make form inactive after submit
 // Form validation

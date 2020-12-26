@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'
-import { register } from '../../actions/userActions'
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../actions/userActions';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -17,9 +17,9 @@ import Container from '@material-ui/core/Container';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color="inherit" href="http://localhost:3000/">
+      <Link color='inherit' href='http://localhost:3000/'>
         GymTracker
       </Link>{' '}
       {new Date().getFullYear()}
@@ -60,7 +60,7 @@ export default function Register({ location, history }) {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/admin'
+  const redirect = location.search ? location.search.split('=')[1] : '/admin';
 
   useEffect(() => {
     if (userInfo) {
@@ -72,94 +72,89 @@ export default function Register({ location, history }) {
     e.preventDefault();
     dispatch(register(username, email, password));
     localStorage.setItem('newUser', true);
-  }
+  };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component='h1' variant='h5'>
           Register
         </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={handleSubmit}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
                 value={username}
-                onInput={ e => setUsername(e.target.value)}
-                variant="outlined"
-                margin="normal"
+                onInput={(e) => setUsername(e.target.value)}
+                variant='outlined'
+                margin='normal'
                 required
                 fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
+                id='username'
+                label='Username'
+                name='username'
+                autoComplete='username'
                 autoFocus
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 value={email}
-                onInput={ e => setEmail(e.target.value)}
-                variant="outlined"
+                onInput={(e) => setEmail(e.target.value)}
+                variant='outlined'
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
+                id='email'
+                label='Email Address'
+                name='email'
+                autoComplete='email'
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 value={password}
-                onInput={ e => setPassword(e.target.value)}
-                variant="outlined"
+                onInput={(e) => setPassword(e.target.value)}
+                variant='outlined'
                 required
                 fullWidth
-                name="password"
-                label="Choose a password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
+                name='password'
+                label='Choose a password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 value={confirmPassword}
-                onInput={ e => setConfirmPassword(e.target.value)}
-                variant="outlined"
+                onInput={(e) => setConfirmPassword(e.target.value)}
+                variant='outlined'
                 required
                 fullWidth
-                name="confirm password"
-                label="Confirm Password"
-                type="password"
-                id="password"
-                autoComplete="confirm-password"
+                name='confirm password'
+                label='Confirm Password'
+                type='password'
+                id='password'
+                autoComplete='confirm-password'
               />
             </Grid>
-            </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-              Register
-              </Button>
-            <Grid container>
-              <Grid alignItems="center">
-                <ReactLink to="/login">
-                  Already have an account? Log in
-                </ReactLink>
+          </Grid>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            color='primary'
+            className={classes.submit}
+          >
+            Register
+          </Button>
+          <Grid container>
+            <Grid alignItems='center'>
+              <ReactLink to='/login'>Already have an account? Log in</ReactLink>
             </Grid>
           </Grid>
         </form>
@@ -171,4 +166,5 @@ export default function Register({ location, history }) {
   );
 }
 
-//form validation
+// Form validation
+// Check if CapsLock is on

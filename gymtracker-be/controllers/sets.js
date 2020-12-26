@@ -15,7 +15,7 @@ exports.createSet = asyncHandler(async (req, res, next) => {
 
   if (!workout) {
     return next(
-      new ErrorResponse(`No workouttttt with the id of ${req.params.workoutId}`),
+      new ErrorResponse(`No workout with the id of ${req.params.workoutId}`),
       404
     );
   }

@@ -3,6 +3,7 @@ import {
   WORKOUT_CREATE_REQUEST,
   WORKOUT_CREATE_SUCCESS,
   WORKOUT_CREATE_FAIL,
+  WORKOUT_CREATE_RESET,
   WORKOUT_LIST_REQUEST,
   WORKOUT_LIST_SUCCESS,
   WORKOUT_LIST_FAIL,
@@ -189,5 +190,23 @@ export const deleteWorkout = (id) => async (dispatch, getState) => {
       type: WORKOUT_DELETE_FAIL,
       payload: message,
     });
+  }
+};
+
+// Reset workout
+export const resetWorkout = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: WORKOUT_CREATE_RESET,
+    });
+
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
   }
 };
