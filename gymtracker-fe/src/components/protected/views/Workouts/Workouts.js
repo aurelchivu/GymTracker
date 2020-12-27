@@ -11,9 +11,7 @@ export default function Workouts(props) {
 
   if (workout) {
     workoutName = workout.data.name;
-  } else {
-    workoutName = '';
   }
 
-  return <>{workoutName === '' ? <ListWorkouts /> : <CurrentWorkout />}</>;
+  return <>{workoutName === undefined ? <ListWorkouts /> : <CurrentWorkout />}</>;
 }

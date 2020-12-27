@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Login from './Login';
@@ -49,16 +50,16 @@ export default function PublicComponent() {
           >
             <MenuIcon />
           </IconButton>
-          <Button color='inherit' href='/'>
+          <Button color='inherit' component={Link} to='/'>
             Home
           </Button>
-          <Button color='inherit' href='/login'>
+          <Button color='inherit' component={Link} to='/login'>
             Login
           </Button>
-          <Button color='inherit' href='/register'>
+          <Button color='inherit' component={Link} to='/register'>
             Register
           </Button>
-          <Button color='inherit' href='/about'>
+          <Button color='inherit' component={Link} to='/about'>
             About
           </Button>
         </Toolbar>

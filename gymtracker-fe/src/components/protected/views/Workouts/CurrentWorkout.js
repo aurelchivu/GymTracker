@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSet, listSets, resetSet } from '../../../../actions/setActions';
+import {
+  createSet,
+  listSets,
+  resetSet,
+  listSetsReset,
+} from '../../../../actions/setActions';
 import { resetWorkout } from '../../../../actions/workoutActions';
 import workoutSets from './workoutSets';
 // @material-ui/core
@@ -122,6 +127,7 @@ export default function CurrentWorkout(props) {
     e.preventDefault();
     dispatch(resetSet());
     dispatch(resetWorkout());
+    dispatch(listSetsReset());
   };
 
   return (

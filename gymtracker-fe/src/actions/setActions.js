@@ -7,6 +7,7 @@ import {
   SET_LIST_REQUEST,
   SET_LIST_SUCCESS,
   SET_LIST_FAIL,
+  SET_LIST_RESET,
   SET_DETAILS_REQUEST,
   SET_DETAILS_SUCCESS,
   SET_DETAILS_FAIL,
@@ -230,12 +231,29 @@ export const deleteSet = (id) => async (dispatch, getState) => {
 };
 
 // Reset set
-export const resetSet = () => async (dispatch, getState) => {
+export const resetSet = () => async (dispatch) => {
   try {
     dispatch({
       type: SET_CREATE_RESET,
     });
 
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
+  }
+};
+
+// Reset set list
+export const listSetsReset = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: SET_LIST_RESET,
+    });
   } catch (error) {
     const message =
       error.response && error.response.data.message

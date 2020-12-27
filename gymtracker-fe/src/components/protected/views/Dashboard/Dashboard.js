@@ -86,7 +86,7 @@ export default function Dashboard({ location, history }) {
           </CardHeader>
           <CardBody>
             {newUser === 'true' ? (
-              <h className={classes.cardTitle}>
+              <h4 className={classes.cardTitle}>
                 Hello, {userInfo.username}! <br />
                 Welcome to GymTracker!
                 <br />
@@ -97,7 +97,7 @@ export default function Dashboard({ location, history }) {
                 <br />
                 What do you want to train today?
                 <br />
-              </h>
+              </h4>
             ) : (
               <h4 className={classes.cardTitle}>
                 Hello, {userInfo.username}! <br />
