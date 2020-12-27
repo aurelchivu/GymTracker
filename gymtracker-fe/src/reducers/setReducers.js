@@ -6,6 +6,7 @@ import {
   SET_LIST_REQUEST,
   SET_LIST_SUCCESS,
   SET_LIST_FAIL,
+  SET_LIST_RESET,
   SET_DETAILS_REQUEST,
   SET_DETAILS_SUCCESS,
   SET_DETAILS_FAIL,
@@ -49,6 +50,8 @@ export const setListReducer = (state = { sets: [] }, action) => {
         loading: false,
         error: action.payload,
       };
+    case SET_LIST_RESET:
+      return {};
     default:
       return state;
   }
