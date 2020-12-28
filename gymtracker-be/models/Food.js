@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const timeZone = require('mongoose-timezone');
 const slugify = require('slugify');
 
 const FoodSchema = new mongoose.Schema(
@@ -54,5 +55,6 @@ const FoodSchema = new mongoose.Schema(
 //   this.slug = slugify(this.name, { lower: true });
 //   next();
 // });
+FoodSchema.plugin(timeZone);
 
 module.exports = mongoose.model('Food', FoodSchema);

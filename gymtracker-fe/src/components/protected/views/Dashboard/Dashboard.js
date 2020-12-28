@@ -5,14 +5,8 @@ import { createWorkout } from '../../../../actions/workoutActions';
 // @material-ui/core
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 // core components
 import Button from '../../components/CustomButtons/Button.js';
 import GridItem from '../../components/Grid/GridItem.js';
@@ -21,9 +15,6 @@ import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
 import CardFooter from '../../components/Card/CardFooter.js';
-
-import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
-import { successCardHeader } from '../../assets/jss/material-dashboard-react';
 
 const useStyles = makeStyles((theme) => ({
   root: {

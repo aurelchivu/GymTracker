@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const timeZone = require('mongoose-timezone');
 const slugify = require('slugify'); // part of a URL which identifies a particular page on a website in a form readable by users
 
 const WorkoutSchema = new mongoose.Schema(
@@ -27,6 +28,8 @@ const WorkoutSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+WorkoutSchema.plugin(timeZone);
 
 // Create workout slug from the name
 // WorkoutSchema.pre('save', function(next) {

@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
-import {AppBar,CssBaseline,Typography,createMuiTheme} from "@material-ui/core";
+import {CssBaseline,Typography,createMuiTheme} from "@material-ui/core";
 
 import Admin from './components/protected/layouts/Admin';
 import About from './components/public/About'
@@ -13,7 +13,6 @@ import PublicComponent from './components/public/PublicComponent'
 import Register from './components/public/Register'
 
 import Image from './utils/Fitness.ico'
-import { palette } from '@material-ui/system';
 
 const theme = createMuiTheme({
   palette: {

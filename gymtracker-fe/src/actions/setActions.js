@@ -120,7 +120,7 @@ export const setDetails = (id) => async (dispatch, getState) => {
     } = getState();
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/workouts/${workout.data._id}//sets/${id}`
+      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets/${id}`
     );
 
     dispatch({

@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'date-fns';
+import { parseISO, format } from 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 import { createSet, listSets } from '../../../../actions/setActions';
+import { listWorkouts } from '../../../../actions/workoutActions';
 import workoutSets from './workoutSets';
-import ListWorkouts from './ListWorkouts';
-// @material-ui/lab
-// import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-// import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-// import DesktopDatePicker from '@material-ui/lab/DesktopDatePicker';
-// @material-ui/core
 import {
   makeStyles,
   ServerStyleSheets,
@@ -47,14 +43,18 @@ const useStyles = makeStyles((theme) => ({
 export default function Workouts({ history }) {
   const classes = useStyles();
 
+  const workoutList = useSelector((state) => state.workoutList);
+  const { loading, error, workouts } = workoutList;
+
   const dispatch = useDispatch();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  console.log(selectedDate);
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    const queryDate = date.toISOString().split('T')[0];
+    console.log(queryDate);
+    dispatch(listWorkouts(date));
   };
 
   return (
@@ -70,7 +70,7 @@ export default function Workouts({ history }) {
               margin='normal'
               id='date-picker-dialog'
               label='Please select a date'
-              format='dd/MM/yyyy'
+              format='dd-MM-yyyy'
               value={selectedDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{

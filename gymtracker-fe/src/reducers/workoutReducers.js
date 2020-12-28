@@ -42,9 +42,7 @@ export const workoutListReducer = (state = { workouts: [] }, action) => {
     case WORKOUT_LIST_SUCCESS:
       return {
         loading: false,
-        workouts: action.payload.workouts,
-        pages: action.payload.pages,
-        page: action.payload.page,
+        workouts: action.payload,
       };
     case WORKOUT_LIST_FAIL:
       return { loading: false, error: action.payload };
