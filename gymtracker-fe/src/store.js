@@ -45,7 +45,7 @@ const appReducer = combineReducers({
   userRegister: userRegisterReducer,
   // userDetails: userDetailsReducer,
   workoutCreate: workoutCreateReducer,
-  // workoutList: workoutListReducer,
+  workoutList: workoutListReducer,
   // workoutDetails: workoutDetailsReducer,
   // workoutUpdate: workoutUpdateReducer,
   // workoutDelete: workoutDeleteReducer,

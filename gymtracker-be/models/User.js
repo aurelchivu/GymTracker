@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const timeZone = require('mongoose-timezone');
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -70,5 +71,7 @@ UserSchema.methods.getResetPasswordToken = function() {
 
   return resetToken;
 };
+
+UserSchema.plugin(timeZone);
 
 module.exports = mongoose.model('User', UserSchema);

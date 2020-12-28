@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const timeZone = require('mongoose-timezone');
 const slugify = require('slugify');
 
 const MeasurementSchema = new mongoose.Schema(
@@ -30,5 +31,7 @@ const MeasurementSchema = new mongoose.Schema(
 //   this.slug = slugify(this.name, { lower: true });
 //   next();
 // });
+
+MeasurementSchema.plugin(timeZone);
 
 module.exports = mongoose.model('Measurement', MeasurementSchema);

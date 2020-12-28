@@ -63,20 +63,32 @@ export const createWorkout = (workout) => async (dispatch, getState) => {
 };
 
 // Get list of workouts
-export const listWorkouts = (keyword = '', pageNumber = '') => async (
-  dispatch
-) => {
+export const listWorkouts = (date) => async (dispatch, getState) => {
   try {
     dispatch({ type: WORKOUT_LIST_REQUEST });
 
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/workouts?keyword=${keyword}&pageNumber=${pageNumber}`
+      `http://localhost:5000/api/v1/workouts?date=${date}`,
+      config
     );
 
     dispatch({
       type: WORKOUT_LIST_SUCCESS,
       payload: data,
     });
+
+    console.log(data);
   } catch (error) {
     dispatch({
       type: WORKOUT_LIST_FAIL,
@@ -199,7 +211,6 @@ export const resetWorkout = () => async (dispatch, getState) => {
     dispatch({
       type: WORKOUT_CREATE_RESET,
     });
-
   } catch (error) {
     const message =
       error.response && error.response.data.message

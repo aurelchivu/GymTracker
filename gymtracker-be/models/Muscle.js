@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const timeZone = require('mongoose-timezone');
 const slugify = require('slugify');
 
 const MuscleSchema = new mongoose.Schema(
@@ -46,5 +47,7 @@ MuscleSchema.virtual('measurements', {
   foreignField: 'muscle',
   justOne: false,
 });
+
+MuscleSchema.plugin(timeZone);
 
 module.exports = mongoose.model('Muscle', MuscleSchema);

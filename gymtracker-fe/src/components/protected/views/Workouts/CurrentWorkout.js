@@ -11,13 +11,9 @@ import workoutSets from './workoutSets';
 // @material-ui/core
 import {
   makeStyles,
-  ServerStyleSheets,
   withStyles,
 } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
@@ -224,6 +220,8 @@ export default function CurrentWorkout(props) {
               </CardBody>
             </Card>
           ) : null}
+          <br />
+          <br />
           <Grid container direction='row' spacing='3'>
             <Grid item xs={2} sm={3} md={3}></Grid>
             <Grid item xs={8} sm={6} md={6}>

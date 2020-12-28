@@ -36,11 +36,10 @@ export default function FullWorkout({ tableHead, tableData, tableHeaderColor }) 
           <TableBody>
             {tableData.map((item, key) => {
               const unused = ['createdAt', '__v', '_id', 'user', 'workout'];
-              unused.map((unused) => delete item[unused]);
+              unused.forEach((unused) => delete item[unused]);
               return (
                 <TableRow key={key} className={classes.tableBodyRow}>
                   {Object.values(item).map((prop, key) => {
-                    // console.log(prop);
                     return (
                       <TableCell className={classes.tableCell} key={key}>
                         {prop}

@@ -1,13 +1,14 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
+
 
 function Copyright() {
   return (
     <Typography variant='body2' color='textSecondary' align='center'>
       {'Copyright © '}
-      <Link color='inherit' href='http://localhost:3000/'>
+      <Link color='inherit' to='/'>
         GymTracker
       </Link>{' '}
       {new Date().getFullYear()}

@@ -1,11 +1,5 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-import Login from './Login';
-import Register from './Register';
-import About from './About';
-import Home from './Home';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,8 +7,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import * as Colors from 'material-ui/styles/colors';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {

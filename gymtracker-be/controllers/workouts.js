@@ -1,3 +1,7 @@
+const moment = require('moment');
+const startOfDay = require('date-fns/startOfDay');
+const endOfDay = require('date-fns/endOfDay');
+const parseISO = require('date-fns/parseISO');
 const ErrorResponse = require('../utils/errorResponse'); // custom error handler
 const asyncHandler = require('../middleware/async'); // custom async handler to avoid repeating the try/catch code on each async middleware
 const Workout = require('../models/Workout');
@@ -8,7 +12,6 @@ const Workout = require('../models/Workout');
 exports.createWorkout = asyncHandler(async (req, res) => {
   // Add user to req.body
   req.body.user = req.user.id;
-  
 
   const workout = await Workout.create(req.body);
 
@@ -22,9 +25,32 @@ exports.createWorkout = asyncHandler(async (req, res) => {
 // @route     GET /api/v1/workouts/
 // @access    Private
 exports.getWorkouts = asyncHandler(async (req, res) => {
-  const workouts = await Workout.find({ user: req.user.id }).populate({
+  const date = req.query.date;
+  queryDate = new Date(date).toISOString().split('T')[0];
+  console.log(new Date(req.query.date).toISOString().split('T')[0]);
+
+  // const startDay = startOfDay(new Date(date));
+  // console.log(startDay);
+  // const endDay = endOfDay(new Date(date));
+  // console.log(endDay);
+
+  const momentStartDay = moment(new Date(date))
+    .startOf('day')
+    .toISOString()
+    .split('T')[0];
+  console.log(momentStartDay);
+  const momentEndDay = moment(new Date(date))
+    .endOf('day')
+    .toISOString()
+    .split('T')[0];
+  console.log(momentEndDay);
+
+  const workouts = await Workout.find({
+    user: req.user.id,
+    createdAt: { $gte: momentStartDay, $lte: momentEndDay },
+  }).populate({
     path: 'sets',
-    select: 'muscle name reps weight',
+    select: 'muscle exercise reps weight',
   });
 
   res.status(200).json({
