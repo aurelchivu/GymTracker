@@ -52,8 +52,8 @@ export default function Workouts({ history }) {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    const queryDate = date.toISOString().split('T')[0];
-    console.log(queryDate);
+    // const queryDate = date.toISOString().split('T')[0];
+    // console.log(queryDate);
     dispatch(listWorkouts(date));
   };
 
@@ -88,7 +88,4 @@ export default function Workouts({ history }) {
   );
 }
 
-// Clear form fields after form submit ???
-// Form validation
-// Keep workout id after location ???
-// Move create sets in Dashboard ???
+
