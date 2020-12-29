@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import WorkoutsList from './WorkoutsList';
 import CurrentWorkout from './CurrentWorkout';
 
-export default function Workouts(props) {
+export default function Workouts({ history }) {
   const workoutCreate = useSelector((state) => state.workoutCreate);
   const { workout } = workoutCreate;
 
@@ -14,6 +14,12 @@ export default function Workouts(props) {
   }
 
   return (
-    <>{workoutName === undefined ? <WorkoutsList /> : <CurrentWorkout />}</>
+    <>
+      {workoutName === undefined ? (
+        <WorkoutsList history={history} />
+      ) : (
+        <CurrentWorkout history={history} />
+      )}
+    </>
   );
 }

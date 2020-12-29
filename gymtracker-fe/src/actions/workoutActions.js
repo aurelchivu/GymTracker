@@ -88,7 +88,6 @@ export const listWorkouts = (date) => async (dispatch, getState) => {
       payload: data,
     });
 
-    console.log(data);
   } catch (error) {
     dispatch({
       type: WORKOUT_LIST_FAIL,

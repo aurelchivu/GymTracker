@@ -9,7 +9,7 @@ const MeasurementSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    muscle: {
+    bodyPart: {
       type: mongoose.Schema.ObjectId,
       ref: 'Muscle',
       required: true,
