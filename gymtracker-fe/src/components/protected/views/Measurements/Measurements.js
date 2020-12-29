@@ -28,7 +28,16 @@ export default function Measurements() {
               {/* <h3 className={classes.cardTitle}>
                 You have no registered measurements.
               </h3> */}
-
+              <GridItem xs={12} sm={12} md={12}>
+                <Button color='primary' round>
+                  Neck
+                </Button>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <Button color='primary' round>
+                  Shoulders
+                </Button>
+              </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <Button color='primary' round>
                   Chest
@@ -41,32 +50,47 @@ export default function Measurements() {
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <Button color='primary' round>
-                  Hip
+                  Hips
                 </Button>
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <Button color='primary' round>
-                  Bicep
+                  Left Bicep
                 </Button>
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <Button color='primary' round>
-                  Forearm
+                  Right Bicep
                 </Button>
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <Button color='primary' round>
-                  Thigh
+                  Left Forearm
                 </Button>
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <Button color='primary' round>
-                  Calve
+                  Right Forearm
                 </Button>
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <Button color='primary' round>
-                  Neck
+                  Left Thigh
+                </Button>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <Button color='primary' round>
+                  Right Thigh
+                </Button>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <Button color='primary' round>
+                  Left Calf
+                </Button>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12}>
+                <Button color='primary' round>
+                  Right Calf
                 </Button>
               </GridItem>
             </CardBody>

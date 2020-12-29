@@ -8,6 +8,7 @@ import {
 } from '../../../../actions/setActions';
 import { resetWorkout } from '../../../../actions/workoutActions';
 import workoutSets from './workoutSets';
+import FullWorkout from './FullWorkout';
 // @material-ui/core
 import {
   makeStyles,
@@ -27,7 +28,7 @@ import CardBody from '../../components/Card/CardBody.js';
 import CardFooter from '../../components/Card/CardFooter.js';
 import Button from '../../components/CustomButtons/Button.js';
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
-import FullWorkout from './FullWorkout';
+
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CurrentWorkout(props) {
+export default function CurrentWorkout({history}) {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -97,7 +98,7 @@ export default function CurrentWorkout(props) {
   useEffect(() => {
     if (success) {
       dispatch(listSets(workoutId));
-      // history.push(`/admin/workouts/${workout.data._id}/sets`);
+      history.push(`/admin/workouts/${workout.data._id}/sets`);
     }
   }, [success]);
 
@@ -124,6 +125,7 @@ export default function CurrentWorkout(props) {
     dispatch(resetSet());
     dispatch(resetWorkout());
     dispatch(listSetsReset());
+    history.push(`/admin/workouts/`);
   };
 
   return (
@@ -209,7 +211,7 @@ export default function CurrentWorkout(props) {
             </h3>
           ) : error ? (
             <h3>{error}</h3>
-          ) : success && sets.data ? (
+          ) : success && sets !== undefined ? (
             <Card plain>
               <CardBody>
                 <FullWorkout
@@ -220,7 +222,6 @@ export default function CurrentWorkout(props) {
               </CardBody>
             </Card>
           ) : null}
-          <br />
           <br />
           <Grid container direction='row' spacing='3'>
             <Grid item xs={2} sm={3} md={3}></Grid>
@@ -250,7 +251,5 @@ export default function CurrentWorkout(props) {
   );
 }
 
-// Clear form fields after form submit ???
 // Form validation
-// Keep workout id after location ???
-// Move create sets in Dashboard ???
+// Keep workout id after change location

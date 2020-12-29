@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'date-fns';
-import { parseISO, format } from 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { createSet, listSets } from '../../../../actions/setActions';
 import { listWorkouts } from '../../../../actions/workoutActions';
-import workoutSets from './workoutSets';
+import FullWorkout from './FullWorkout';
 import {
   makeStyles,
   ServerStyleSheets,
@@ -32,7 +30,6 @@ import CardBody from '../../components/Card/CardBody.js';
 import CardFooter from '../../components/Card/CardFooter.js';
 import Button from '../../components/CustomButtons/Button.js';
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
-import FullWorkout from './FullWorkout';
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -40,22 +37,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Workouts({ history }) {
+export default function WorkoutsList({ history }) {
   const classes = useStyles();
 
   const workoutList = useSelector((state) => state.workoutList);
   const { loading, error, workouts } = workoutList;
+  const { success, count, data } = workouts;
+  console.log(data);
 
   const dispatch = useDispatch();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  useEffect(() => {
+    if (success) {
+      // dispatch(listWorkouts(setSelectedDate));
+      console.log(data);
+    }
+  }, [success]);
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    // const queryDate = date.toISOString().split('T')[0];
+    const queryDate = date.toISOString().split('T')[0];
     // console.log(queryDate);
     dispatch(listWorkouts(date));
   };
+
+  const workoutDate = selectedDate.toDateString();
 
   return (
     <>
@@ -79,13 +87,50 @@ export default function Workouts({ history }) {
             />
           </MuiPickersUtilsProvider>
         </CardBody>
-
         <CardFooter chart>
-          <br />
+          {loading ? (
+            <h3>
+              <CircularProgress color='primary' />
+            </h3>
+          ) : error ? (
+            <h3>{error}</h3>
+          ) : count >= 0 ? (
+            <Card plain>
+              <CardBody>
+                {count === 0 ? (
+                  <h3>{workoutDate} you had no workuts!</h3>
+                ) : count === 1 ? (
+                  <h3>
+                    {workoutDate} you had {count} workut:
+                  </h3>
+                ) : (
+                  <h3>
+                    {workoutDate} you had {count} workuts:
+                  </h3>
+                )}
+                <br />
+                {data.map((workout) => {
+                  return (
+                    <>
+                      <h3>{workout.name}</h3>
+                      <FullWorkout
+                        tableHeaderColor='primary'
+                        tableHead={['Muscle', 'Exercise', 'Reps', 'Weight']}
+                        tableData={workout.sets}
+                      />
+                      <br />
+                      <br />
+                    </>
+                  );
+                })}
+              </CardBody>
+            </Card>
+          ) : null}
         </CardFooter>
       </Card>
     </>
   );
 }
 
-
+// Workoutlist is empty after logout
+//
