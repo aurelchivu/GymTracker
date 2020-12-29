@@ -16,6 +16,7 @@ const WorkoutSchema = new mongoose.Schema(
     },
     time: {
       type: Number,
+      default: 0,
     },
     createdAt: {
       type: Date,
