@@ -6,6 +6,7 @@ import {
   WORKOUT_LIST_REQUEST,
   WORKOUT_LIST_SUCCESS,
   WORKOUT_LIST_FAIL,
+  WORKOUT_LIST_RESET,
   WORKOUT_DETAILS_REQUEST,
   WORKOUT_DETAILS_SUCCESS,
   WORKOUT_DETAILS_FAIL,
@@ -46,6 +47,8 @@ export const workoutListReducer = (state = { workouts: [] }, action) => {
       };
     case WORKOUT_LIST_FAIL:
       return { loading: false, error: action.payload };
+    case WORKOUT_LIST_RESET:
+      return {};
     default:
       return state;
   }

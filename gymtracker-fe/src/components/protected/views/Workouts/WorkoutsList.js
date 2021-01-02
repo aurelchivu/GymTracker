@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -41,8 +41,9 @@ export default function WorkoutsList({ history }) {
   const classes = useStyles();
 
   const workoutList = useSelector((state) => state.workoutList);
+
   const { loading, error, workouts } = workoutList;
-  const { success, count, data } = workouts;
+  const { count, data } = workouts;
   console.log(data);
 
   const dispatch = useDispatch();
@@ -50,20 +51,20 @@ export default function WorkoutsList({ history }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    if (success) {
-      // dispatch(listWorkouts(setSelectedDate));
-      console.log(data);
-    }
-  }, [success]);
+    dispatch(listWorkouts(new Date()));
+  }, [dispatch]);
+
+  
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
     const queryDate = date.toISOString().split('T')[0];
     // console.log(queryDate);
+    console.log(date);
     dispatch(listWorkouts(date));
   };
 
-  const workoutDate = selectedDate.toDateString();
+  const workoutDate = selectedDate.toLocaleDateString();
 
   return (
     <>
@@ -78,7 +79,7 @@ export default function WorkoutsList({ history }) {
               margin='normal'
               id='date-picker-dialog'
               label='Please select a date'
-              format='dd-MM-yyyy'
+              format='dd/MM/yyyy'
               value={selectedDate}
               onChange={handleDateChange}
               KeyboardButtonProps={{
@@ -98,21 +99,22 @@ export default function WorkoutsList({ history }) {
             <Card plain>
               <CardBody>
                 {count === 0 ? (
-                  <h3>{workoutDate} you had no workuts!</h3>
+                  <h3>On {workoutDate} you had no workouts!</h3>
                 ) : count === 1 ? (
                   <h3>
-                    {workoutDate} you had {count} workut:
+                    On {workoutDate} you had {count} workout:
                   </h3>
                 ) : (
                   <h3>
-                    {workoutDate} you had {count} workuts:
+                    On {workoutDate} you had {count} workouts:
                   </h3>
                 )}
-                <br />
-                {data.map((workout) => {
+                    <br />
+                    <ol>
+                {data && data.map((workout) => {
                   return (
                     <>
-                      <h3>{workout.name}</h3>
+                      <li key={workout._id}>{workout.name}</li>
                       <FullWorkout
                         tableHeaderColor='primary'
                         tableHead={['Muscle', 'Exercise', 'Reps', 'Weight']}
@@ -123,6 +125,7 @@ export default function WorkoutsList({ history }) {
                     </>
                   );
                 })}
+                      </ol>
               </CardBody>
             </Card>
           ) : null}
@@ -133,4 +136,4 @@ export default function WorkoutsList({ history }) {
 }
 
 // Workoutlist is empty after logout
-//
+// Check createdAt date in database

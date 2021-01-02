@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const timeZone = require('mongoose-timezone');
-const slugify = require('slugify');
+// const timeZone = require('mongoose-timezone');
 
 const ExerciseSchema = new mongoose.Schema(
   {
@@ -42,12 +41,6 @@ const ExerciseSchema = new mongoose.Schema(
   }
 );
 
-// // Create exercise slug from the name
-// ExerciseSchema.pre('save', function(next) {
-//   this.slug = slugify(this.name, { lower: true });
-//   next();
-// });
-
-ExerciseSchema.plugin(timeZone);
+// ExerciseSchema.plugin(timeZone);
 
 module.exports = mongoose.model('Exercise', ExerciseSchema);

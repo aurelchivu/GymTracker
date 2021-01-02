@@ -1,6 +1,7 @@
 import React from 'react';
 // @material-ui/core
 import { makeStyles } from '@material-ui/core/styles';
+
 // core components
 import GridItem from '../../components/Grid/GridItem.js';
 import GridContainer from '../../components/Grid/GridContainer.js';
@@ -25,74 +26,40 @@ export default function Measurements() {
               <h2>My Measurements</h2>
             </CardHeader>
             <CardBody>
-              {/* <h3 className={classes.cardTitle}>
-                You have no registered measurements.
-              </h3> */}
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Neck
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Shoulders
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Chest
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Waist
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Hips
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Left Bicep
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Right Bicep
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Left Forearm
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Right Forearm
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Left Thigh
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Right Thigh
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Left Calf
-                </Button>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Button color='primary' round>
-                  Right Calf
-                </Button>
-              </GridItem>
+              <br />
+              <GridContainer spacing='3'>
+                <GridItem xs={1} sm={2} md={2}></GridItem>
+                <GridItem xs={4} sm={3} md={3}>
+                  <Button
+                    size='small'
+                    type='submit'
+                    fullWidth
+                    variant='contained'
+                    color='primary'
+                    round
+                    className={classes.button}
+                    center
+                  >
+                    Add measure
+                  </Button>
+                </GridItem>
+                <GridItem xs={2} sm={2} md={2}></GridItem>
+                <GridItem xs={4} sm={3} md={3}>
+                  <Button
+                    type='submit'
+                    fullWidth
+                    variant='contained'
+                    color='primary'
+                    round
+                    className={classes.button}
+                    center
+                  >
+                    Check measure
+                  </Button>
+                </GridItem>
+                <GridItem xs={1} sm={2} md={2}></GridItem>
+              </GridContainer>
+              <br />
             </CardBody>
             <CardFooter chart>
               <br />

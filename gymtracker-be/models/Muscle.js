@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const timeZone = require('mongoose-timezone');
-const slugify = require('slugify');
+// const timeZone = require('mongoose-timezone');
 
 const MuscleSchema = new mongoose.Schema(
   {
@@ -27,12 +26,6 @@ const MuscleSchema = new mongoose.Schema(
   }
 );
 
-// Create exercise slug from the name
-// MeasurementSchema.pre('save', function(next) {
-//   this.slug = slugify(this.name, { lower: true });
-//   next();
-// });
-
 // Reverse populate with virtuals
 MuscleSchema.virtual('sets', {
   ref: 'Set',
@@ -48,6 +41,6 @@ MuscleSchema.virtual('measurements', {
   justOne: false,
 });
 
-MuscleSchema.plugin(timeZone);
+// MuscleSchema.plugin(timeZone);
 
 module.exports = mongoose.model('Muscle', MuscleSchema);
