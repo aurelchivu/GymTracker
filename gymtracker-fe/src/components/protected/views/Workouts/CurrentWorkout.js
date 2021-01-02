@@ -6,14 +6,14 @@ import {
   resetSet,
   listSetsReset,
 } from '../../../../actions/setActions';
-import { resetWorkout } from '../../../../actions/workoutActions';
+import {
+  resetWorkout,
+  resetListWorkouts,
+} from '../../../../actions/workoutActions';
 import workoutSets from './workoutSets';
 import FullWorkout from './FullWorkout';
 // @material-ui/core
-import {
-  makeStyles,
-  withStyles,
-} from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
@@ -28,7 +28,6 @@ import CardBody from '../../components/Card/CardBody.js';
 import CardFooter from '../../components/Card/CardFooter.js';
 import Button from '../../components/CustomButtons/Button.js';
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
-
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -71,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CurrentWorkout({history}) {
+export default function CurrentWorkout({ history }) {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -124,6 +123,7 @@ export default function CurrentWorkout({history}) {
     e.preventDefault();
     dispatch(resetSet());
     dispatch(resetWorkout());
+    // dispatch(resetListWorkouts());
     dispatch(listSetsReset());
     history.push(`/admin/workouts/`);
   };

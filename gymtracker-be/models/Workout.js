@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const timeZone = require('mongoose-timezone');
-const slugify = require('slugify'); // part of a URL which identifies a particular page on a website in a form readable by users
+// const timeZone = require('mongoose-timezone');
 
 const WorkoutSchema = new mongoose.Schema(
   {
@@ -30,13 +29,7 @@ const WorkoutSchema = new mongoose.Schema(
   }
 );
 
-WorkoutSchema.plugin(timeZone);
-
-// Create workout slug from the name
-// WorkoutSchema.pre('save', function(next) {
-//   this.slug = slugify(this.name, { lower: true, replacement: '_' });
-//   next();
-// });
+// WorkoutSchema.plugin(timeZone);
 
 // Cascade delete exercises when a workout is deleted
 WorkoutSchema.pre('remove', async function (next) {

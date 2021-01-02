@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createWorkout } from '../../../../actions/workoutActions';
+import {
+  createWorkout,
+  listWorkouts,
+} from '../../../../actions/workoutActions';
 
 // @material-ui/core
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // core components
 import Button from '../../components/CustomButtons/Button.js';
 import GridItem from '../../components/Grid/GridItem.js';
@@ -40,11 +44,29 @@ export default function Dashboard({ location, history }) {
 
   const currentDate = new Date().toDateString();
   const currentTime = new Date().toLocaleTimeString();
-  const lastWeekWorkout = 'back and abs';
-  const googleWorkout = 'legs';
+  const lastWeekDay = new Date(Date.now() - 604800000);
+  // console.log(lastWeekDay);
+  const googleWorkout = '';
   const classes = useStyles();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listWorkouts(lastWeekDay));
+  }, [dispatch]);
+
+  const workoutList = useSelector((state) => state.workoutList);
+  const {
+    loading: loadingWorkoutList,
+    error: errorWorkoutList,
+    workouts,
+  } = workoutList;
+  const {
+    success: successWorkouts,
+    count: countWorkouts,
+    data: dataWorkouts,
+  } = workouts;
+  console.log(dataWorkouts);
 
   const workoutCreate = useSelector((state) => state.workoutCreate);
   const { workout, success, error } = workoutCreate;
@@ -77,7 +99,7 @@ export default function Dashboard({ location, history }) {
           </CardHeader>
           <CardBody>
             {newUser === 'true' ? (
-              <h4 className={classes.cardTitle}>
+              <p className={classes.cardTitle}>
                 Hello, {userInfo.username}! <br />
                 Welcome to GymTracker!
                 <br />
@@ -88,19 +110,51 @@ export default function Dashboard({ location, history }) {
                 <br />
                 What do you want to train today?
                 <br />
-              </h4>
+              </p>
             ) : (
-              <h4 className={classes.cardTitle}>
-                Hello, {userInfo.username}! <br />
-                Today is {currentDate}, {currentTime}.<br />
-                This time last week you had the {lastWeekWorkout} workout.
-                <br />
-                According to your Google Calendar, today you have{' '}
-                {googleWorkout} day.
-                <br />
-                What do you want to train today?
-                <br />
-              </h4>
+              <>
+                <p>
+                  Hello, {userInfo.username}! <br />
+                  Today is {currentDate}, {currentTime}.
+                </p>
+                {loadingWorkoutList ? (
+                  <h3>
+                    <CircularProgress color='primary' />
+                  </h3>
+                ) : errorWorkoutList ? (
+                  <h3>{errorWorkoutList}</h3>
+                ) : countWorkouts === 0 ? (
+                  <p>On this day, last week, you had no workouts!</p>
+                ) : countWorkouts === 1 ? (
+                  <p>
+                    On this day, last week, you had {countWorkouts} workout:
+                  </p>
+                ) : (
+                  <p>
+                    On this day, last week, you had {countWorkouts} workouts:
+                  </p>
+                )}
+                <ol>
+                  {dataWorkouts &&
+                    dataWorkouts.map((workout) => {
+                      return (
+                          <li key={workout._id}>{workout.name}</li>
+                      );
+                    })}
+                </ol>
+                {googleWorkout === '' ? (
+                  <p>
+                    According to your Google Calendar, today you have no
+                    workouts.
+                  </p>
+                ) : (
+                  <p>
+                    According to your Google Calendar, today you have{' '}
+                    {googleWorkout} day.
+                  </p>
+                )}
+                <p>What do you want to train today?</p>
+              </>
             )}
             <FormControl>
               <form className={classes.form} noValidate onSubmit={handleSubmit}>

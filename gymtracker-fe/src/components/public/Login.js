@@ -59,7 +59,6 @@ const Login = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
-  // With useSelector you can read state data from the Redux Store
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 

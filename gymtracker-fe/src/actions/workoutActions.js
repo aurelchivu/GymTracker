@@ -7,6 +7,7 @@ import {
   WORKOUT_LIST_REQUEST,
   WORKOUT_LIST_SUCCESS,
   WORKOUT_LIST_FAIL,
+  WORKOUT_LIST_RESET,
   WORKOUT_DETAILS_REQUEST,
   WORKOUT_DETAILS_SUCCESS,
   WORKOUT_DETAILS_FAIL,
@@ -87,7 +88,6 @@ export const listWorkouts = (date) => async (dispatch, getState) => {
       type: WORKOUT_LIST_SUCCESS,
       payload: data,
     });
-
   } catch (error) {
     dispatch({
       type: WORKOUT_LIST_FAIL,
@@ -205,7 +205,7 @@ export const deleteWorkout = (id) => async (dispatch, getState) => {
 };
 
 // Reset workout
-export const resetWorkout = () => async (dispatch, getState) => {
+export const resetWorkout = () => async (dispatch) => {
   try {
     dispatch({
       type: WORKOUT_CREATE_RESET,
@@ -215,8 +215,19 @@ export const resetWorkout = () => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === 'Not authorized, token failed') {
-      dispatch(logout());
-    }
+  }
+};
+
+// Reset workout LIST
+export const resetListWorkouts = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: WORKOUT_LIST_RESET,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
   }
 };
