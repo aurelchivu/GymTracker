@@ -1,18 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { createBrowserHistory } from "history";
-import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import {store, persistor} from './store'
+import { store, persistor } from './store';
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-
-import Admin from "./components/protected/layouts/Admin";
-import './components/protected/assets/css/material-dashboard-react.css?v=1.9.0"'
+import Admin from './components/protected/layouts/Admin';
+import './components/protected/assets/css/material-dashboard-react.css?v=1.9.0"';
 
 const hist = createBrowserHistory();
 

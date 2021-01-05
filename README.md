@@ -1,2 +1,2 @@
-GymTracker is build using the MERN stack and is an app that tracks your progress in the gym, gives you a workout routine, and gives you a meal plan depending on the results you want to have.
+GymTracker is build using the MERN stack (MongoDB, Express, React, Node) and is an app that tracks your progress in the gym, gives you a workout routine, and gives you a meal plan depending on the results you want to have.
 The app tracks your last sessions for each muscle (what exercises you had, the volume - sets x reps x weight, and the intensity - time spent in the gym to train each muscle), and every 4 weeks, to avoid adaption, from a predefined list of exercises targeting each muscle, the app will suggest new exercises, a new volume, and a new intensity.
