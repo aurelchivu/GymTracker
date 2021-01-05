@@ -40,29 +40,46 @@ import {
   mealUpdateReducer,
 } from './reducers/mealReducers';
 
+import {
+  measurementCreateReducer,
+  measurementListReducer,
+  measurementDetailsReducer,
+  measurementUpdateReducer,
+  measurementDeleteReducer,
+} from './reducers/measurementReducers';
+
 const appReducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   // userDetails: userDetailsReducer,
+  // userUpdateProfile: userUpdateProfileReducer,
+  // userList: userListReducer,
+  // userDelete: userDeleteReducer,
+  // userUpdate: userUpdateReducer
+
   workoutCreate: workoutCreateReducer,
   workoutList: workoutListReducer,
   // workoutDetails: workoutDetailsReducer,
   // workoutUpdate: workoutUpdateReducer,
   // workoutDelete: workoutDeleteReducer,
+
   setCreate: setCreateReducer,
   setList: setListReducer,
   // setDetails: setDetailsReducer,
   // setUpdate: setUpdateReducer,
   // setDelete: setDeleteReducer,
+
+  measurementCreate: measurementCreateReducer,
+  measurementList: measurementListReducer,
+  // measurementDetails: measurementDetailsReducer,
+  // measurementUpdate: measurementUpdateReducer,
+  // measurementDelete: measurementDeleteReducer,
+
   // mealList: mealListReducer,
   // mealDetails: mealDetailsReducer,
   // mealDelete: mealDeleteReducer,
   // mealCreate: mealCreateReducer,
   // mealUpdate: mealUpdateReducer,
-  //   userUpdateProfile: userUpdateProfileReducer,
-  //   userList: userListReducer,
-  //   userDelete: userDeleteReducer,
-  //   userUpdate: userUpdateReducer
 });
 
 const rootReducer = (state, action) => {

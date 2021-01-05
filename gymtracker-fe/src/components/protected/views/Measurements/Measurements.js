@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 // @material-ui/core
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -13,60 +14,87 @@ import Button from '../../components/CustomButtons/Button.js';
 
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
+import AddMeasurement from './AddMeasurement';
+import CheckMeasurement from './CheckMeasurement';
+
 const useStyles = makeStyles(styles);
 
-export default function Measurements() {
+export default function Measurements({ history }) {
   const classes = useStyles();
+  const [showAddMeasuremet, setShowAddMeasurement] = useState(false);
+  const [showCheckMeasurement, setShowCheckMeasurement] = useState(false);
+
+  const handleAddMeasurement = () => {
+    history.push(`/admin/measurements/add_measurement`);
+    setShowAddMeasurement(true);
+  };
+
+  const handleCheckMeasurement = () => {
+    history.push(`/admin/measurements/check_measurement`);
+    setShowCheckMeasurement(true);
+  };
+
+  // const didMount = useRef(false);
+
+  // useEffect(() => {
+  //   setShowAddMeasurement(false);
+  //   setShowCheckMeasurement(false);
+  //   history.push(`/admin/measurements`);
+  // }, [showAddMeasuremet, showCheckMeasurement, history]);
+
   return (
     <>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color='primary'>
-              <h2>My Measurements</h2>
-            </CardHeader>
-            <CardBody>
-              <br />
-              <GridContainer spacing='3'>
-                <GridItem xs={1} sm={2} md={2}></GridItem>
-                <GridItem xs={4} sm={3} md={3}>
-                  <Button
-                    size='small'
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    color='primary'
-                    round
-                    className={classes.button}
-                    center
-                  >
-                    Add measure
-                  </Button>
-                </GridItem>
-                <GridItem xs={2} sm={2} md={2}></GridItem>
-                <GridItem xs={4} sm={3} md={3}>
-                  <Button
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    color='primary'
-                    round
-                    className={classes.button}
-                    center
-                  >
-                    Check measure
-                  </Button>
-                </GridItem>
-                <GridItem xs={1} sm={2} md={2}></GridItem>
-              </GridContainer>
-              <br />
-            </CardBody>
-            <CardFooter chart>
-              <br />
-            </CardFooter>
-          </Card>
-        </GridItem>
-      </GridContainer>
+      {showAddMeasuremet ? (
+        <AddMeasurement />
+      ) : showCheckMeasurement ? (
+        <CheckMeasurement />
+      ) : (
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color='primary'>
+                <h2>My Measurements</h2>
+              </CardHeader>
+              <CardBody>
+                <br />
+                <GridContainer>
+                  <GridItem xs={1} sm={2} md={2}></GridItem>
+                  <GridItem xs={4} sm={3} md={3}>
+                    <Button
+                      onClick={handleAddMeasurement}
+                      fullWidth
+                      variant='contained'
+                      color='primary'
+                      round
+                      className={classes.button}
+                    >
+                      Add measurement
+                    </Button>
+                  </GridItem>
+                  <GridItem xs={2} sm={2} md={2}></GridItem>
+                  <GridItem xs={4} sm={3} md={3}>
+                    <Button
+                      onClick={handleCheckMeasurement}
+                      fullWidth
+                      variant='contained'
+                      color='primary'
+                      round
+                      className={classes.button}
+                    >
+                      Check measurement
+                    </Button>
+                  </GridItem>
+                  <GridItem xs={1} sm={2} md={2}></GridItem>
+                </GridContainer>
+                <br />
+              </CardBody>
+              <CardFooter chart>
+                <br />
+              </CardFooter>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      )}
     </>
   );
 }

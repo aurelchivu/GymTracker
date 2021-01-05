@@ -1,34 +1,15 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Measurement = require('../models/Measurement');
-const Muscle = require('../models/Muscle');
 
-// @desc      Add measurement to a specific muscle
-// @route     POST /api/v1/muscles/:muscleId/measurements
+// @desc      Add measurement to a specific body part
+// @route     POST /api/v1/measurements/bodyPart
 // @access    Private
 exports.createMeasurement = asyncHandler(async (req, res, next) => {
-  // Add user and muscle to req.body
+  // Add user and body part to req.body
   req.body.user = req.user.id;
-  req.body.muscle = req.params.muscleId;
-
-  const muscle = await Muscle.findById(req.params.muscleId);
-
-  if (!muscle) {
-    return next(
-      new ErrorResponse(`No muscle with the id of ${req.params.muscleId}`),
-      404
-    );
-  }
-
-  // Make sure user is muscle owner
-  if (muscle.user.toString() !== req.user.id) {
-    return next(
-      new ErrorResponse(
-        `User ${req.user.id} is not authorized to add a measurement to muscle ${muscle._id}`,
-        401
-      )
-    );
-  }
+  req.body.bodyPart = req.params.bodyPart;
+  console.log('req.body', req.body);
 
   const measurement = await Measurement.create(req.body);
 
@@ -38,13 +19,13 @@ exports.createMeasurement = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc      Get measurements from a specific muscle
-// @route     GET /api/v1/muscles/:muscleId/measurements
+// @desc      Get measurements from a specific body part
+// @route     GET /api/v1/measurements/bodyPart
 // @access    Private
 exports.getMeasurements = asyncHandler(async (req, res, next) => {
-  if (req.params.muscleId) {
+  if (req.params.bodyPart) {
     const measurements = await Measurement.find({
-      muscle: req.params.muscleId,
+      bodyPart: req.params.bodyPart,
       user: req.user.id,
     });
     return res.status(200).json({
@@ -55,8 +36,8 @@ exports.getMeasurements = asyncHandler(async (req, res, next) => {
   }
 });
 
-// @desc      Get single measurement from a specific muscle
-// @route     GET /api/v1/muscles/:muscleId/measurements/:id
+// @desc      Get single measurement from a specific body part
+// @route     GET /api/v1/measurements/bodyPart/:id
 // @access    Private
 exports.getMeasurement = asyncHandler(async (req, res, next) => {
   const measurement = await Measurement.findById(req.params.id);
@@ -84,8 +65,8 @@ exports.getMeasurement = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc      Update measurement from a specific muscle
-// @route     PUT /api/v1/muscles/:muscleId/measurements/:id
+// @desc      Update measurement from a specific body part
+// @route     PUT /api/v1/measurements/bodyPart/:id
 // @access    Private
 exports.updateMeasurement = asyncHandler(async (req, res, next) => {
   let measurement = await Measurement.findById(req.params.id);
@@ -118,8 +99,8 @@ exports.updateMeasurement = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc      Delete measurement from a specific muscle
-// @route     DELETE /api/v1/muscles/:muscleId/measurements/:id
+// @desc      Delete measurement from a specific body part
+// @route     DELETE /api/v1/measurements/bodyPart/:id
 // @access    Private
 exports.deleteMeasurement = asyncHandler(async (req, res, next) => {
   const measurement = await Measurement.findById(req.params.id);

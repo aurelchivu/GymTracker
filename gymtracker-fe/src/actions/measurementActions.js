@@ -1,38 +1,37 @@
 import axios from 'axios';
 import {
-  SET_CREATE_REQUEST,
-  SET_CREATE_SUCCESS,
-  SET_CREATE_FAIL,
-  SET_CREATE_RESET,
-  SET_LIST_REQUEST,
-  SET_LIST_SUCCESS,
-  SET_LIST_FAIL,
-  SET_LIST_RESET,
-  SET_DETAILS_REQUEST,
-  SET_DETAILS_SUCCESS,
-  SET_DETAILS_FAIL,
-  SET_UPDATE_REQUEST,
-  SET_UPDATE_SUCCESS,
-  SET_UPDATE_FAIL,
-  SET_DELETE_REQUEST,
-  SET_DELETE_SUCCESS,
-  SET_DELETE_FAIL,
-} from '../constants/setConstants';
+  MEASUREMENT_CREATE_REQUEST,
+  MEASUREMENT_CREATE_SUCCESS,
+  MEASUREMENT_CREATE_FAIL,
+  MEASUREMENT_CREATE_RESET,
+  MEASUREMENT_LIST_REQUEST,
+  MEASUREMENT_LIST_SUCCESS,
+  MEASUREMENT_LIST_FAIL,
+  MEASUREMENT_LIST_RESET,
+  MEASUREMENT_DETAILS_REQUEST,
+  MEASUREMENT_DETAILS_SUCCESS,
+  MEASUREMENT_DETAILS_FAIL,
+  MEASUREMENT_UPDATE_REQUEST,
+  MEASUREMENT_UPDATE_SUCCESS,
+  MEASUREMENT_UPDATE_FAIL,
+  MEASUREMENT_DELETE_REQUEST,
+  MEASUREMENT_DELETE_SUCCESS,
+  MEASUREMENT_DELETE_FAIL,
+} from '../constants/measurementConstants';
 import { logout } from './userActions';
 
-// Create set
-export const createSet = (set) => async (dispatch, getState) => {
+// Create measurement
+export const createMeasurement = (bodyPart, measure) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({
-      type: SET_CREATE_REQUEST,
+      type: MEASUREMENT_CREATE_REQUEST,
     });
 
     const {
       userLogin: { userInfo },
-    } = getState();
-
-    const {
-      workoutCreate: { workout },
     } = getState();
 
     const config = {
@@ -42,14 +41,23 @@ export const createSet = (set) => async (dispatch, getState) => {
       },
     };
 
+    console.log(config);
+
+    const measurement = {
+      bodyPart: bodyPart,
+      measure: measure,
+    };
+
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets`,
-      set,
+      `http://localhost:5000/api/v1/measurements/${bodyPart}`,
+      measurement,
       config
     );
 
+    console.log(data);
+
     dispatch({
-      type: SET_CREATE_SUCCESS,
+      type: MEASUREMENT_CREATE_SUCCESS,
       payload: data,
     });
   } catch (error) {
@@ -61,23 +69,19 @@ export const createSet = (set) => async (dispatch, getState) => {
       dispatch(logout());
     }
     dispatch({
-      type: SET_CREATE_FAIL,
+      type: MEASUREMENT_CREATE_FAIL,
       payload: message,
     });
   }
 };
 
-// Get list of sets
-export const listSets = (workoutId) => async (dispatch, getState) => {
+// Get list of measurements
+export const listMeasuremets = (bodyPart) => async (dispatch, getState) => {
   try {
-    dispatch({ type: SET_LIST_REQUEST });
+    dispatch({ type: MEASUREMENT_LIST_REQUEST });
 
     const {
       userLogin: { userInfo },
-    } = getState();
-
-    const {
-      workoutCreate: { workout },
     } = getState();
 
     const config = {
@@ -88,18 +92,18 @@ export const listSets = (workoutId) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets`,
+      `http://localhost:5000/api/v1/measurements/${bodyPart}`,
       config,
-      workoutId
+      bodyPart
     );
 
     dispatch({
-      type: SET_LIST_SUCCESS,
+      type: MEASUREMENT_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: SET_LIST_FAIL,
+      type: MEASUREMENT_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -108,26 +112,22 @@ export const listSets = (workoutId) => async (dispatch, getState) => {
   }
 };
 
-// Get set by id
-export const setDetails = (id) => async (dispatch, getState) => {
+// Get measurement by id
+export const measurementDetails = (id) => async (dispatch, getState) => {
   try {
-    dispatch({ type: SET_DETAILS_REQUEST });
-
-    const {
-      workoutCreate: { workout },
-    } = getState();
+    dispatch({ type: MEASUREMENT_DETAILS_REQUEST });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets/${id}`
+      `http://localhost:5000/api/v1/measurements/${id}`
     );
 
     dispatch({
-      type: SET_DETAILS_SUCCESS,
+      type: MEASUREMENT_DETAILS_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type: SET_DETAILS_FAIL,
+      type: MEASUREMENT_DETAILS_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -136,19 +136,15 @@ export const setDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-// Update set
-export const updateSet = (set) => async (dispatch, getState) => {
+// Update measurement
+export const updateMeasuremet = (measurement) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: SET_UPDATE_REQUEST,
+      type: MEASUREMENT_UPDATE_REQUEST,
     });
 
     const {
       userLogin: { userInfo },
-    } = getState();
-
-    const {
-      workoutCreate: { workout },
     } = getState();
 
     const config = {
@@ -159,16 +155,16 @@ export const updateSet = (set) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets/${set._id}`,
-      set,
+      `http://localhost:5000/api/v1/measurements/${measurement._id}`,
+      measurement,
       config
     );
 
     dispatch({
-      type: SET_UPDATE_SUCCESS,
+      type: MEASUREMENT_UPDATE_SUCCESS,
       payload: data,
     });
-    dispatch({ type: SET_DETAILS_SUCCESS, payload: data });
+    dispatch({ type: MEASUREMENT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -178,25 +174,21 @@ export const updateSet = (set) => async (dispatch, getState) => {
       dispatch(logout());
     }
     dispatch({
-      type: SET_UPDATE_FAIL,
+      type: MEASUREMENT_UPDATE_FAIL,
       payload: message,
     });
   }
 };
 
-// Delete set
-export const deleteSet = (id) => async (dispatch, getState) => {
+// Delete measurement
+export const deleteMeasuremet = (id) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: SET_DELETE_REQUEST,
+      type: MEASUREMENT_DELETE_REQUEST,
     });
 
     const {
       userLogin: { userInfo },
-    } = getState();
-
-    const {
-      workoutCreate: { workout },
     } = getState();
 
     const config = {
@@ -206,12 +198,12 @@ export const deleteSet = (id) => async (dispatch, getState) => {
     };
 
     await axios.delete(
-      `http://localhost:5000/api/v1/workouts/${workout.data._id}/sets/${id}`,
+      `http://localhost:5000/api/v1/measurements/${id}`,
       config
     );
 
     dispatch({
-      type: SET_DELETE_SUCCESS,
+      type: MEASUREMENT_DELETE_SUCCESS,
     });
   } catch (error) {
     const message =
@@ -222,35 +214,17 @@ export const deleteSet = (id) => async (dispatch, getState) => {
       dispatch(logout());
     }
     dispatch({
-      type: SET_DELETE_FAIL,
+      type: MEASUREMENT_DELETE_FAIL,
       payload: message,
     });
   }
 };
 
-// Reset set
-export const resetSet = () => async (dispatch) => {
+// Reset measurement
+export const resetMeasuremet = () => async (dispatch) => {
   try {
     dispatch({
-      type: SET_CREATE_RESET,
-    });
-
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    if (message === 'Not authorized, token failed') {
-      dispatch(logout());
-    }
-  }
-};
-
-// Reset set list
-export const listSetsReset = () => async (dispatch) => {
-  try {
-    dispatch({
-      type: SET_LIST_RESET,
+      type: MEASUREMENT_CREATE_RESET,
     });
   } catch (error) {
     const message =
@@ -263,3 +237,19 @@ export const listSetsReset = () => async (dispatch) => {
   }
 };
 
+// Reset measurement list
+export const listMeasuremetsReset = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: MEASUREMENT_LIST_RESET,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
+  }
+};

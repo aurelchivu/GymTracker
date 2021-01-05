@@ -202,3 +202,4 @@ export default function Dashboard({ location, history }) {
 }
 
 // Form validation
+// Fix first render when workout is undefined
