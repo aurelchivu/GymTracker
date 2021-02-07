@@ -1,8 +1,13 @@
+const { OAuth2Client } = require('google-auth-library');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendEmail');
 const User = require('../models/User');
-const generateToken = require('../utils/generateToken')
+const generateToken = require('../utils/generateToken');
+
+const oAuth2Client = new OAuth2Client(
+  '1015056692539-p9umkg7cnc36u61ajov11cq3ug1c7tli.apps.googleusercontent.com'
+);
 
 // @desc      Register user
 // @route     POST /api/v1/auth/register
@@ -10,18 +15,18 @@ const generateToken = require('../utils/generateToken')
 exports.register = asyncHandler(async (req, res, next) => {
   const { username, password, email } = req.body;
 
-  const userExists = await User.findOne({ email })
+  const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400)
-    throw new Error('User already exists')
+    res.status(400);
+    throw new Error('User already exists');
   }
 
   const user = await User.create({
     username,
     email,
     password,
-  })
+  });
 
   if (user) {
     res.status(201).json({
@@ -29,10 +34,10 @@ exports.register = asyncHandler(async (req, res, next) => {
       username: user.username,
       email: user.email,
       token: generateToken(user._id),
-    })
+    });
   } else {
-    res.status(400)
-    throw new Error('Invalid user data')
+    res.status(400);
+    throw new Error('Invalid user data');
   }
 });
 
@@ -44,7 +49,9 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   // Validate email & password
   if (!email || !password) {
-    return next(new ErrorResponse('Please provide an username and password', 400));
+    return next(
+      new ErrorResponse('Please provide an username and password', 400)
+    );
   }
 
   // Check user & password
@@ -56,10 +63,10 @@ exports.login = asyncHandler(async (req, res, next) => {
       username: user.username,
       email: user.email,
       token: generateToken(user._id),
-    })
+    });
   } else {
-    res.status(401)
-    throw new Error('Invalid email or password')
+    res.status(401);
+    throw new Error('Invalid email or password');
   }
 
   // sendTokenResponse(user, 200, res);
@@ -71,12 +78,12 @@ exports.login = asyncHandler(async (req, res, next) => {
 exports.logout = asyncHandler(async (req, res, next) => {
   res.cookie('token', 'none', {
     expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
+    httpOnly: true,
   });
 
   res.status(200).json({
     success: true,
-    data: {}
+    data: {},
   });
 });
 
@@ -88,7 +95,7 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: user
+    data: user,
   });
 });
 
@@ -98,17 +105,17 @@ exports.getMe = asyncHandler(async (req, res, next) => {
 exports.updateDetails = asyncHandler(async (req, res, next) => {
   const fieldsToUpdate = {
     username: req.body.username,
-    email: req.body.email
+    email: req.body.email,
   };
 
   const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate, {
     new: true,
-    runValidators: true
+    runValidators: true,
   });
 
   res.status(200).json({
     success: true,
-    data: user
+    data: user,
   });
 });
 
@@ -155,7 +162,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     await sendEmail({
       email: user.email,
       subject: 'Password reset token',
-      message
+      message,
     });
 
     res.status(200).json({ success: true, data: 'Email sent' });
@@ -171,7 +178,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: user
+    data: user,
   });
 });
 
@@ -187,7 +194,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
   const user = await User.findOne({
     resetPasswordToken,
-    resetPasswordExpire: { $gt: Date.now() }
+    resetPasswordExpire: { $gt: Date.now() },
   });
 
   if (!user) {
@@ -200,7 +207,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   user.resetPasswordExpire = undefined;
   await user.save();
 
-  sendTokenResponse(user, 200, res);        
+  sendTokenResponse(user, 200, res);
 });
 
 // Get token from model, create cookie and send response
@@ -212,18 +219,47 @@ const sendTokenResponse = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true // cookie will be accesed only from the client side script
+    httpOnly: true, // cookie will be accesed only from the client side script
   };
 
   if (process.env.NODE_ENV === 'production') {
     options.secure = true;
   }
 
-  res
-    .status(statusCode)
-    .cookie('token', token, options)
-    .json({
-      success: true,
-      token
-    });
+  res.status(statusCode).cookie('token', token, options).json({
+    success: true,
+    token,
+  });
 };
+
+// @desc      Login with google
+// @route     POST /api/v1/googlelogin
+// @access    Public
+exports.googlelogin = asyncHandler(async (req, res, next) => {
+  const { tokenId } = req.body;
+  oAuth2Client
+    .verifyIdToken({
+      idToken: tokenId,
+      audience:
+        '1015056692539-p9umkg7cnc36u61ajov11cq3ug1c7tli.apps.googleusercontent.com',
+    })
+    .then((response) => {
+      console.log(response.payload);
+      const { email, email_verified, name } = response.payload;
+      if (email_verified) {
+        User.findOne({ email }).exec((err, user) => {
+          if (err) {
+            return res.status(404).json({
+              error: 'Someting went wrong...'
+            })
+          } else {
+            if (user) {
+              generateToken(user._id);
+            } else {
+
+            }
+          }
+        });
+      }
+    });
+});

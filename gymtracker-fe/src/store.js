@@ -9,6 +9,7 @@ import { USER_LOGOUT } from './constants/userConstants';
 import {
   userLoginReducer,
   userRegisterReducer,
+  userGoogleAuthReducer,
   userDetailsReducer,
   //   userUpdateProfileReducer,
   //   userListReducer,
@@ -51,6 +52,7 @@ import {
 const appReducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  userGoogleAuth: userGoogleAuthReducer,
   // userDetails: userDetailsReducer,
   // userUpdateProfile: userUpdateProfileReducer,
   // userList: userListReducer,

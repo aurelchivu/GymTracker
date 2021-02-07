@@ -60,7 +60,7 @@ export default function Register({ location, history }) {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
-  const redirect = location.search ? location.search.split('=')[1] : '/admin';
+  const redirect = location.search ? location.search.split('=')[1] : '/user';
 
   useEffect(() => {
     if (userInfo) {
