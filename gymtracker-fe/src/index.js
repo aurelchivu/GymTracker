@@ -21,7 +21,7 @@ ReactDOM.render(
       <PersistGate loading={null} persistor={persistor}>
         <Router history={hist}>
           <App />
-          <Route path='/admin' component={Admin} />
+          <Route path='/user' component={Admin} />
         </Router>
       </PersistGate>
     </Provider>

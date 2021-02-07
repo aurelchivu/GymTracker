@@ -43,14 +43,14 @@ export const createMeasurement = (bodyPart, measure) => async (
 
     console.log(config);
 
-    const measurement = {
-      bodyPart: bodyPart,
-      measure: measure,
-    };
+    // const measurement = {
+    //   bodyPart: bodyPart,
+    //   measure: measure,
+    // };
 
     const { data } = await axios.post(
       `http://localhost:5000/api/v1/measurements/${bodyPart}`,
-      measurement,
+      { bodyPart, measure },
       config
     );
 
