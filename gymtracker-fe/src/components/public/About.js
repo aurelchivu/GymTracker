@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-
+import PublicComponent from './PublicComponent';
 
 function Copyright() {
   return (
@@ -20,6 +20,7 @@ function Copyright() {
 const About = () => {
   return (
     <>
+      <PublicComponent />
       <h2>GymTracker</h2>
       <p>
         GymTracker is an app tracks your progress in the gym, gives you a

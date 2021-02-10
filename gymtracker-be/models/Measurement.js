@@ -9,12 +9,10 @@ const MeasurementSchema = new mongoose.Schema({
   },
   bodyPart: {
     type: String,
-    // trim: true,
     required: [true, 'Please add a body part'],
   },
   measure: {
     type: Number,
-    default: 0,
     required: [true, 'Please add a value'],
   },
   createdAt: {

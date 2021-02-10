@@ -107,6 +107,7 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
+  // workoutList: { workouts: [] },
 };
 
 const middleware = [thunk];

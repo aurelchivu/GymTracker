@@ -25,12 +25,12 @@ export default function Measurements({ history }) {
   const [showCheckMeasurement, setShowCheckMeasurement] = useState(false);
 
   const handleAddMeasurement = () => {
-    history.push(`/admin/measurements/add_measurement`);
+    history.push(`/user/measurements/add_measurement`);
     setShowAddMeasurement(true);
   };
 
   const handleCheckMeasurement = () => {
-    history.push(`/admin/measurements/check_measurement`);
+    history.push(`/user/measurements/check_measurement`);
     setShowCheckMeasurement(true);
   };
 
@@ -39,7 +39,7 @@ export default function Measurements({ history }) {
   // useEffect(() => {
   //   setShowAddMeasurement(false);
   //   setShowCheckMeasurement(false);
-  //   history.push(`/admin/measurements`);
+  //   history.push(`/user/measurements`);
   // }, [showAddMeasuremet, showCheckMeasurement, history]);
 
   return (

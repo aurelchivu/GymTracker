@@ -234,7 +234,6 @@ export const resetSet = () => async (dispatch) => {
     dispatch({
       type: SET_CREATE_RESET,
     });
-
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -262,4 +261,3 @@ export const listSetsReset = () => async (dispatch) => {
     }
   }
 };
-

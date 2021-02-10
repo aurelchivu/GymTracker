@@ -4,6 +4,7 @@ import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, googleAuth } from '../../actions/userActions';
+import PublicComponent from './PublicComponent';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -33,7 +34,7 @@ function Copyright() {
   );
 }
 
-const Icon = () => (
+const GoogleIcon = () => (
   <svg style={{ width: '20px', height: '20px' }} viewBox='0 0 24 24'>
     <path
       fill='currentColor'
@@ -107,98 +108,101 @@ const Login = ({ location, history }) => {
   };
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component='h1' variant='h5'>
-          Log in
-        </Typography>
-        <FormControl>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <TextField
-              value={email}
-              onInput={(e) => setEmail(e.target.value)}
-              variant='outlined'
-              margin='normal'
-              required
-              fullWidth
-              id='email'
-              label='Email'
-              name='email'
-              autoComplete='email'
-              autoFocus
-            />
-            <TextField
-              value={password}
-              onInput={(e) => setPassword(e.target.value)}
-              variant='outlined'
-              margin='normal'
-              required
-              fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
-            />
-
-            <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
-              label='Remember me'
-            />
-            <Button
-              type='submit'
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.submit}
-            >
-              Log in
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href='#' variant='body2'>
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <ReactLink to='/register'>
-                  {"Don't have an account? Register"}
-                </ReactLink>
-              </Grid>
-              <br />
-              <br />
-              <GoogleLogin
-                clientId='1015056692539-p9umkg7cnc36u61ajov11cq3ug1c7tli.apps.googleusercontent.com'
-                render={(renderProps) => (
-                  <Button
-                    className={classes.googleButton}
-                    fullWidth
-                    variant='contained'
-                    color='primary'
-                    onClick={renderProps.onClick}
-                    disabled={renderProps.disabled}
-                    startIcon={<Icon />}
-                  >
-                    Google Log In
-                  </Button>
-                )}
-                // buttonText='Login'
-                onSuccess={googleSucces}
-                onFailure={googleFailure}
-                cookiePolicy={'single_host_origin'}
+    <>
+      <PublicComponent />
+      <Container component='main' maxWidth='xs'>
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component='h1' variant='h5'>
+            Log in
+          </Typography>
+          <FormControl>
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+              <TextField
+                value={email}
+                onInput={(e) => setEmail(e.target.value)}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                id='email'
+                label='Email'
+                name='email'
+                autoComplete='email'
+                autoFocus
               />
-            </Grid>
-          </form>
-        </FormControl>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+              <TextField
+                value={password}
+                onInput={(e) => setPassword(e.target.value)}
+                variant='outlined'
+                margin='normal'
+                required
+                fullWidth
+                name='password'
+                label='Password'
+                type='password'
+                id='password'
+                autoComplete='current-password'
+              />
+
+              <FormControlLabel
+                control={<Checkbox value='remember' color='primary' />}
+                label='Remember me'
+              />
+              <Button
+                type='submit'
+                fullWidth
+                variant='contained'
+                color='primary'
+                className={classes.submit}
+              >
+                Log in
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link href='#' variant='body2'>
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <ReactLink to='/register'>
+                    {"Don't have an account? Register"}
+                  </ReactLink>
+                </Grid>
+                <br />
+                <br />
+                <GoogleLogin
+                  clientId='1015056692539-p9umkg7cnc36u61ajov11cq3ug1c7tli.apps.googleusercontent.com'
+                  render={(renderProps) => (
+                    <Button
+                      className={classes.googleButton}
+                      fullWidth
+                      variant='contained'
+                      color='primary'
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                      startIcon={<GoogleIcon />}
+                    >
+                      Google Log In
+                    </Button>
+                  )}
+                  // buttonText='Login'
+                  onSuccess={googleSucces}
+                  onFailure={googleFailure}
+                  cookiePolicy={'single_host_origin'}
+                />
+              </Grid>
+            </form>
+          </FormControl>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    </>
   );
 };
 

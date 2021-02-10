@@ -48,6 +48,7 @@ export default function Dashboard({ location, history }) {
   // console.log(lastWeekDay);
   const googleWorkout = '';
   const classes = useStyles();
+  const noWorkouts = [];
 
   const dispatch = useDispatch();
 
@@ -61,11 +62,9 @@ export default function Dashboard({ location, history }) {
     error: errorWorkoutList,
     workouts,
   } = workoutList;
-  const {
-    success: successWorkouts,
-    count: countWorkouts,
-    data: dataWorkouts,
-  } = workouts;
+  const { success: successWorkouts, count: countWorkouts, data: dataWorkouts } =
+    workouts || noWorkouts;
+
   console.log(dataWorkouts);
 
   const workoutCreate = useSelector((state) => state.workoutCreate);
@@ -75,7 +74,7 @@ export default function Dashboard({ location, history }) {
 
   useEffect(() => {
     if (success && didMount.current) {
-      history.push(`/admin/workouts/${workout.data._id}/sets`);
+      history.push(`/user/workouts/${workout.data._id}/sets`);
     } else {
       didMount.current = true;
     }
@@ -114,7 +113,8 @@ export default function Dashboard({ location, history }) {
             ) : (
               <>
                 <p>
-                  Hello, {userInfo.username}! <br />
+                    Hello, {userInfo.username}!
+                   <br />
                   Today is {currentDate}, {currentTime}.
                 </p>
                 {loadingWorkoutList ? (

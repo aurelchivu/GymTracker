@@ -8,8 +8,6 @@ const Measurement = require('../models/Measurement');
 exports.createMeasurement = asyncHandler(async (req, res, next) => {
   // Add user and body part to req.body
   req.body.user = req.user.id;
-  req.body.bodyPart = req.params.bodyPart;
-  console.log('req.body', req.body);
 
   const measurement = await Measurement.create(req.body);
 
@@ -19,22 +17,40 @@ exports.createMeasurement = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc      Get all measurements
+// @route     GET /api/v1/measurements
+// @access    Private
+exports.getAllMeasurements = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id;
+
+  console.log('req.user.id = ', req.user.id);
+
+  const measurements = await Measurement.find({
+    user: req.user.id,
+  });
+  return res.status(200).json({
+    success: true,
+    count: measurements.length,
+    data: measurements,
+  });
+});
+
 // @desc      Get measurements from a specific body part
 // @route     GET /api/v1/measurements/bodyPart
 // @access    Private
-exports.getMeasurements = asyncHandler(async (req, res, next) => {
-  if (req.params.bodyPart) {
-    const measurements = await Measurement.find({
-      bodyPart: req.params.bodyPart,
-      user: req.user.id,
-    });
-    return res.status(200).json({
-      success: true,
-      count: measurements.length,
-      data: measurements,
-    });
-  }
-});
+// exports.getMeasurements = asyncHandler(async (req, res, next) => {
+//   if (req.params.bodyPart) {
+//     const measurements = await Measurement.find({
+//       bodyPart: req.params.bodyPart,
+//       user: req.user.id,
+//     });
+//     return res.status(200).json({
+//       success: true,
+//       count: measurements.length,
+//       data: measurements,
+//     });
+//   }
+// });
 
 // @desc      Get single measurement from a specific body part
 // @route     GET /api/v1/measurements/bodyPart/:id

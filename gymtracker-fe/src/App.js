@@ -44,21 +44,19 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Typography style={{ margin: 10 }}>
-        <Route
-          exact
-          path='/'
-          render={(props) => <PublicComponent {...props} />}
-        />
-        <Route exact path='/' render={(props) => <Home {...props} />} />
-        <Route exact path='/login' render={(props) => <Login {...props} />} />
-        <Route exact path='/about' render={(props) => <About {...props} />} />
-        <Route
-          exact
-          path='/register'
-          render={(props) => <Register {...props} />}
-        />
-      </Typography>
+      <Route
+        exact
+        path='/'
+        render={(props) => <PublicComponent {...props} />}
+      />
+      <Route exact path='/' render={(props) => <Home {...props} />} />
+      <Route exact path='/login' render={(props) => <Login {...props} />} />
+      <Route exact path='/about' render={(props) => <About {...props} />} />
+      <Route
+        exact
+        path='/register'
+        render={(props) => <Register {...props} />}
+      />
     </ThemeProvider>
   );
 };

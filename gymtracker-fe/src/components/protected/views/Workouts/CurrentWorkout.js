@@ -97,7 +97,7 @@ export default function CurrentWorkout({ history }) {
   useEffect(() => {
     if (success) {
       dispatch(listSets(workoutId));
-      history.push(`/admin/workouts/${workout.data._id}/sets`);
+      history.push(`/user/workouts/${workout.data._id}/sets`);
     }
   }, [success]);
 
@@ -125,7 +125,7 @@ export default function CurrentWorkout({ history }) {
     dispatch(resetWorkout());
     // dispatch(resetListWorkouts());
     dispatch(listSetsReset());
-    history.push(`/admin/workouts/`);
+    history.push(`/user/workouts/`);
   };
 
   return (

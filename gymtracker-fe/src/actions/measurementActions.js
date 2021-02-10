@@ -41,7 +41,7 @@ export const createMeasurement = (bodyPart, measure) => async (
       },
     };
 
-    console.log(config);
+    // console.log('measurement redux = ', measurement);
 
     // const measurement = {
     //   bodyPart: bodyPart,
@@ -49,12 +49,12 @@ export const createMeasurement = (bodyPart, measure) => async (
     // };
 
     const { data } = await axios.post(
-      `http://localhost:5000/api/v1/measurements/${bodyPart}`,
+      `http://localhost:5000/api/v1/measurements`,
       { bodyPart, measure },
       config
     );
 
-    console.log(data);
+    console.log('data response from express = ', data);
 
     dispatch({
       type: MEASUREMENT_CREATE_SUCCESS,
