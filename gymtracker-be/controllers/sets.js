@@ -10,7 +10,6 @@ exports.createSet = asyncHandler(async (req, res, next) => {
   // Add user and workout to req.body
   req.body.user = req.user.id;
   req.body.workout = req.params.workoutId;
-  console.log('req.body = ', req.body)
 
   const workout = await Workout.findById(req.params.workoutId);
 

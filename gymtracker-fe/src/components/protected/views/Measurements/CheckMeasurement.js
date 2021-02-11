@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  createSet,
-  listSets,
-  resetSet,
-  listSetsReset,
-} from '../../../../actions/setActions';
-import {
-  resetWorkout,
-  resetListWorkouts,
-} from '../../../../actions/workoutActions';
-import workoutSets from '../Workouts/workoutSets';
-import FullWorkout from '../Workouts/FullWorkout';
+  createMeasurement,
+  listMeasurements,
+  resetMeasurement,
+  listMeasurementsReset,
+} from '../../../../actions/measurementActions';
+import bodyParts from './bodyParts';
 // @material-ui/core
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -75,17 +70,13 @@ export default function CheckMeasurement({ history }) {
 
   const dispatch = useDispatch();
 
-  const [muscle, setMuscle] = useState('');
-  const [exercise, setExercise] = useState('');
-  const [exercises, setExercises] = useState(['Exercises']);
-  const [reps, setReps] = useState();
-  const [weight, setWeight] = useState();
+  const [bodyPart, setBodyPart] = useState('');
 
-  const setList = useSelector((state) => state.setList);
-  const { loading, error, sets } = setList;
+  // const setList = useSelector((state) => state.setList);
+  // const { loading, error, sets } = setList;
 
-  const setCreate = useSelector((state) => state.setCreate);
-  let { success, set } = setCreate;
+  // const setCreate = useSelector((state) => state.setCreate);
+  // let { success, set } = setCreate;
   // const setId = set.data._id
 
   // const workoutCreate = useSelector((state) => state.workoutCreate);
@@ -97,45 +88,31 @@ export default function CheckMeasurement({ history }) {
   // useEffect(() => {
   //   if (success) {
   //     dispatch(listSets(workoutId));
-  //     history.push(`/admin/workouts/${workout.data._id}/sets`);
+  //     history.push(`/user/workouts/${workout.data._id}/sets`);
   //   }
   // }, [success]);
 
-  const selectMuscle = (e) => {
-    setMuscle(e.target.value);
-    setExercises(
-      workoutSets.find((workout) => workout.name === e.target.value).exercises
-    );
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const set = {
-      muscle: muscle,
-      exercise: exercise,
-      reps: reps,
-      weight: weight,
-    };
-    dispatch(createSet(set));
+    dispatch(listMeasurements(bodyPart));
   };
 
   const stopTraining = (e) => {
     e.preventDefault();
-    dispatch(resetSet());
-    dispatch(resetWorkout());
-    // dispatch(resetListWorkouts());
-    dispatch(listSetsReset());
-    history.push(`/admin/workouts/`);
+    // dispatch(resetSet());
+    // // dispatch(resetListWorkouts());
+    // dispatch(listSetsReset());
+    // history.push(`/user/workouts/`);
   };
 
   return (
     <>
       <Card>
         <CardHeader color='primary'>
-          <h2>Check Measurement</h2>
+          <h2>Add Measurement</h2>
         </CardHeader>
         <CardBody>
-          <h3>Today's workout summary:</h3>
+          <h3>Add new measuremet</h3>
           <GridContainer>
             <form
               style={{ display: 'flex' }}
@@ -147,51 +124,14 @@ export default function CheckMeasurement({ history }) {
                 {/* <InputLabel htmlFor='demo-customized-select-native'>Muscle</InputLabel> */}
                 <NativeSelect
                   id='demo-customized-select-native'
-                  value={muscle}
-                  onChange={selectMuscle}
+                  value={bodyPart}
+                  onChange={(e) => setBodyPart(e.target.value)}
                   input={<BootstrapInput />}
                 >
-                  {workoutSets.map((workout, key) => {
-                    return <option key={key}>{workout.name}</option>;
+                  {bodyParts.map((bodyPart, key) => {
+                    return <option key={key}>{bodyPart}</option>;
                   })}
                 </NativeSelect>
-              </FormControl>
-              <FormControl className={classes.margin}>
-                {/* <InputLabel htmlFor='demo-customized-select-native'>Exercise</InputLabel> */}
-                <NativeSelect
-                  id='demo-customized-select-native'
-                  value={exercise}
-                  onChange={(e) => setExercise(e.target.value)}
-                  input={<BootstrapInput />}
-                >
-                  {exercises.map((exercise, key) => {
-                    return <option key={key}>{exercise}</option>;
-                  })}
-                </NativeSelect>
-              </FormControl>
-              <FormControl className={classes.margin}>
-                {/* <InputLabel htmlFor='demo-customized-select-native'>Reps</InputLabel> */}
-                <BootstrapInput
-                  placeholder='Reps'
-                  id='demo-customized-textbox'
-                  htmlFor='demo-customized-select-native'
-                  value={reps}
-                  onChange={(e) => setReps(e.target.value)}
-                  variant='outlined'
-                  required
-                />
-              </FormControl>
-              <FormControl className={classes.margin}>
-                {/* <InputLabel htmlFor='demo-customized-select-native'>Weight</InputLabel> */}
-                <BootstrapInput
-                  placeholder='Weight'
-                  id='demo-customized-textbox'
-                  htmlFor='demo-customized-select-native'
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                  variant='outlined'
-                  required
-                />
               </FormControl>
               <Button
                 round
@@ -201,7 +141,7 @@ export default function CheckMeasurement({ history }) {
                 color='primary'
                 className={classes.submit}
               >
-                Add Set
+                Check measurement
               </Button>
             </form>
           </GridContainer>
@@ -223,7 +163,7 @@ export default function CheckMeasurement({ history }) {
             </Card>
           ) : null} */}
           <br />
-          <Grid container direction='row' spacing='3'>
+          {/* <Grid container direction='row' spacing='3'>
             <Grid item xs={2} sm={3} md={3}></Grid>
             <Grid item xs={8} sm={6} md={6}>
               <Button
@@ -240,10 +180,11 @@ export default function CheckMeasurement({ history }) {
               </Button>
             </Grid>
             <Grid item xs={2} sm={3} md={3}></Grid>
-          </Grid>
+          </Grid> */}
         </CardBody>
 
         <CardFooter chart>
+          <br />
           {/* <h3>Last week's workout summary.</h3> */}
         </CardFooter>
       </Card>
@@ -252,4 +193,3 @@ export default function CheckMeasurement({ history }) {
 }
 
 // Form validation
-// Keep workout id after change location

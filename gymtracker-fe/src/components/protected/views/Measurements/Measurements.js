@@ -34,14 +34,6 @@ export default function Measurements({ history }) {
     setShowCheckMeasurement(true);
   };
 
-  // const didMount = useRef(false);
-
-  // useEffect(() => {
-  //   setShowAddMeasurement(false);
-  //   setShowCheckMeasurement(false);
-  //   history.push(`/user/measurements`);
-  // }, [showAddMeasuremet, showCheckMeasurement, history]);
-
   return (
     <>
       {showAddMeasuremet ? (

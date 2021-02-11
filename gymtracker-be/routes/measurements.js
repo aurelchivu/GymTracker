@@ -1,8 +1,7 @@
 const express = require('express');
 const {
   createMeasurement,
-  getAllMeasurements,
-  // getMeasurements,
+  getMeasurements,
   getMeasurement,
   updateMeasurement,
   deleteMeasurement,
@@ -17,8 +16,7 @@ router.use(protect);
 router
   .route('/')
   .post(protect, createMeasurement)
-  // .get(protect, getMeasurements)
-  .get(protect, getAllMeasurements);
+  .get(protect, getMeasurements)
 
 router
   .route('/:id')

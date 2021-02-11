@@ -17,16 +17,18 @@ exports.createMeasurement = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc      Get all measurements
-// @route     GET /api/v1/measurements
+// @desc      Get measurements from a specific body part
+// @route     GET /api/v1/measurements/bodyPart
 // @access    Private
-exports.getAllMeasurements = asyncHandler(async (req, res, next) => {
+exports.getMeasurements = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
+  const bodyPart = req.query.bodyPart;
 
   console.log('req.user.id = ', req.user.id);
 
   const measurements = await Measurement.find({
     user: req.user.id,
+    bodyPart: bodyPart,
   });
   return res.status(200).json({
     success: true,
@@ -34,23 +36,6 @@ exports.getAllMeasurements = asyncHandler(async (req, res, next) => {
     data: measurements,
   });
 });
-
-// @desc      Get measurements from a specific body part
-// @route     GET /api/v1/measurements/bodyPart
-// @access    Private
-// exports.getMeasurements = asyncHandler(async (req, res, next) => {
-//   if (req.params.bodyPart) {
-//     const measurements = await Measurement.find({
-//       bodyPart: req.params.bodyPart,
-//       user: req.user.id,
-//     });
-//     return res.status(200).json({
-//       success: true,
-//       count: measurements.length,
-//       data: measurements,
-//     });
-//   }
-// });
 
 // @desc      Get single measurement from a specific body part
 // @route     GET /api/v1/measurements/bodyPart/:id

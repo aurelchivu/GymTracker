@@ -54,8 +54,6 @@ export const createMeasurement = (bodyPart, measure) => async (
       config
     );
 
-    console.log('data response from express = ', data);
-
     dispatch({
       type: MEASUREMENT_CREATE_SUCCESS,
       payload: data,
@@ -76,7 +74,7 @@ export const createMeasurement = (bodyPart, measure) => async (
 };
 
 // Get list of measurements
-export const listMeasuremets = (bodyPart) => async (dispatch, getState) => {
+export const listMeasurements = (bodyPart) => async (dispatch, getState) => {
   try {
     dispatch({ type: MEASUREMENT_LIST_REQUEST });
 
@@ -92,10 +90,11 @@ export const listMeasuremets = (bodyPart) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/measurements/${bodyPart}`,
+      `http://localhost:5000/api/v1/measurements?bodyPart=${bodyPart}`,
       config,
-      bodyPart
     );
+    
+    console.log(data)
 
     dispatch({
       type: MEASUREMENT_LIST_SUCCESS,
