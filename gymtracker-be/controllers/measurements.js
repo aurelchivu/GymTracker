@@ -3,7 +3,7 @@ const asyncHandler = require('../middleware/async');
 const Measurement = require('../models/Measurement');
 
 // @desc      Add measurement to a specific body part
-// @route     POST /api/v1/measurements/bodyPart
+// @route     POST /api/v1/measurements
 // @access    Private
 exports.createMeasurement = asyncHandler(async (req, res, next) => {
   // Add user and body part to req.body
@@ -24,8 +24,6 @@ exports.getMeasurements = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
   const bodyPart = req.query.bodyPart;
 
-  console.log('req.user.id = ', req.user.id);
-
   const measurements = await Measurement.find({
     user: req.user.id,
     bodyPart: bodyPart,
@@ -37,12 +35,11 @@ exports.getMeasurements = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @desc      Get single measurement from a specific body part
-// @route     GET /api/v1/measurements/bodyPart/:id
+// @desc      Get single measurement by ID
+// @route     GET /api/v1/measurements/:id
 // @access    Private
 exports.getMeasurement = asyncHandler(async (req, res, next) => {
   const measurement = await Measurement.findById(req.params.id);
-
   if (!measurement) {
     return next(
       new ErrorResponse(`No measurement with the id of ${req.params.id}`),
@@ -54,7 +51,7 @@ exports.getMeasurement = asyncHandler(async (req, res, next) => {
   if (measurement.user.toString() !== req.user.id) {
     return next(
       new ErrorResponse(
-        `User ${req.user.id} is not authorized to update measurement ${measurement._id}`,
+        `User ${req.user.id} is not authorized to get measurement ${measurement._id}`,
         401
       )
     );

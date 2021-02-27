@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -8,27 +8,13 @@ import {
 } from '@material-ui/pickers';
 import { listWorkouts } from '../../../../actions/workoutActions';
 import FullWorkout from './FullWorkout';
-import {
-  makeStyles,
-  ServerStyleSheets,
-  withStyles,
-} from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import InputBase from '@material-ui/core/InputBase';
+import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 // core components
-import GridItem from '../../components/Grid/GridItem.js';
-import GridContainer from '../../components/Grid/GridContainer.js';
 import Card from '../../components/Card/Card.js';
 import CardHeader from '../../components/Card/CardHeader.js';
 import CardBody from '../../components/Card/CardBody.js';
 import CardFooter from '../../components/Card/CardFooter.js';
-import Button from '../../components/CustomButtons/Button.js';
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,9 +28,8 @@ export default function WorkoutsList({ history }) {
 
   const workoutList = useSelector((state) => state.workoutList);
 
-  const { loading, error, workouts } = workoutList;
+  const { loading, error, workouts = []} = workoutList;
   const { count, data } = workouts;
-  console.log(data);
 
   const dispatch = useDispatch();
 
@@ -54,13 +39,11 @@ export default function WorkoutsList({ history }) {
     dispatch(listWorkouts(new Date()));
   }, [dispatch]);
 
-  
-
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    const queryDate = date.toISOString().split('T')[0];
+    // const queryDate = date.toISOString().split('T')[0];
     // console.log(queryDate);
-    console.log(date);
+    // console.log(date);
     dispatch(listWorkouts(date));
   };
 
@@ -109,23 +92,24 @@ export default function WorkoutsList({ history }) {
                     On {workoutDate} you had {count} workouts:
                   </h3>
                 )}
-                    <br />
-                    <ol>
-                {data && data.map((workout) => {
-                  return (
-                    <>
-                      <li key={workout._id}>{workout.name}</li>
-                      <FullWorkout
-                        tableHeaderColor='primary'
-                        tableHead={['Muscle', 'Exercise', 'Reps', 'Weight']}
-                        tableData={workout.sets}
-                      />
-                      <br />
-                      <br />
-                    </>
-                  );
-                })}
-                      </ol>
+                <br />
+                <ol>
+                  {data &&
+                    data.map((workout) => {
+                      return (
+                        <>
+                          <li key={workout._id}>{workout.name}</li>
+                          <FullWorkout
+                            tableHeaderColor='primary'
+                            tableHead={['Muscle', 'Exercise', 'Reps', 'Weight']}
+                            tableData={workout.sets}
+                          />
+                          <br />
+                          <br />
+                        </>
+                      );
+                    })}
+                </ol>
               </CardBody>
             </Card>
           ) : null}
@@ -134,6 +118,3 @@ export default function WorkoutsList({ history }) {
     </>
   );
 }
-
-// Workoutlist is empty after logout
-// Check createdAt date in database

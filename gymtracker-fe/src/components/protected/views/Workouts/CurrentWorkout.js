@@ -86,13 +86,12 @@ export default function CurrentWorkout({ history }) {
 
   const setCreate = useSelector((state) => state.setCreate);
   let { success, set } = setCreate;
-  // const setId = set.data._id
 
   const workoutCreate = useSelector((state) => state.workoutCreate);
   const { workout } = workoutCreate;
 
-  const workoutName = workout.data.name;
-  const workoutId = workout.data._id;
+  const workoutName = workout?.data?.name;
+  const workoutId = workout?.data?._id;
 
   useEffect(() => {
     if (success) {

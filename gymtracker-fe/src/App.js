@@ -3,9 +3,8 @@ import { Route } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-import { CssBaseline, Typography, createMuiTheme } from '@material-ui/core';
+import { CssBaseline, createMuiTheme } from '@material-ui/core';
 
-import Admin from './components/protected/layouts/Admin';
 import About from './components/public/About';
 import Home from './components/public/Home';
 import Login from './components/public/Login';
@@ -62,5 +61,3 @@ const App = () => {
 };
 
 export default withStyles(styles)(App);
-
-// Fix double scrollbar

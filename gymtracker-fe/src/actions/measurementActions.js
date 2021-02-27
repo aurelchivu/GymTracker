@@ -41,13 +41,6 @@ export const createMeasurement = (bodyPart, measure) => async (
       },
     };
 
-    // console.log('measurement redux = ', measurement);
-
-    // const measurement = {
-    //   bodyPart: bodyPart,
-    //   measure: measure,
-    // };
-
     const { data } = await axios.post(
       `http://localhost:5000/api/v1/measurements`,
       { bodyPart, measure },
@@ -91,10 +84,10 @@ export const listMeasurements = (bodyPart) => async (dispatch, getState) => {
 
     const { data } = await axios.get(
       `http://localhost:5000/api/v1/measurements?bodyPart=${bodyPart}`,
-      config,
+      config
     );
-    
-    console.log(data)
+
+    // console.log(data);
 
     dispatch({
       type: MEASUREMENT_LIST_SUCCESS,
@@ -112,12 +105,12 @@ export const listMeasurements = (bodyPart) => async (dispatch, getState) => {
 };
 
 // Get measurement by id
-export const measurementDetails = (id) => async (dispatch, getState) => {
+export const measurementDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: MEASUREMENT_DETAILS_REQUEST });
 
     const { data } = await axios.get(
-      `http://localhost:5000/api/v1/measurements/${id}`
+      `http://localhost:5000/api/v1/measurements/${id}`,
     );
 
     dispatch({
@@ -136,7 +129,7 @@ export const measurementDetails = (id) => async (dispatch, getState) => {
 };
 
 // Update measurement
-export const updateMeasuremet = (measurement) => async (dispatch, getState) => {
+export const updateMeasurement = (measurement) => async (dispatch, getState) => {
   try {
     dispatch({
       type: MEASUREMENT_UPDATE_REQUEST,
@@ -154,7 +147,7 @@ export const updateMeasuremet = (measurement) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.put(
-      `http://localhost:5000/api/v1/measurements/${measurement._id}`,
+      `http://localhost:5000/api/v1/measurements/${measurement.id}`,
       measurement,
       config
     );

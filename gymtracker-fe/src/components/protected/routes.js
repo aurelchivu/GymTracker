@@ -1,9 +1,7 @@
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
 import HomeIcon from '@material-ui/icons/Home';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
-import HeightIcon from '@material-ui/icons/Height';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import VideocamIcon from '@material-ui/icons/Videocam';

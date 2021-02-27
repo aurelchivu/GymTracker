@@ -45,10 +45,8 @@ export default function Dashboard({ location, history }) {
   const currentDate = new Date().toDateString();
   const currentTime = new Date().toLocaleTimeString();
   const lastWeekDay = new Date(Date.now() - 604800000);
-  // console.log(lastWeekDay);
   const googleWorkout = '';
   const classes = useStyles();
-  const noWorkouts = [];
 
   const dispatch = useDispatch();
 
@@ -60,10 +58,10 @@ export default function Dashboard({ location, history }) {
   const {
     loading: loadingWorkoutList,
     error: errorWorkoutList,
-    workouts,
+    workouts = [],
   } = workoutList;
   const { success: successWorkouts, count: countWorkouts, data: dataWorkouts } =
-    workouts || noWorkouts;
+    workouts;
 
   console.log(dataWorkouts);
 
@@ -98,7 +96,7 @@ export default function Dashboard({ location, history }) {
           </CardHeader>
           <CardBody>
             {newUser === 'true' ? (
-              <p className={classes.cardTitle}>
+              <h4 className={classes.cardTitle}>
                 Hello, {userInfo.username}! <br />
                 Welcome to GymTracker!
                 <br />
@@ -109,51 +107,50 @@ export default function Dashboard({ location, history }) {
                 <br />
                 What do you want to train today?
                 <br />
-              </p>
+              </h4>
             ) : (
               <>
-                <p>
-                    Hello, {userInfo.username}!
-                   <br />
+                <h4>
+                  Hello, {userInfo.username}!
+                  <br />
+                  <br />
                   Today is {currentDate}, {currentTime}.
-                </p>
+                </h4>
                 {loadingWorkoutList ? (
-                  <h3>
+                  <h4>
                     <CircularProgress color='primary' />
-                  </h3>
+                  </h4>
                 ) : errorWorkoutList ? (
-                  <h3>{errorWorkoutList}</h3>
+                  <h4>{errorWorkoutList}</h4>
                 ) : countWorkouts === 0 ? (
-                  <p>On this day, last week, you had no workouts!</p>
+                  <h4>On this day, last week, you had no workouts!</h4>
                 ) : countWorkouts === 1 ? (
-                  <p>
+                  <h4>
                     On this day, last week, you had {countWorkouts} workout:
-                  </p>
+                  </h4>
                 ) : (
-                  <p>
+                  <h4>
                     On this day, last week, you had {countWorkouts} workouts:
-                  </p>
+                  </h4>
                 )}
                 <ol>
                   {dataWorkouts &&
                     dataWorkouts.map((workout) => {
-                      return (
-                          <li key={workout._id}>{workout.name}</li>
-                      );
+                      return <li key={workout._id}>{workout.name}</li>;
                     })}
                 </ol>
                 {googleWorkout === '' ? (
-                  <p>
+                  <h4>
                     According to your Google Calendar, today you have no
                     workouts.
-                  </p>
+                  </h4>
                 ) : (
-                  <p>
+                  <h4>
                     According to your Google Calendar, today you have{' '}
                     {googleWorkout} day.
-                  </p>
+                  </h4>
                 )}
-                <p>What do you want to train today?</p>
+                <h4>What do you want to train today?</h4>
               </>
             )}
             <FormControl>
