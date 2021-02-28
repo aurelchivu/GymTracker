@@ -102,7 +102,6 @@ export default function Measurement({ history }) {
   useEffect(() => {
     if (successCreate) {
       dispatch(detailsMeasurement(measurementId));
-      console.log(measurement);
     }
   }, [successCreate]);
 
