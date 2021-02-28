@@ -110,6 +110,8 @@ export default function Measurement({ history }) {
     dispatch(createMeasurement(addBodyPart, measure));
     setShowMeasurements(false);
     setShowDetails(true);
+    setAddBodyPart('');
+    setMeasure(0);
   };
 
   const handleCheckMeasurements = (e) => {
