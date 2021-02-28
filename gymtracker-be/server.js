@@ -14,7 +14,8 @@ const errorHandler = require('./middleware/error'); // custom error handler
 const connectDB = require('./config/db');
 
 // Load environment variables
-dotenv.config({ path: `${__dirname}/config/config.env` });
+// dotenv.config({ path: `${__dirname}/config/config.env` });
+dotenv.config();
 
 // Connect to database
 connectDB();

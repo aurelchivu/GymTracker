@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node gymtracker-be/server",
     "server": "nodemon gymtracker-be/server",
-    "client": "npm start --prefix gymtracker-fe ",
+    "client": "npm start --prefix gymtracker-fe",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
@@ -21,25 +21,35 @@
   },
   "homepage": "https://github.com/aurelchivu/GymTracker#readme",
   "dependencies": {
-    "@material-ui/core": "^4.10.0",
-    "@material-ui/icons": "^4.9.1",
-    "axios": "^0.21.1",
-    "bootstrap": "^4.5.0",
-    "core-js": "^3.6.5",
-    "dayjs": "^1.8.27",
+    "@types/mongoose": "^5.10.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "colors": "^1.4.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "date-fns": "^2.17.0",
     "dotenv": "^8.2.0",
-    "history": "^5.0.0",
-    "jquery": "^3.5.1",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.0.2",
+    "express-rate-limit": "^5.2.6",
+    "google-auth-library": "^7.0.2",
+    "helmet": "^4.4.1",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.7",
-    "react": "^16.13.1",
-    "react-bootstrap": "^0.32.4",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0",
-    "react-toastify": "^6.0.8",
-    "redux": "^4.0.5"
+    "mongoose": "^5.11.18",
+    "morgan": "^1.10.0",
+    "node": "^15.8.0",
+    "nodemailer": "^6.5.0",
+    "slugify": "^1.4.7",
+    "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "nodemon": "^2.0.6"
-  }
+    "nodemon": "^2.0.7"
+  },
+  "typeRoots": [
+    "./typings",
+    "./node_modules/@types/"
+  ]
 }
