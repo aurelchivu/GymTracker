@@ -11,6 +11,7 @@ import {
   MEASUREMENT_DETAILS_REQUEST,
   MEASUREMENT_DETAILS_SUCCESS,
   MEASUREMENT_DETAILS_FAIL,
+  MEASUREMENT_DETAILS_RESET,
   MEASUREMENT_UPDATE_REQUEST,
   MEASUREMENT_UPDATE_SUCCESS,
   MEASUREMENT_UPDATE_FAIL,
@@ -105,12 +106,24 @@ export const listMeasurements = (bodyPart) => async (dispatch, getState) => {
 };
 
 // Get measurement by id
-export const measurementDetails = (id) => async (dispatch) => {
+export const detailsMeasurement = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: MEASUREMENT_DETAILS_REQUEST });
 
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
     const { data } = await axios.get(
       `http://localhost:5000/api/v1/measurements/${id}`,
+      config
     );
 
     dispatch({
@@ -129,7 +142,10 @@ export const measurementDetails = (id) => async (dispatch) => {
 };
 
 // Update measurement
-export const updateMeasurement = (measurement) => async (dispatch, getState) => {
+export const updateMeasurement = (measurement) => async (
+  dispatch,
+  getState
+) => {
   try {
     dispatch({
       type: MEASUREMENT_UPDATE_REQUEST,
@@ -213,10 +229,10 @@ export const deleteMeasuremet = (id) => async (dispatch, getState) => {
 };
 
 // Reset measurement
-export const resetMeasuremet = () => async (dispatch) => {
+export const resetMeasurement = () => async (dispatch) => {
   try {
     dispatch({
-      type: MEASUREMENT_CREATE_RESET,
+      type: MEASUREMENT_DETAILS_RESET,
     });
   } catch (error) {
     const message =

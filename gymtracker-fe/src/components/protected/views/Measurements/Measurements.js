@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createMeasurement,
-  measurementDetails,
+  detailsMeasurement,
   listMeasurements,
   resetMeasurement,
   listMeasurementsReset,
@@ -73,33 +73,44 @@ export default function Measurement({ history }) {
   const [checkBodyPart, setCheckBodyPart] = useState('');
   const [measure, setMeasure] = useState();
   const [showMeasurements, setShowMeasurements] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   const measurementList = useSelector((state) => state.measurementList);
-  const { loading, error, measurements = []} = measurementList;
-  const { succes: succesMeasurementsList, count, data: MeasurementsByBodyPart } = measurements;
+  const {
+    loading: loadingList,
+    error: errorList,
+    measurements = [],
+  } = measurementList;
+  const {
+    succes: succesMeasurementsList,
+    count,
+    data: MeasurementsByBodyPart,
+  } = measurements;
 
   const measurementCreate = useSelector((state) => state.measurementCreate);
-  let { success: successCreate, measurement } = measurementCreate;
-
+  const { success: successCreate, measurement } = measurementCreate;
   const measurementId = measurement?.data?._id;
 
-  // useEffect(() => {
-    // if (success) {
-    //   dispatch(measurementDetails(measurementId));
-    //   history.push(
-    //     `http://localhost:5000/api/v1/measurements?bodyPart=${bodyPart}`
-    //   );
-    // }
-    // if (succesMeasurementsList) {
-    //   dispatch(listMeasurements(checkBodyPart));
-    // }
-  // }, [succesMeasurementsList]);
+  const measurementDetails = useSelector((state) => state.measurementDetails);
+  const {
+    loading: loadingDetails,
+    error: errorDetails,
+    measurement: detailsMeasurements = {},
+  } = measurementDetails;
+  const { succes: succesDetails, data: details } = detailsMeasurements;
+
+  useEffect(() => {
+    if (successCreate) {
+      dispatch(detailsMeasurement(measurementId));
+      console.log(measurement);
+    }
+  }, [successCreate]);
 
   const handleAddMeasurement = (e) => {
     e.preventDefault();
     dispatch(createMeasurement(addBodyPart, measure));
-    dispatch(measurementDetails(measurementId));
     setShowMeasurements(false);
+    setShowDetails(true);
   };
 
   const handleCheckMeasurements = (e) => {
@@ -127,7 +138,12 @@ export default function Measurement({ history }) {
                 <NativeSelect
                   id='demo-customized-select-native'
                   value={addBodyPart}
-                  onChange={(e) => setAddBodyPart(e.target.value)}
+                  onChange={(e) => {
+                    setAddBodyPart(e.target.value);
+                    setShowDetails(false);
+                    dispatch(resetMeasurement());
+                    setShowMeasurements(false);
+                  }}
                   input={<BootstrapInput />}
                 >
                   {bodyParts.map((bodyPart, key) => {
@@ -159,21 +175,19 @@ export default function Measurement({ history }) {
             </form>
           </GridContainer>
 
-          {/* {loading ? (
+          {loadingDetails ? (
             <h3>
               <CircularProgress color='primary' />
             </h3>
-          ) : error ? (
-            <h3>{error}</h3>
-          ) : success && measurements ? (
-            <Card plain>
-              <CardBody>
-                <h3>{measurements}</h3>
-              </CardBody>
-            </Card>
-          ) : null} */}
+          ) : errorDetails ? (
+            <h3>{errorDetails}</h3>
+          ) : showDetails && details ? (
+            <p>
+              Your new measure for {details.bodyPart} is {details.measure}.
+            </p>
+          ) : null}
 
-          <h3>Check measuremet</h3>
+          <h3>Check Measurements</h3>
           <GridContainer>
             <form
               style={{ display: 'flex' }}
@@ -188,6 +202,7 @@ export default function Measurement({ history }) {
                   onChange={(e) => {
                     setCheckBodyPart(e.target.value);
                     setShowMeasurements(false);
+                    setShowDetails(false);
                   }}
                   input={<BootstrapInput />}
                 >
@@ -208,20 +223,30 @@ export default function Measurement({ history }) {
               </Button>
             </form>
           </GridContainer>
-          {loading ? (
+          {loadingList ? (
             <h3>
               <CircularProgress color='primary' />
             </h3>
-          ) : error ? (
-            <h3>{error}</h3>
+          ) : errorList ? (
+            <h3>{errorList}</h3>
           ) : showMeasurements && MeasurementsByBodyPart ? (
             <>
               <h4>
                 At {checkBodyPart} you have {count} measurements.{' '}
               </h4>
-              {Object.values(MeasurementsByBodyPart).map((measurement, key) => {
-                return <p key={key}>{measurement.measure}</p>;
-              })}
+              <ol>
+                {Object.values(MeasurementsByBodyPart).map(
+                  (measurement, key) => {
+                    return (
+                      <li key={key}>
+                        {measurement.measure} on{' '}
+                        {new Date(measurement.createdAt).toDateString()}
+                        {'.'}
+                      </li>
+                    );
+                  }
+                )}
+              </ol>
             </>
           ) : null}
           <br />

@@ -10,6 +10,7 @@ import {
   MEASUREMENT_DETAILS_REQUEST,
   MEASUREMENT_DETAILS_SUCCESS,
   MEASUREMENT_DETAILS_FAIL,
+  MEASUREMENT_DETAILS_RESET,
   MEASUREMENT_UPDATE_REQUEST,
   MEASUREMENT_UPDATE_SUCCESS,
   MEASUREMENT_UPDATE_FAIL,
@@ -29,8 +30,8 @@ export const measurementCreateReducer = (state = {}, action) => {
         loading: false,
         error: action.payload,
       };
-    case MEASUREMENT_CREATE_RESET:
-      return {};
+    // case MEASUREMENT_CREATE_RESET:
+    //   return {};
     default:
       return state;
   }
@@ -68,6 +69,8 @@ export const measurementDetailsReducer = (
       return { loading: false, measurement: action.payload };
     case MEASUREMENT_DETAILS_FAIL:
       return { loading: false, error: action.payload };
+    case MEASUREMENT_DETAILS_RESET:
+      return {};
     default:
       return state;
   }

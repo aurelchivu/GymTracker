@@ -73,7 +73,7 @@ const appReducer = combineReducers({
 
   measurementCreate: measurementCreateReducer,
   measurementList: measurementListReducer,
-  // measurementDetails: measurementDetailsReducer,
+  measurementDetails: measurementDetailsReducer,
   // measurementUpdate: measurementUpdateReducer,
   // measurementDelete: measurementDeleteReducer,
 
