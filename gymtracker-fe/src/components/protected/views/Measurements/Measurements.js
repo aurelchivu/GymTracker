@@ -6,7 +6,7 @@ import {
   listMeasurements,
   resetMeasurement,
   listMeasurementsReset,
-} from '../../../../actions/measurementActions';
+} from '../../../../redux/actions/measurementActions';
 import bodyParts from './bodyParts';
 // @material-ui/core
 import { makeStyles, withStyles } from '@material-ui/core/styles';

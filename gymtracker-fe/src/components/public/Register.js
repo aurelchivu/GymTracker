@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../../actions/userActions';
+import { register } from '../../redux/actions/userActions';
 import PublicComponent from './PublicComponent';
 
 import Avatar from '@material-ui/core/Avatar';

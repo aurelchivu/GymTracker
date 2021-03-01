@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../../../actions/userActions'
+import { logout } from '../../../../redux/actions/userActions'
 
 import classNames from "classnames";
 // @material-ui/core components

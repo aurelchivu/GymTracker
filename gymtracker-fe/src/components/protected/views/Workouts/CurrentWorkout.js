@@ -5,11 +5,11 @@ import {
   listSets,
   resetSet,
   listSetsReset,
-} from '../../../../actions/setActions';
+} from '../../../../redux/actions/setActions';
 import {
   resetWorkout,
   resetListWorkouts,
-} from '../../../../actions/workoutActions';
+} from '../../../../redux/actions/workoutActions';
 import workoutSets from './workoutSets';
 import FullWorkout from './FullWorkout';
 // @material-ui/core

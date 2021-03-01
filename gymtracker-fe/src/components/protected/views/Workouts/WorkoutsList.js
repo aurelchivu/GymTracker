@@ -6,7 +6,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { listWorkouts } from '../../../../actions/workoutActions';
+import { listWorkouts } from '../../../../redux/actions/workoutActions';
 import FullWorkout from './FullWorkout';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';

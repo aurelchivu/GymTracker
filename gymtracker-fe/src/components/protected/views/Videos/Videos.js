@@ -1,76 +1,93 @@
-import React from "react";
-import axios from "axios"
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import dotenv from 'dotenv';
+import path from 'path';
+import YTSearch from 'youtube-api-search';
+
 // @material-ui/core
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from "@material-ui/core/styles";
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 // core components
 import Button from '../../components/CustomButtons/Button.js';
-import GridItem from "../../components/Grid/GridItem.js";
-import GridContainer from "../../components/Grid/GridContainer.js";
-import Card from "../../components/Card/Card.js";
-import CardHeader from "../../components/Card/CardHeader.js";
-import CardBody from "../../components/Card/CardBody.js";
-import CardFooter from "../../components/Card/CardFooter.js";
+import GridItem from '../../components/Grid/GridItem.js';
+import GridContainer from '../../components/Grid/GridContainer.js';
+import Card from '../../components/Card/Card.js';
+import CardHeader from '../../components/Card/CardHeader.js';
+import CardBody from '../../components/Card/CardBody.js';
+import CardFooter from '../../components/Card/CardFooter.js';
 
-import TextField from '@material-ui/core/TextField';
-
-import styles from "../../assets/jss/material-dashboard-react/views/dashboardStyle.js";
-
+import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 const useStyles = makeStyles(styles);
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
+export default function Videos() {
+  const [muscle, setMuscle] = useState('');
+  const [videoList, setVideoList] = useState([]);
+  const [showVideoList, setShowVideoList] = useState(false);
 
+  const videoSearch = async () => {
+    YTSearch(
+      {
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+        term: `${muscle} traning workout exercises`,
+        maxResults: 100,
+      },
+      (videos) => setVideoList(videos)
+    );
+  };
 
-export default function Videos(props) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    videoSearch();
+    setShowVideoList(true);
+    console.log(videoList);
+  };
 
-  const YOUTUBE_PLAYLIST_ITEMS_API = 'https://www.googleapis.com/youtube/v3/playlistItems';
-  const YOUTUBE_API_KEY="AIzaSyB6lOjj9XCkTwsotkClF5FuXtMUNmx2oxM"
-
-  async function getServerSideProps() {
-    const { data } = await axios.get(`${YOUTUBE_PLAYLIST_ITEMS_API}?key=${YOUTUBE_API_KEY}`);
-    return {
-      props: {
-        data
-      }
-    }
-  }
-  
-  console.log('data', props.data);
+  // useEffect(() => {
+  //   videoSearch();
+  // }, []);
 
   const classes = useStyles();
-  
+
   return (
     <>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
-            <CardHeader color="primary">
+            <CardHeader color='primary'>
               <h2>Training Videos</h2>
             </CardHeader>
             <CardBody>
               <TextField
-                // value={video}
-                variant="outlined"
-                margin="normal"
+                value={muscle}
+                onChange={(e) => {
+                  setMuscle(e.target.value);
+                  setShowVideoList(false);
+                  setVideoList([]);
+                }}
+                variant='outlined'
+                margin='normal'
                 required
                 fullWidth
-                id="standard-basic"
-                label="Training videos"
-                name="muscle"
-                autoComplete="muscle"
+                id='standard-basic'
+                label='Training videos'
+                name='muscle'
+                autoComplete='muscle'
                 autoFocus
               />
               <br />
               <br />
-              <Grid container direction="row" spacing="3">
-              <Grid item xs={2} sm={3} md={3}>
-              </Grid>
+              <Grid container direction='row' spacing='3'>
+                <Grid item xs={2} sm={3} md={3}></Grid>
                 <Grid item xs={8} sm={6} md={6}>
                   <Button
-                    type="submit"
+                    onClick={handleClick}
+                    type='submit'
                     fullWidth
-                    variant="contained"
-                    color="primary"
+                    variant='contained'
+                    color='primary'
                     round
                     className={classes.button}
                     center
@@ -79,12 +96,38 @@ export default function Videos(props) {
                     search for training videos
                   </Button>
                 </Grid>
-                <Grid item xs={2} sm={3} md={3}>
-                </Grid>
+                <Grid item xs={2} sm={3} md={3}></Grid>
               </Grid>
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
+                {showVideoList && videoList ? (
+                  <ul className={classes.grid}>
+                    {videoList.map((video) => {
+                      const { id, snippet = {} } = video;
+                      // const { videoId } = id;
+                      const { title, thumbnails = {} } = snippet;
+                      const { medium = {} } = thumbnails;
+                      return (
+                        <li className='styles.card' key={id}>
+                          <a
+                            href={`https://www.youtube.com/watch?v=${id.videoId}`}
+                          >
+                            <p>
+                              <img
+                                width={medium.width}
+                                height={medium.height}
+                                src={medium.url}
+                                alt=''
+                              />
+                            </p>
+                            <h3>{title}</h3>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : null}
               </div>
             </CardFooter>
           </Card>

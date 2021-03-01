@@ -3,7 +3,7 @@ import { Link as ReactLink } from 'react-router-dom';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, googleAuth } from '../../actions/userActions';
+import { login, googleAuth } from '../../redux/actions/userActions';
 import PublicComponent from './PublicComponent';
 
 import Avatar from '@material-ui/core/Avatar';

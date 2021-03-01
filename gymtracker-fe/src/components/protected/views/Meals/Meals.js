@@ -13,7 +13,7 @@ import CardFooter from '../../components/Card/CardFooter.js';
 
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
-import { listMeals } from '../../../../actions/mealActions';
+import { listMeals } from '../../../../redux/actions/mealActions';
 
 const useStyles = makeStyles(styles);
 

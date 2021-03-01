@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   createWorkout,
   listWorkouts,
-} from '../../../../actions/workoutActions';
+} from '../../../../redux/actions/workoutActions';
 
 // @material-ui/core
 import { makeStyles } from '@material-ui/core/styles';
