@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node gymtracker-be/server",
+    "start": "node gymtracker-be/server ",
     "server": "nodemon gymtracker-be/server",
     "client": "npm start --prefix gymtracker-fe",
     "dev": "concurrently \"npm run server\" \"npm run client\""

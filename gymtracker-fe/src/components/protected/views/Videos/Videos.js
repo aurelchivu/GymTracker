@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import dotenv from 'dotenv';
 import path from 'path';
 import YTSearch from 'youtube-api-search';
@@ -26,11 +25,11 @@ export default function Videos() {
   const [muscle, setMuscle] = useState('');
   const [videoList, setVideoList] = useState([]);
   const [showVideoList, setShowVideoList] = useState(false);
-
+  
   const videoSearch = async () => {
     YTSearch(
       {
-        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+        key: REACT_APP_YOUTUBE_API_KEY,
         term: `${muscle} traning workout exercises`,
         maxResults: 100,
       },
@@ -44,10 +43,6 @@ export default function Videos() {
     setShowVideoList(true);
     console.log(videoList);
   };
-
-  // useEffect(() => {
-  //   videoSearch();
-  // }, []);
 
   const classes = useStyles();
 
@@ -91,7 +86,6 @@ export default function Videos() {
                     round
                     className={classes.button}
                     center
-                    // className={classes.submit}
                   >
                     search for training videos
                   </Button>
@@ -105,7 +99,6 @@ export default function Videos() {
                   <ul className={classes.grid}>
                     {videoList.map((video) => {
                       const { id, snippet = {} } = video;
-                      // const { videoId } = id;
                       const { title, thumbnails = {} } = snippet;
                       const { medium = {} } = thumbnails;
                       return (
