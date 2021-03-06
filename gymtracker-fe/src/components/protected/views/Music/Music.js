@@ -25,6 +25,8 @@ export default function Music() {
   const [keyword, setKeyword] = useState('');
   const [trackList, setTrackList] = useState([]);
   const [showTrackList, setShowTrackList] = useState(false);
+
+  const {REACT_APP_spotifyClientID, REACT_APP_spotifyClientSecret} = process.env;
   
   const getAccesToken = async (keyword) => {
     const config = {
@@ -134,9 +136,9 @@ export default function Music() {
                           <a href={`https://open.spotify.com/track/${track.id}`}>
                             <p>
                               <img
-                                width={track.album.images[2].width}
-                                height={track.album.images[2].height}
-                                src={track.album.images[2].url}
+                                width={track.album.images[1].width}
+                                height={track.album.images[1].height}
+                                src={track.album.images[1].url}
                                 alt=''
                               />
                               <h3>{track.name}</h3>

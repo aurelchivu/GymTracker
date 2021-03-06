@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const timeZone = require('mongoose-timezone');
 
 const SetSchema = new mongoose.Schema({
   user: {
@@ -38,7 +37,5 @@ const SetSchema = new mongoose.Schema({
   },
   slug: String,
 });
-
-// SetSchema.plugin(timeZone);
 
 module.exports = mongoose.model('Set', SetSchema);

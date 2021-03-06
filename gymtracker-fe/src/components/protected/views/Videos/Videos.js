@@ -25,7 +25,9 @@ export default function Videos() {
   const [muscle, setMuscle] = useState('');
   const [videoList, setVideoList] = useState([]);
   const [showVideoList, setShowVideoList] = useState(false);
-  
+
+  const { REACT_APP_YOUTUBE_API_KEY } = process.env;
+
   const videoSearch = async () => {
     YTSearch(
       {

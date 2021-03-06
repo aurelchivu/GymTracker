@@ -18,6 +18,52 @@ import {
 } from '../constants/mealConstants'
 import { logout } from './userActions'
 
+// Create meal
+export const createMeal = (meal) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({
+      type: MEAL_CREATE_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(
+      `http://localhost:5000/api/v1/meals`,
+      meal,
+      config
+    );
+
+    dispatch({
+      type: MEAL_CREATE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
+    dispatch({
+      type: MEAL_CREATE_FAIL,
+      payload: message,
+    });
+  }
+};
+
 export const listMeals = () => async (
   dispatch
 ) => {
@@ -64,46 +110,6 @@ export const mealDetails = (id) => async (dispatch) => {
   }
 }
 
-export const createMeal = (meal) => async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: MEAL_CREATE_REQUEST,
-      })
-  
-      const {
-        userLogin: { userInfo },
-      } = getState()
-  
-      const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userInfo.token}`,
-        },
-      }
-  
-      const { data } = await axios.post(`/api/v1/meals`, meal, config)
-  
-      dispatch({
-        type: MEAL_CREATE_SUCCESS,
-        payload: data,
-      })
-
-      // localStorage.setItem('mealName', JSON.stringify(data.name))
-
-    } catch (error) {
-      const message =
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message
-      if (message === 'Not authorized, token failed') {
-        dispatch(logout())
-      }
-      dispatch({
-        type: MEAL_CREATE_FAIL,
-        payload: message,
-      })
-    }
-  }
   
   export const updateMeal = (meal) => async (dispatch, getState) => {
     try {

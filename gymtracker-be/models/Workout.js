@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const timeZone = require('mongoose-timezone');
 
 const WorkoutSchema = new mongoose.Schema(
   {
@@ -28,8 +27,6 @@ const WorkoutSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-
-// WorkoutSchema.plugin(timeZone);
 
 // Cascade delete exercises when a workout is deleted
 WorkoutSchema.pre('remove', async function (next) {

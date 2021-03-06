@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const timeZone = require('mongoose-timezone');
 
 const MealSchema = new mongoose.Schema(
   {
@@ -7,6 +6,30 @@ const MealSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       required: true,
+    },
+    meal: {
+      type: String,
+      required: [true, 'Please add a meal'],
+    },
+    food: {
+      type: String,
+      required: [true, 'Please add a food'],
+    },
+    calories: {
+      type: Number,
+      required: [true, 'Please add calories'],
+    },
+    proteins: {
+      type: Number,
+      required: [true, 'Please add proteins'],
+    },
+    carbs: {
+      type: Number,
+      required: [true, 'Please add carbs'],
+    },
+    fats: {
+      type: Number,
+      required: [true, 'Please add fats'],
     },
     createdAt: {
       type: Date,
@@ -19,22 +42,5 @@ const MealSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-
-// Cascade delete foods when a meal is deleted
-MealSchema.pre('remove', async function(next) {
-  console.log(`Foods being removed from meal ${this._id}`);
-  await this.model('Food').deleteMany({ meal: this._id });
-  next();
-});
-
-// Reverse populate with virtuals
-MealSchema.virtual('foods', {
-  ref: 'Food',
-  localField: '_id',
-  foreignField: 'meal',
-  justOne: false
-});
-
-// MealSchema.plugin(timeZone);
 
 module.exports = mongoose.model('Meal',  MealSchema);

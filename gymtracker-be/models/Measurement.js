@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-// const timeZone = require('mongoose-timezone');
 
 const MeasurementSchema = new mongoose.Schema({
   user: {
@@ -21,7 +20,5 @@ const MeasurementSchema = new mongoose.Schema({
   },
   slug: String,
 });
-
-// MeasurementSchema.plugin(timeZone);
 
 module.exports = mongoose.model('Measurement', MeasurementSchema);

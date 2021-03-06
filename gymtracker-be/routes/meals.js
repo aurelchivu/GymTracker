@@ -6,16 +6,10 @@ const {
   updateMeal,
   deleteMeal,
 } = require('../controllers/meals');
-
-// Include other resource routers
-const foodRouter = require('./foods');
  
 const router = express.Router();
 
 const { protect } = require('../middleware/auth');
-
-// Re-route into other resource routers
-router.use('/:mealId/foods', foodRouter);
 
 router.use(protect);
 
