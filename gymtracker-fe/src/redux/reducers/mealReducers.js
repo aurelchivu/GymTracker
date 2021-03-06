@@ -21,13 +21,11 @@ import {
 export const mealListReducer = (state = { meals: [] }, action) => {
   switch (action.type) {
     case MEAL_LIST_REQUEST:
-      return { loading: true, meals: [] }
+      return { loading: true }
     case MEAL_LIST_SUCCESS:
       return {
         loading: false,
-        meals: action.payload.meals,
-        pages: action.payload.pages,
-        page: action.payload.page,
+        meals: action.payload,
       }
     case MEAL_LIST_FAIL:
       return { loading: false, error: action.payload }

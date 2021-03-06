@@ -64,20 +64,31 @@ export const createMeal = (meal) => async (
   }
 };
 
-export const listMeals = () => async (
-  dispatch
-) => {
+// Get list of meals
+export const listMeals = (date) => async (dispatch, getState) => {
   try {
-    dispatch({ type: MEAL_LIST_REQUEST })
+    dispatch({ type: MEAL_LIST_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
 
     const { data } = await axios.get(
-      `/api/v1/meals`
-    )
+      `http://localhost:5000/api/v1/meals?date=${date}`,
+      config
+    );
 
     dispatch({
       type: MEAL_LIST_SUCCESS,
       payload: data,
-    })
+    });
   } catch (error) {
     dispatch({
       type: MEAL_LIST_FAIL,
@@ -85,9 +96,9 @@ export const listMeals = () => async (
         error.response && error.response.data.message
           ? error.response.data.message
           : error.message,
-    })
+    });
   }
-}
+};
 
 export const mealDetails = (id) => async (dispatch) => {
   try {

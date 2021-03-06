@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+
 // @material-ui/core
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -17,7 +19,7 @@ import CardFooter from '../../components/Card/CardFooter.js';
 
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
-import { createMeal } from '../../../../redux/actions/mealActions';
+import { createMeal, listMeals } from '../../../../redux/actions/mealActions';
 
 const BootstrapInput = withStyles((theme) => ({
   root: {
@@ -61,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Meals() {
+
+  const history = useHistory();
+  
   const classes = useStyles();
 
   const [meal, setMeal] = useState('');
@@ -69,15 +74,19 @@ export default function Meals() {
   const [proteins, setProteins] = useState(null);
   const [carbs, setCarbs] = useState(null);
   const [fats, setFats] = useState(null);
+  const [totalCalories, setTotalCalories] = useState(null);
 
   const dispatch = useDispatch();
 
-  // const mealList = useSelector((state) => state.mealList);
-  // const { loading, error, meals } = mealList;
+  const mealList = useSelector((state) => state.mealList);
+  const { loading, error, meals = [] } = mealList;
+  const { count, data = [] } = meals;
 
-  // useEffect(() => {
-  //   dispatch(listMeals());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(listMeals(new Date()));
+    const totalCals = data?.reduce((prev, curr) => prev + curr.calories, 0);
+    setTotalCalories(totalCals);
+  }, []);
 
   const handleAddMeal = (e) => {
     e.preventDefault();
@@ -90,130 +99,172 @@ export default function Meals() {
       fats,
     };
     dispatch(createMeal(newMeal));
+    // history.go(0);
   };
 
-  return (
+  // www.eatthismuch.com/
+
+  https: return (
     <>
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
+        <GridItem xs={11} sm={11} md={11}>
           <Card>
             <CardHeader color='primary'>
               <h2>My Meals</h2>
             </CardHeader>
             <CardBody>
-              <form
-                style={{ display: 'flex' }}
-                className={classes.form}
-                noValidate
-                onSubmit={handleAddMeal}
-              >
-                <GridContainer>
-                  <GridContainer xs={12} spacing={1}>
-                    <GridItem>
-                      <FormControl className={classes.margin}>
-                        <BootstrapInput
-                          placeholder='Meal name'
-                          id='demo-customized-textbox'
-                          htmlFor='demo-customized-select-native'
-                          value={meal}
-                          onChange={(e) => setMeal(e.target.value)}
-                          variant='outlined'
-                          required
-                        />
-                      </FormControl>
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer xs={12} spacing={1}>
-                    <GridItem>
-                      <FormControl className={classes.margin}>
-                        <BootstrapInput
-                          placeholder='Food name'
-                          id='demo-customized-textbox'
-                          htmlFor='demo-customized-select-native'
-                          value={food}
-                          onChange={(e) => setFood(e.target.value)}
-                          variant='outlined'
-                          required
-                        />
-                      </FormControl>
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer xs={12} spacing={1}>
-                    <GridItem>
-                      <FormControl className={classes.margin}>
-                        <BootstrapInput
-                          placeholder='Calories'
-                          id='demo-customized-textbox'
-                          htmlFor='demo-customized-select-native'
-                          value={calories}
-                          onChange={(e) => setCalories(e.target.value)}
-                          variant='outlined'
-                          required
-                        />
-                      </FormControl>
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer xs={12} spacing={1}>
-                    <GridItem>
-                      <FormControl className={classes.margin}>
-                        <BootstrapInput
-                          placeholder='Proteins'
-                          id='demo-customized-textbox'
-                          htmlFor='demo-customized-select-native'
-                          value={proteins}
-                          onChange={(e) => setProteins(e.target.value)}
-                          variant='outlined'
-                          required
-                        />
-                      </FormControl>
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer xs={12} spacing={1}>
-                    <GridItem>
-                      <FormControl className={classes.margin}>
-                        <BootstrapInput
-                          placeholder='Carbs'
-                          id='demo-customized-textbox'
-                          htmlFor='demo-customized-select-native'
-                          value={carbs}
-                          onChange={(e) => setCarbs(e.target.value)}
-                          variant='outlined'
-                          required
-                        />
-                      </FormControl>
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer xs={12} spacing={1}>
-                    <GridItem>
-                      <FormControl className={classes.margin}>
-                        <BootstrapInput
-                          placeholder='Fats'
-                          id='demo-customized-textbox'
-                          htmlFor='demo-customized-select-native'
-                          value={fats}
-                          onChange={(e) => setFats(e.target.value)}
-                          variant='outlined'
-                          required
-                        />
-                      </FormControl>
-                    </GridItem>
-                  </GridContainer>
-
-                  <Button
-                    round
-                    size='medium'
-                    color='primary'
-                    type='submit'
-                    color='primary'
-                    className={classes.submit}
-                  >
-                    Add meal
-                  </Button>
-                </GridContainer>
-              </form>
+              {loading ? (
+                <h3>
+                  <CircularProgress color='primary' />
+                </h3>
+              ) : error ? (
+                <h3>{error}</h3>
+              ) : count === 0 ? (
+                <h4>Today you had no meals!</h4>
+              ) : count === 1 ? (
+                <h4>
+                  Today you had {count} meal, {totalCalories} calories in total.
+                </h4>
+              ) : (
+                <h4>
+                  Today you had {count} meals, {totalCalories} calories in
+                  total.
+                </h4>
+              )}
+              <ol>
+                {data &&
+                  data.map((meal) => {
+                    return (
+                      <>
+                        <li key={meal._id}>{meal.meal}</li>
+                        <p>Food: {meal.food}</p>
+                        <p>Calories: {meal.calories}</p>
+                        <p>Proteins: {meal.proteins}</p>
+                        <p>Carbs: {meal.carbs}</p>
+                        <p>Fats: {meal.fats}</p>
+                        <br />
+                      </>
+                    );
+                  })}
+              </ol>
             </CardBody>
 
-            <CardFooter chart></CardFooter>
+            <CardFooter chart>
+              <GridContainer xs={1} sm={1} md={1}></GridContainer>
+              <GridContainer xs={11} sm={11} md={11}>
+                <GridContainer xs={12} sm={12} md={12}>
+                  <h3>Add a new meal</h3>
+                </GridContainer>
+                <form
+                  style={{ display: 'flex' }}
+                  className={classes.form}
+                  noValidate
+                  onSubmit={handleAddMeal}
+                >
+                  <GridContainer>
+                    <GridContainer xs={12} spacing={1}>
+                      <GridItem>
+                        <FormControl className={classes.margin}>
+                          <BootstrapInput
+                            placeholder='Meal name'
+                            id='demo-customized-textbox'
+                            htmlFor='demo-customized-select-native'
+                            value={meal}
+                            onChange={(e) => setMeal(e.target.value)}
+                            variant='outlined'
+                            required
+                          />
+                        </FormControl>
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer xs={12} sm={12} md={12} spacing={1}>
+                      <GridItem>
+                        <FormControl className={classes.margin}>
+                          <BootstrapInput
+                            placeholder='Food name'
+                            id='demo-customized-textbox'
+                            htmlFor='demo-customized-select-native'
+                            value={food}
+                            onChange={(e) => setFood(e.target.value)}
+                            variant='outlined'
+                            required
+                          />
+                        </FormControl>
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer xs={12} sm={12} md={12} spacing={1}>
+                      <GridItem>
+                        <FormControl className={classes.margin}>
+                          <BootstrapInput
+                            placeholder='Calories'
+                            id='demo-customized-textbox'
+                            htmlFor='demo-customized-select-native'
+                            value={calories}
+                            onChange={(e) => setCalories(e.target.value)}
+                            variant='outlined'
+                            required
+                          />
+                        </FormControl>
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer xs={12} sm={12} md={12} spacing={1}>
+                      <GridItem>
+                        <FormControl className={classes.margin}>
+                          <BootstrapInput
+                            placeholder='Proteins'
+                            id='demo-customized-textbox'
+                            htmlFor='demo-customized-select-native'
+                            value={proteins}
+                            onChange={(e) => setProteins(e.target.value)}
+                            variant='outlined'
+                            required
+                          />
+                        </FormControl>
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer xs={12} sm={12} md={12} spacing={1}>
+                      <GridItem>
+                        <FormControl className={classes.margin}>
+                          <BootstrapInput
+                            placeholder='Carbs'
+                            id='demo-customized-textbox'
+                            htmlFor='demo-customized-select-native'
+                            value={carbs}
+                            onChange={(e) => setCarbs(e.target.value)}
+                            variant='outlined'
+                            required
+                          />
+                        </FormControl>
+                      </GridItem>
+                    </GridContainer>
+                    <GridContainer xs={12} sm={12} md={12} spacing={1}>
+                      <GridItem>
+                        <FormControl className={classes.margin}>
+                          <BootstrapInput
+                            placeholder='Fats'
+                            id='demo-customized-textbox'
+                            htmlFor='demo-customized-select-native'
+                            value={fats}
+                            onChange={(e) => setFats(e.target.value)}
+                            variant='outlined'
+                            required
+                          />
+                        </FormControl>
+                      </GridItem>
+                    </GridContainer>
+                    <Button
+                      round
+                      // size='big'
+                      color='primary'
+                      type='submit'
+                      className={classes.submit}
+                    >
+                      Add new meal
+                    </Button>
+                  </GridContainer>
+                </form>
+              </GridContainer>
+            </CardFooter>
           </Card>
         </GridItem>
       </GridContainer>

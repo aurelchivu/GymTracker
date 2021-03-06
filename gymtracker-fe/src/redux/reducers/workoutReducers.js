@@ -39,7 +39,7 @@ export const workoutCreateReducer = (state = {}, action) => {
 export const workoutListReducer = (state = { workouts: [] }, action) => {
   switch (action.type) {
     case WORKOUT_LIST_REQUEST:
-      return { loading: true, workouts: [] };
+      return { loading: true };
     case WORKOUT_LIST_SUCCESS:
       return {
         loading: false,

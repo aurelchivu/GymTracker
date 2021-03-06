@@ -1,3 +1,4 @@
+const moment = require('moment');
 const ErrorResponse = require('../utils/errorResponse'); // custom error handler
 const asyncHandler = require('../middleware/async'); // custom async handler to avoid repeating the try/catch code on each async middleware
 const Meal = require('../models/Meal');
@@ -10,10 +11,10 @@ exports.createMeal = asyncHandler(async (req, res) => {
   req.body.user = req.user.id;
 
   const meal = await Meal.create(req.body);
-  
+
   res.status(201).json({
     success: true,
-    data: meal
+    data: meal,
   });
 });
 
@@ -21,15 +22,20 @@ exports.createMeal = asyncHandler(async (req, res) => {
 // @route     GET /api/v1/meals/
 // @access    Private
 exports.getMeals = asyncHandler(async (req, res) => {
-  const meals = await Meal.find({ user: req.user.id }).populate({
-    path: 'foods',
-    select: 'name qty cals'
+  const date = req.query.date;
+
+  const startDay = moment(new Date(date)).startOf('day');
+  const endDay = moment(new Date(date)).endOf('day');
+
+  const meals = await Meal.find({
+    user: req.user.id,
+    createdAt: { $gte: startDay, $lte: endDay },
   });
 
   res.status(200).json({
     succes: true,
     count: meals.length,
-    data: meals
+    data: meals,
   });
 });
 
@@ -39,9 +45,9 @@ exports.getMeals = asyncHandler(async (req, res) => {
 exports.getMeal = asyncHandler(async (req, res, next) => {
   const meal = await Meal.findById(req.params._id).populate({
     path: 'foods',
-    select: 'name qty cals'
+    select: 'name qty cals',
   });
-  
+
   if (!meal) {
     return next(
       new ErrorResponse(`No meal found with id of ${req.params._id}`, 404)
@@ -85,7 +91,7 @@ exports.updateMeal = asyncHandler(async (req, res, next) => {
 
   meal = await Meal.findByIdAndUpdate(req.params._id, req.body, {
     new: true,
-    runValidators: true
+    runValidators: true,
   });
 
   res.status(200).json({ success: true, data: meal });
@@ -106,7 +112,10 @@ exports.deleteMeal = asyncHandler(async (req, res, next) => {
   // Make sure user is meal owner
   if (meal.user.toString() !== req.user._id.toString()) {
     return next(
-      new ErrorResponse(`User with id ${req.user._id} is not authorized to delete this meal`, 401)
+      new ErrorResponse(
+        `User with id ${req.user._id} is not authorized to delete this meal`,
+        401
+      )
     );
   }
 
@@ -114,7 +123,6 @@ exports.deleteMeal = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: {}
+    data: {},
   });
 });
-

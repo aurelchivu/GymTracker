@@ -7,7 +7,9 @@ import {
 } from 'react-google-maps';
 
 export default function Maps() {
-  const [currentPosition, setCurrentPosition] = useState({ lat: 44, lng: 26 });
+  const [currentPosition, setCurrentPosition] = useState({ lat: 44.43, lng: 26.1 });
+
+  const { REACT_GOOGLE_MAPS_URL_KEY } = process.env;
 
   // if (navigator.geolocation) {
   //   navigator.geolocation.getCurrentPosition((position) => {

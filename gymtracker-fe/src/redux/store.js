@@ -34,10 +34,10 @@ import {
 } from './reducers/setReducers';
 
 import {
+  mealCreateReducer,
   mealListReducer,
   mealDetailsReducer,
   mealDeleteReducer,
-  mealCreateReducer,
   mealUpdateReducer,
 } from './reducers/mealReducers';
 
@@ -77,10 +77,10 @@ const appReducer = combineReducers({
   // measurementUpdate: measurementUpdateReducer,
   // measurementDelete: measurementDeleteReducer,
 
-  // mealList: mealListReducer,
+  mealCreate: mealCreateReducer,
+  mealList: mealListReducer,
   // mealDetails: mealDetailsReducer,
   // mealDelete: mealDeleteReducer,
-  // mealCreate: mealCreateReducer,
   // mealUpdate: mealUpdateReducer,
 });
 
@@ -107,7 +107,6 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 
 const initialState = {
   userLogin: { userInfo: userInfoFromStorage },
-  // workoutList: { workouts: [] },
 };
 
 const middleware = [thunk];
