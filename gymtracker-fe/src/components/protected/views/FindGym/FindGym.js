@@ -11,14 +11,6 @@ export default function Maps() {
 
   const { REACT_GOOGLE_MAPS_URL_KEY } = process.env;
 
-  // if (navigator.geolocation) {
-  //   navigator.geolocation.getCurrentPosition((position) => {
-  //     setCurrentPosition({lat: position.coords.latitude, lng: position.coords.longitude});
-  //   });
-  // } else {
-  //   window.alert('dddd')
-  // }
-
   const CustomSkinMap = withScriptjs(
     withGoogleMap(() => (
       <GoogleMap
@@ -89,17 +81,23 @@ export default function Maps() {
           ],
         }}
       >
-        <Marker position={{ lat: 40.748817, lng: -73.985428 }} />
+        <Marker position={currentPosition} />
       </GoogleMap>
     ))
   );
 
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(function (position) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setCurrentPosition({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
         console.log('Latitude is :', position.coords.latitude);
         console.log('Longitude is :', position.coords.longitude);
       });
+    } else {
+      window.alert('Location not found');
     }
   }, []);
 
