@@ -12,7 +12,6 @@ exports.getGyms = asyncHandler(async (req, res, next) => {
     console.log(req.query);
 
     const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=gym&location=${lat},${lng}&radius=${radius}&keyword=${keyword}&key=${key}`;
-    // const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=gym&location=45.1279766,25.7142248&radius=10000&key=AIzaSyDx6QiNmIC4DwCVzAwXaOD8On1Q71khDdc`;
     const { data } = await axios.get(url);
 
     res.status(200).json({

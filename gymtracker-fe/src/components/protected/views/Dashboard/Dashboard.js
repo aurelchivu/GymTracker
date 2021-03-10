@@ -63,8 +63,6 @@ export default function Dashboard({ location, history }) {
   const { success: successWorkouts, count: countWorkouts, data: dataWorkouts } =
     workouts;
 
-  console.log(dataWorkouts);
-
   const workoutCreate = useSelector((state) => state.workoutCreate);
   const { workout, success, error } = workoutCreate;
 
@@ -168,7 +166,7 @@ export default function Dashboard({ location, history }) {
                   autoComplete='workoutName'
                   autoFocus
                 />
-                <Grid container direction='row' spacing='3'>
+                <Grid container direction='row' spacing={3}>
                   <Grid item xs={2} sm={3} md={3}></Grid>
                   <Grid item xs={8} sm={6} md={6}>
                     <Button

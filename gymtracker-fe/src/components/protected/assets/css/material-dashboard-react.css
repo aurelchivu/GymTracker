@@ -506,6 +506,10 @@ footer ul li a:hover {
   right: auto;
   left: 80px;
 }
+
+.infoWindow {
+  color: #3c4858;
+}
 * {
   letter-spacing: normal !important;
 }
