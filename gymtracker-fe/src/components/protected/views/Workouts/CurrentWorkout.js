@@ -252,3 +252,4 @@ export default function CurrentWorkout({ history }) {
 
 // Form validation
 // Keep workout id after change location
+

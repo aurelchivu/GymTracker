@@ -63,18 +63,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Meals() {
-
   const history = useHistory();
-  
+
   const classes = useStyles();
 
   const [meal, setMeal] = useState('');
   const [food, setFood] = useState('');
-  const [calories, setCalories] = useState(null);
-  const [proteins, setProteins] = useState(null);
-  const [carbs, setCarbs] = useState(null);
-  const [fats, setFats] = useState(null);
-  const [totalCalories, setTotalCalories] = useState(null);
+  const [calories, setCalories] = useState();
+  const [proteins, setProteins] = useState();
+  const [carbs, setCarbs] = useState();
+  const [fats, setFats] = useState();
+  const [totalCalories, setTotalCalories] = useState();
 
   const dispatch = useDispatch();
 
@@ -82,11 +81,22 @@ export default function Meals() {
   const { loading, error, meals = [] } = mealList;
   const { count, data = [] } = meals;
 
+  const mealCreate = useSelector((state) => state.mealCreate);
+  const { success } = mealCreate;
+
   useEffect(() => {
     dispatch(listMeals(new Date()));
     const totalCals = data?.reduce((prev, curr) => prev + curr.calories, 0);
     setTotalCalories(totalCals);
   }, []);
+
+  useEffect(() => {
+    if (success) {
+      dispatch(listMeals(new Date()));
+      const totalCals = data?.reduce((prev, curr) => prev + curr.calories, 0);
+      setTotalCalories(totalCals);
+    }
+  }, [success]);
 
   const handleAddMeal = (e) => {
     e.preventDefault();
@@ -99,7 +109,6 @@ export default function Meals() {
       fats,
     };
     dispatch(createMeal(newMeal));
-    // history.go(0);
   };
 
   // www.eatthismuch.com/

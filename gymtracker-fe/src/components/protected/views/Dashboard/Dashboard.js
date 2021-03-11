@@ -41,14 +41,54 @@ export default function Dashboard({ location, history }) {
 
   const newUser = localStorage.getItem('newUser');
   const [workoutName, setWorkoutName] = useState('');
+  const [event, setEvent] = useState({});
+  const [googleWorkout, setGooleWorkout] = useState('');
 
   const currentDate = new Date().toDateString();
   const currentTime = new Date().toLocaleTimeString();
   const lastWeekDay = new Date(Date.now() - 604800000);
-  const googleWorkout = '';
+
   const classes = useStyles();
 
   const dispatch = useDispatch();
+
+  const gapi = window.gapi;
+  const { REACT_APP_GOOGLE_CALENDAR_API_KEY } = process.env;
+  const { REACT_APP_GOOGLE_CALENDAR_CLIENT_ID } = process.env;
+  const { REACT_APP_GOOGLE_CALENDAR_DISCOVERY_DOCS } = process.env;
+  const { REACT_APP_GOOGLE_CALENDAR_SCOPES } = process.env;
+  const DISCOVERY_DOCS = [REACT_APP_GOOGLE_CALENDAR_DISCOVERY_DOCS];
+
+  const getEvents = () => {
+    gapi.load('client:auth2', () => {
+      gapi.client.init({
+        apiKey: REACT_APP_GOOGLE_CALENDAR_API_KEY,
+        clientId: REACT_APP_GOOGLE_CALENDAR_CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: REACT_APP_GOOGLE_CALENDAR_SCOPES,
+      });
+      gapi.auth2
+        .getAuthInstance()
+        .signIn()
+        .then(() => {
+          gapi.client.calendar.events
+            .list({
+              calendarId: 'primary',
+              timeMin: new Date().toISOString(),
+              showDeleted: false,
+              singleEvents: true,
+              maxResults: 10,
+              orderBy: 'startTime',
+            })
+            .then((response) => {
+              const event = response.result.items;
+              setEvent(event);
+              setGooleWorkout(event[0].summary);
+              console.log('EVENT: ', event);
+            });
+        });
+    });
+  };
 
   useEffect(() => {
     dispatch(listWorkouts(lastWeekDay));
@@ -60,8 +100,11 @@ export default function Dashboard({ location, history }) {
     error: errorWorkoutList,
     workouts = [],
   } = workoutList;
-  const { success: successWorkouts, count: countWorkouts, data: dataWorkouts } =
-    workouts;
+  const {
+    success: successWorkouts,
+    count: countWorkouts,
+    data: dataWorkouts,
+  } = workouts;
 
   const workoutCreate = useSelector((state) => state.workoutCreate);
   const { workout, success, error } = workoutCreate;
@@ -69,6 +112,7 @@ export default function Dashboard({ location, history }) {
   const didMount = useRef(false);
 
   useEffect(() => {
+    getEvents();
     if (success && didMount.current) {
       history.push(`/user/workouts/${workout.data._id}/sets`);
     } else {

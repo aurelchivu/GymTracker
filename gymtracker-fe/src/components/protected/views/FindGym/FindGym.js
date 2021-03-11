@@ -12,7 +12,6 @@ import mapStyles from './mapStyles';
 const { REACT_APP_GOOGLE_MAPS_URL_KEY } = process.env;
 
 export default function Maps() {
-
   const [currentPosition, setCurrentPosition] = useState({
     lat: null,
     lng: null,
@@ -35,7 +34,6 @@ export default function Maps() {
   }, []);
 
   const Map = () => {
-    
     const [gyms, setGyms] = useState([]);
     const [selectedGym, setSelectedGym] = useState(null);
 
@@ -53,21 +51,7 @@ export default function Maps() {
     };
 
     useEffect(() => {
-      // if (navigator.geolocation) {
-      //   navigator.geolocation.getCurrentPosition((position) => {
-      //     setCurrentPosition({
-      //       lat: position.coords.latitude,
-      //       lng: position.coords.longitude,
-      //     });
-      //     console.log('Position :', currentPosition);
-      //     console.log('Latitude is :', position.coords.latitude);
-      //     console.log('Longitude is :', position.coords.longitude);
-      //   });
-      // } else {
-      //   window.alert('Location not found');
-      // }
-
-      if (currentPosition.lat !== null ) {
+      if (currentPosition.lat !== null) {
         findGymNearMe();
       }
       const listener = (e) => {
@@ -128,9 +112,10 @@ export default function Maps() {
         <Marker position={currentPosition} />
       </GoogleMap>
     );
-  }
+  };
 
   const MapWrapped = withScriptjs(withGoogleMap(Map));
+
   return (
     <>
       <MapWrapped

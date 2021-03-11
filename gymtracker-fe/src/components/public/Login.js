@@ -66,6 +66,8 @@ const useStyles = makeStyles((theme) => ({
 const Login = ({ location, history }) => {
   const classes = useStyles();
 
+  const { REACT_APP_GOOGLE_LOGIN_CLIENT_ID } = process.env;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -102,7 +104,7 @@ const Login = ({ location, history }) => {
     }
   };
 
-  const googleFailure = (error) => {
+  const googleFailure = async (error) => {
     console.log(error);
     console.log('Google Sign In was unsuccessful. Try again later');
   };
@@ -175,7 +177,7 @@ const Login = ({ location, history }) => {
                 <br />
                 <br />
                 <GoogleLogin
-                  clientId='1015056692539-p9umkg7cnc36u61ajov11cq3ug1c7tli.apps.googleusercontent.com'
+                  clientId={REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
                   render={(renderProps) => (
                     <Button
                       className={classes.googleButton}
