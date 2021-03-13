@@ -137,8 +137,7 @@ export default function CurrentWorkout({ history }) {
           <h3>Today's {workoutName} workout summary:</h3>
           <GridContainer>
             <form
-              style={{ display: 'flex' }}
-              className={classes.form}
+              className={classes.formButton}
               noValidate
               onSubmit={handleSubmit}
             >
@@ -243,7 +242,6 @@ export default function CurrentWorkout({ history }) {
         </CardBody>
 
         <CardFooter chart>
-          {/* <h3>Last week's workout summary.</h3> */}
         </CardFooter>
       </Card>
     </>
@@ -251,5 +249,4 @@ export default function CurrentWorkout({ history }) {
 }
 
 // Form validation
-// Keep workout id after change location
 

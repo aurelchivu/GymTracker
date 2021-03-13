@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import dotenv from 'dotenv';
-import path from 'path';
 import YTSearch from 'youtube-api-search';
+import ReactPlayer from 'react-player';
 
 // @material-ui/core
 import Grid from '@material-ui/core/Grid';
@@ -19,7 +18,6 @@ import CardFooter from '../../components/Card/CardFooter.js';
 import styles from '../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 const useStyles = makeStyles(styles);
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 export default function Videos() {
   const [muscle, setMuscle] = useState('');
@@ -33,7 +31,7 @@ export default function Videos() {
       {
         key: REACT_APP_YOUTUBE_API_KEY,
         term: `${muscle} traning workout exercises`,
-        maxResults: 100,
+        maxResults: 20,
       },
       (videos) => setVideoList(videos)
     );
@@ -104,7 +102,7 @@ export default function Videos() {
                       const { medium = {} } = thumbnails;
                       return (
                         <li className='styles.card' key={id}>
-                          <a
+                          {/* <a
                             href={`https://www.youtube.com/watch?v=${id.videoId}`}
                           >
                             <p>
@@ -116,7 +114,12 @@ export default function Videos() {
                               />
                             </p>
                             <h3>{title}</h3>
-                          </a>
+                          </a> */}
+                          <ReactPlayer
+                            url={`https://www.youtube.com/watch?v=${id.videoId}`}
+                            controls
+                          />
+                          <h3>{title}</h3>
                         </li>
                       );
                     })}

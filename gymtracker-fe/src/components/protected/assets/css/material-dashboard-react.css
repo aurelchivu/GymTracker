@@ -510,6 +510,11 @@ footer ul li a:hover {
 .infoWindow {
   color: #3c4858;
 }
+
+.formButton {
+  display: flex;
+}
+
 * {
   letter-spacing: normal !important;
-}
+}       

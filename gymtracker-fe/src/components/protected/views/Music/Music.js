@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import SpotifyPlayer from 'react-spotify-player';
+import ReactAudioPlayer from 'react-audio-player';
+
 // @material-ui/core
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,17 +26,22 @@ export default function Music() {
 
   const [token, setToken] = useState('');
   const [keyword, setKeyword] = useState('');
+  const [tracks, setTracks] = useState([]);
   const [trackList, setTrackList] = useState([]);
   const [showTrackList, setShowTrackList] = useState(false);
 
-  const { REACT_APP_spotifyClientID, REACT_APP_spotifyClientSecret } = process.env;
-  
+  const {
+    REACT_APP_spotifyClientID,
+    REACT_APP_spotifyClientSecret,
+  } = process.env;
+
   const getAccesToken = async (keyword) => {
     const config = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization:
-          'Basic ' + btoa(REACT_APP_spotifyClientID + ':' + REACT_APP_spotifyClientSecret),
+          'Basic ' +
+          btoa(REACT_APP_spotifyClientID + ':' + REACT_APP_spotifyClientSecret),
       },
       data: 'grant_type=client_credentials',
       method: 'POST',
@@ -58,10 +66,12 @@ export default function Music() {
 
     try {
       const { data } = await axios(
-        `https://api.spotify.com/v1/search?query=${keyword}&type=track&limit=50`,
+        `https://api.spotify.com/v1/search?query=${keyword}&type=track&limit=10`,
         config
       );
       setTrackList(data.tracks.items);
+      setTrackList(data.tracks.items);
+      setTracks(data.tracks.items.href);
       console.log(data.tracks.items);
     } catch (err) {
       console.log(err);
@@ -116,7 +126,6 @@ export default function Music() {
                     color='primary'
                     round
                     className={classes.button}
-                    // className={classes.submit}
                   >
                     play music!
                   </Button>
@@ -131,7 +140,9 @@ export default function Music() {
                     {trackList.map((track) => {
                       return (
                         <li className='styles.card' key={track.id}>
-                          <a href={`https://open.spotify.com/track/${track.id}`}>
+                          <a
+                            href={`https://open.spotify.com/track/${track.id}`}
+                          >
                             <p>
                               <img
                                 width={track.album.images[1].width}
@@ -142,6 +153,13 @@ export default function Music() {
                               <h3>{track.name}</h3>
                             </p>
                           </a>
+                          {/* <SpotifyPlayer
+                            token={token}
+                            uri={[track.external_urls.spotify]}
+                            // uri={track.uri}
+                            // constrols
+                          /> */}
+                          <br/>
                         </li>
                       );
                     })}

@@ -130,8 +130,7 @@ export default function Measurement({ history }) {
           <h3>Add new measurement</h3>
           <GridContainer>
             <form
-              style={{ display: 'flex' }}
-              className={classes.form}
+              className={classes.formButton}
               noValidate
               onSubmit={handleAddMeasurement}
             >

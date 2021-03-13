@@ -40,7 +40,7 @@ export default function Maps() {
     const findGymNearMe = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/api/v1/findgym?location=${currentPosition.lat},${currentPosition.lng}&radius=10000&type=gym&keyword=near&key=${REACT_APP_GOOGLE_MAPS_URL_KEY}`
+          `http://localhost:5000/api/v1/findgym?location=${currentPosition.lat},${currentPosition.lng}&radius=5000&type=gym&key=${REACT_APP_GOOGLE_MAPS_URL_KEY}`
         );
 
         console.log(data.data.results);

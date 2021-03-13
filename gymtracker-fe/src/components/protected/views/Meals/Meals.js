@@ -164,8 +164,7 @@ export default function Meals() {
                 <GridContainer xs={12} sm={12} md={12}>
                   <h3>Add a new meal</h3>
                 </GridContainer>
-                <form
-                  style={{ display: 'flex' }}
+                <form 
                   className={classes.form}
                   noValidate
                   onSubmit={handleAddMeal}
