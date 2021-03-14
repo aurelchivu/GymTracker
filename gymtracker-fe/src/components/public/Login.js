@@ -176,6 +176,7 @@ const Login = ({ location, history }) => {
                 </Grid>
                 <br />
                 <br />
+                <p>Log in with Google if you want to have acces to your calendar</p>
                 <GoogleLogin
                   clientId={REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
                   render={(renderProps) => (

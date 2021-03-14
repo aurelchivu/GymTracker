@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SpotifyPlayer from 'react-spotify-player';
-import ReactAudioPlayer from 'react-audio-player';
 
 // @material-ui/core
 import Grid from '@material-ui/core/Grid';

@@ -73,7 +73,6 @@ export default function Meals() {
   const [proteins, setProteins] = useState();
   const [carbs, setCarbs] = useState();
   const [fats, setFats] = useState();
-  const [totalCalories, setTotalCalories] = useState();
 
   const dispatch = useDispatch();
 
@@ -82,21 +81,11 @@ export default function Meals() {
   const { count, data = [] } = meals;
 
   const mealCreate = useSelector((state) => state.mealCreate);
-  const { success } = mealCreate;
+  const { success: successMealCreate } = mealCreate;
 
   useEffect(() => {
-    dispatch(listMeals(new Date()));
-    const totalCals = data?.reduce((prev, curr) => prev + curr.calories, 0);
-    setTotalCalories(totalCals);
-  }, []);
-
-  useEffect(() => {
-    if (success) {
-      dispatch(listMeals(new Date()));
-      const totalCals = data?.reduce((prev, curr) => prev + curr.calories, 0);
-      setTotalCalories(totalCals);
-    }
-  }, [success]);
+    dispatch(listMeals(new Date().toISOString()));
+  }, [successMealCreate]);
 
   const handleAddMeal = (e) => {
     e.preventDefault();
@@ -113,7 +102,7 @@ export default function Meals() {
 
   // www.eatthismuch.com/
 
-  https: return (
+  return (
     <>
       <GridContainer>
         <GridItem xs={11} sm={11} md={11}>
@@ -132,12 +121,15 @@ export default function Meals() {
                 <h4>Today you had no meals!</h4>
               ) : count === 1 ? (
                 <h4>
-                  Today you had {count} meal, {totalCalories} calories in total.
+                  Today you had {count} meal,{' '}
+                  {data?.reduce((prev, curr) => prev + curr.calories, 0)}{' '}
+                  calories in total.
                 </h4>
               ) : (
                 <h4>
-                  Today you had {count} meals, {totalCalories} calories in
-                  total.
+                  Today you had {count} meals,{' '}
+                  {data?.reduce((prev, curr) => prev + curr.calories, 0)}{' '}
+                  calories in total.
                 </h4>
               )}
               <ol>
@@ -164,7 +156,7 @@ export default function Meals() {
                 <GridContainer xs={12} sm={12} md={12}>
                   <h3>Add a new meal</h3>
                 </GridContainer>
-                <form 
+                <form
                   className={classes.form}
                   noValidate
                   onSubmit={handleAddMeal}
