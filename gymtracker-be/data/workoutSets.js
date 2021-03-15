@@ -313,4 +313,4 @@ const workoutSets = [
   },
 ];
 
-export default workoutSets
+module.exports = workoutSets;

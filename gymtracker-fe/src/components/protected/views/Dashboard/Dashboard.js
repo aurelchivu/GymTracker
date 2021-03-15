@@ -90,10 +90,6 @@ export default function Dashboard({ location, history }) {
   //   });
   // };
 
-  useEffect(() => {
-    dispatch(listWorkouts(lastWeekDay));
-  }, [dispatch]);
-
   const workoutList = useSelector((state) => state.workoutList);
   const {
     loading: loadingWorkoutList,
@@ -111,14 +107,24 @@ export default function Dashboard({ location, history }) {
 
   const didMount = useRef(false);
 
+  // useEffect(() => {
+  //   // getEvents();
+  //   if (success && didMount.current) {
+  //     history.push(`/user/workouts/${workout.data._id}/sets`);
+  //   } else {
+  //     didMount.current = true;
+  //   }
+  // }, [success]);
+
   useEffect(() => {
+    dispatch(listWorkouts(lastWeekDay));
     // getEvents();
     if (success && didMount.current) {
       history.push(`/user/workouts/${workout.data._id}/sets`);
     } else {
       didMount.current = true;
     }
-  }, [success]);
+  }, [dispatch, success]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -241,4 +247,4 @@ export default function Dashboard({ location, history }) {
 }
 
 // Form validation
-// Fix first render when workout is undefined
+

@@ -15,4 +15,4 @@ const bodyParts = [
   'Right Calf',
 ];
 
-export default bodyParts;
+module.exports = bodyParts;

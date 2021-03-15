@@ -22,10 +22,12 @@ connectDB();
 
 // Route files
 const auth = require('./routes/auth');
+const bodyParts = require('./routes/bodyParts');
 const getGyms = require('./routes/googlePlaces')
 const home = require('./routes/home');
 const users = require('./routes/users');
 const workouts = require('./routes/workouts');
+const workoutSets = require('./routes/workoutSets');
 // const exercises = require('./routes/exercises');
 const meals = require('./routes/meals');
 const measurements = require('./routes/measurements');
@@ -72,6 +74,7 @@ app.use(express.static(path.join(__dirname, ' public')));
 
 // Mount routers
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/bodyParts', bodyParts);
 // app.use('/api/v1/exercises', exercises);
 app.use('/api/v1/findgym', getGyms);
 app.use('/api/v1/', home);
@@ -80,6 +83,7 @@ app.use('/api/v1/measurements', measurements);
 // app.use('/api/v1/muscles', muscles);
 app.use('/api/v1/users', users);
 app.use('/api/v1/workouts', workouts);
+app.use('/api/v1/workoutSets', workoutSets);
 app.use('/api/v1/sets', sets);
 
 

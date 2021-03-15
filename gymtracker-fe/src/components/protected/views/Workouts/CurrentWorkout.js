@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import {
   createSet,
   listSets,
@@ -10,7 +11,6 @@ import {
   resetWorkout,
   resetListWorkouts,
 } from '../../../../redux/actions/workoutActions';
-import workoutSets from './workoutSets';
 import FullWorkout from './FullWorkout';
 // @material-ui/core
 import { makeStyles, withStyles } from '@material-ui/core/styles';
@@ -80,6 +80,7 @@ export default function CurrentWorkout({ history }) {
   const [exercises, setExercises] = useState(['Exercises']);
   const [reps, setReps] = useState();
   const [weight, setWeight] = useState();
+  const [workoutSets, setWorkoutSets] = useState([]);
 
   const setList = useSelector((state) => state.setList);
   const { loading, error, sets } = setList;
@@ -93,7 +94,15 @@ export default function CurrentWorkout({ history }) {
   const workoutName = workout?.data?.name;
   const workoutId = workout?.data?._id;
 
+  const getworkoutSets = async () => {
+    const { data } = await axios.get(
+      `http://localhost:5000/api/v1/workoutSets`
+    );
+    setWorkoutSets(data.data);
+  };
+
   useEffect(() => {
+    getworkoutSets();
     if (success) {
       dispatch(listSets(workoutId));
       history.push(`/user/workouts/${workout.data._id}/sets`);
@@ -241,12 +250,10 @@ export default function CurrentWorkout({ history }) {
           </Grid>
         </CardBody>
 
-        <CardFooter chart>
-        </CardFooter>
+        <CardFooter chart></CardFooter>
       </Card>
     </>
   );
 }
 
 // Form validation
-

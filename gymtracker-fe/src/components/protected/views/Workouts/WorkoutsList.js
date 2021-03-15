@@ -36,7 +36,7 @@ export default function WorkoutsList({ history }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    dispatch(listWorkouts(new Date()));
+    dispatch(listWorkouts(new Date().toISOString()));
   }, [dispatch]);
 
   const handleDateChange = (date) => {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import {
   createMeasurement,
   detailsMeasurement,
@@ -7,7 +8,6 @@ import {
   resetMeasurement,
   listMeasurementsReset,
 } from '../../../../redux/actions/measurementActions';
-import bodyParts from './bodyParts';
 // @material-ui/core
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -74,6 +74,7 @@ export default function Measurement({ history }) {
   const [measure, setMeasure] = useState();
   const [showMeasurements, setShowMeasurements] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [bodyParts, setBodyParts] = useState([]);
 
   const measurementList = useSelector((state) => state.measurementList);
   const {
@@ -99,7 +100,13 @@ export default function Measurement({ history }) {
   } = measurementDetails;
   const { succes: succesDetails, data: details } = detailsMeasurements;
 
+  const getBodyParts = async () => {
+    const { data } = await axios.get(`http://localhost:5000/api/v1/bodyParts`);
+    setBodyParts(data.data);
+  };
+
   useEffect(() => {
+    getBodyParts();
     if (successCreate) {
       dispatch(detailsMeasurement(measurementId));
     }
@@ -232,7 +239,7 @@ export default function Measurement({ history }) {
           ) : showMeasurements && MeasurementsByBodyPart ? (
             <>
               <h4>
-                At {checkBodyPart} you have {count} measurements.{' '}
+                On {checkBodyPart} you have {count} measurements.{' '}
               </h4>
               <ol>
                 {Object.values(MeasurementsByBodyPart).map(
